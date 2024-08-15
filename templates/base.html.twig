@@ -2,12 +2,13 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <title>{% block title %}Manager{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><circle cx=%2264%22 cy=%2264%22 r=%2240%22 fill=%22%238bc34a%22/><path d=%22M64 28 L76 58 L108 58 L82 74 L92 104 L64 86 L36 104 L46 74 L20 58 L52 58 Z%22 fill=%22%23e91e63%22/></svg>">
         {% block stylesheets %}
         {% endblock %}
 
         {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
     <body>
