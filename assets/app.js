@@ -1,2 +1,4 @@
 // CSS
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/adminlte.css';
+// JS
+import './js/adminlte.js';
