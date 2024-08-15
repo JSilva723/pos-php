@@ -1,7 +1,8 @@
 #!/bin/bash
 
 UID = $(shell id -u)
-DOCKER_BE = symfony-app
+DOCKER_BE = main-app
+DOCKER_DB = main-app-mysql
 
 start:
 	U_ID=${UID} docker compose up -d
@@ -29,3 +30,6 @@ composer-install:
 
 ssh:
 	U_ID=${UID} docker exec -it --user ${UID} ${DOCKER_BE} bash
+
+db-ssh:
+	U_ID=${UID} docker exec -it --user ${UID} ${DOCKER_DB} bash
