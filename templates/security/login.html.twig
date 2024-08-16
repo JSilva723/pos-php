@@ -5,19 +5,19 @@
 		<div class="login-box">
 			<div class="card">
 				<div class="card-body login-card-body">
-					<p class="login-box-msg">Sign in</p>
-					<form action="/login" method="post">
+					<p class="login-box-msg">{{ 'Login'|trans }}</p>
+					<form action="{{ url('app_login') }}" method="post">
 						<div class="input-group mb-3">
-							<input type="text" class="form-control" placeholder="Username" value="{{ last_username }}" name="_username" id="username" autocomplete="username" required autofocus>
+							<input type="text" class="form-control" placeholder={{ 'Username'|trans }} value="{{ last_username }}" name="_username" id="username" autocomplete="username" required autofocus>
 						</div>
 						<div class="input-group mb-3">
-							<input type="password" class="form-control" placeholder="Password" name="_password" id="password" autocomplete="current-password" required>
+							<input type="password" class="form-control" placeholder={{ 'Password'|trans }} name="_password" id="password" autocomplete="current-password" required>
 						</div>
 						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 						<div class="row">
 							<div class="col-4">
 								<div class="d-grid gap-2">
-									<button type="submit" class="btn btn-primary">Sign In</button>
+									<button type="submit" class="btn btn-primary">{{ 'Login'|trans }}</button>
 								</div>
 							</div>
 						</div>

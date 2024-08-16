@@ -9,9 +9,6 @@
 		</ul>
 		<ul class="navbar-nav ms-auto">
 			<li class="nav-item">
-				<span class="nav-link">es_AR</span>
-			</li>
-			<li class="nav-item">
 				<a class="nav-link" href="#" role="button">
 					<i class="bi bi-share"></i>
 				</a>
@@ -22,16 +19,14 @@
 					<span>Configuration</span>
 				</a>
 				<div class="dropdown-menu nav-treeview">
-					<span class="dropdown-item">15 Notifications</span>
-					<div class="dropdown-divider"></div>
 					<a href="#" class="dropdown-item">
-						<i class="bi bi-envelope me-2"></i>4 new messages
-						<span class="float-end text-secondary fs-7">3 mins</span>
+						<i class="bi bi-gear me-2"></i>
+						{{ 'Preferences'|trans}}
 					</a>
 				</div>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link text-danger" href="/logout" role="button">
+				<a class="nav-link text-danger" href="{{ path('app_logout') }}" role="button">
 					<i class="bi bi-power"></i>
 				</a>
 			</li>
