@@ -19,24 +19,24 @@ make build
 ```sh
 make start
 ```
-5. Install dependencies and run migrations
+5. Install dependencies
 ```sh
-make prepare
+make composer-install
 ```
-6. Open broeser -> http://localhost:3000
+6. Run migrations
+```sh
+make composer-install
+```
+7. Open broeser -> http://localhost:3000
 
-## Create user
-1. Gen pass - open terminal
-```sh
-make ssh 
-```
-```sh
-bin/console security:hash-password admin
-```
-2. Insert in DB - opent other terminal
+## Create user - (admin, admin)
+1. Insert in DB - opent other terminal
 ```sh
 make db-ssh
 ```
 ```sh
 mysql -u root -p main-app # pass -> root
+```
+```sql
+insert into user (username, roles, password) values ('admin','["ROLE_USER"]' ,'$2y$13$O6TxZOXywpOYKmgzc1Zn4uU9dtvCMWlHT1p/8.aFRYn2k7AidSOPO');
 ```
