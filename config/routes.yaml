@@ -23,6 +23,15 @@ root_route_redirect:
         path: '/%locale%/'
         permanent: false
 
+app_lang:
+    path: /{_locale}/lang/{lang}
+    controller: App\Controller\IndexController::lang
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        template: index/index.html.twig
+        _locale: '%locale%'
+
 app_login:
     path: /{_locale}/login
     methods: GET|POST
