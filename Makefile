@@ -18,6 +18,7 @@ build:
 
 prepare:
 	$(MAKE) composer-install
+	$(MAKE) migrations-migrate
 
 run:
 	U_ID=${UID} docker exec -it --user ${UID} ${DOCKER_BE} symfony serve -d
@@ -27,6 +28,9 @@ logs:
 
 composer-install:
 	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} composer install --no-interaction
+
+migrations-migrate:
+	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} bin/console doctrine:migrations:migrate --no-interaction
 
 ssh:
 	U_ID=${UID} docker exec -it --user ${UID} ${DOCKER_BE} bash
