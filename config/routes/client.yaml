@@ -1,0 +1,54 @@
+app_client_index:
+    path: 
+        en: /{_locale}/client
+        es: /{_locale}/cliente
+    methods: GET
+    controller: App\Controller\ClientController::index
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+app_client_new:
+    path: 
+        en: /{_locale}/client/new
+        es: /{_locale}/cliente/nuevo
+    methods: GET|POST
+    controller: App\Controller\ClientController::new
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+app_client_show:
+    path: 
+        en: /{_locale}/client/{id}
+        es: /{_locale}/cliente/{id}
+    methods: GET
+    controller: App\Controller\ClientController::show
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+app_client_edit:
+    path: 
+        en: /{_locale}/client/{id}/edit
+        es: /{_locale}/cliente/{id}/editar
+    methods: GET|POST
+    controller: App\Controller\ClientController::edit
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+app_client_delete:
+    path: 
+        en: /{_locale}/client/{id}
+        es: /{_locale}/cliente/{id}
+    methods: POST
+    controller: App\Controller\ClientController::delete
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'

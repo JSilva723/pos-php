@@ -1,0 +1,45 @@
+{% extends 'components/layout.html.twig' %}
+
+{% block main %}
+	<div class="row p-3">
+		<div class="col-12">
+			<div class="card mb-4">
+				<div class="card-header">
+					<div class="d-flex justify-content-between align-items-center">
+						{% block tTitle %}{% endblock %}
+					</div>
+					<form class="form-horizontal" method="GET">
+						<div class="input-group pt-3 w-75">
+							<input id="btn-input" type="text" class="form-control input-sm" name="q"/>
+							<button class="btn btn-success" type="submit">
+								<i class="bi bi-search" aria-hidden="true"></i>
+							</button>
+						</div>
+					</form>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<thead>
+								{% block tHead %}{% endblock %}
+							</thead>
+							<tbody>
+								{% block tBody %}{% endblock %}
+							</tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card-footer clearfix">
+				<ul class="pagination m-0 float-end">
+					<li class="page-item">
+						<a class="page-link" href="#">&laquo;</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="#">&raquo;</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}

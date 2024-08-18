@@ -25,7 +25,7 @@ root_route_redirect:
 
 app_login:
     path: /{_locale}/login
-    methods: ["GET", "POST"]
+    methods: GET|POST
     controller: App\Controller\SecurityController::login
     requirements:
         _locale: '%app_locales%'
@@ -40,3 +40,6 @@ app_logout:
         _locale: '%app_locales%'
     defaults:
         _locale: '%locale%'
+
+app_client:
+    resource: 'routes/client.yaml'

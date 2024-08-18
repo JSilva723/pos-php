@@ -1,0 +1,8 @@
+{% extends 'components/entity_form.html.twig' %}
+
+{% block formBody %}
+	<div class="col-6">
+		{{ form_row(form.name) }}
+		{{ form_row(form.address) }}
+	</div>
+{% endblock %}

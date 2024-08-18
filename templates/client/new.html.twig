@@ -1,0 +1,10 @@
+{% extends 'components/layout.html.twig' %}
+
+{% block main %}
+	{{ include(
+        'client/_form.html.twig', {
+            'form_header': 'New client',
+            'button_label': 'Save'        
+        }) 
+    }}
+{% endblock %}
