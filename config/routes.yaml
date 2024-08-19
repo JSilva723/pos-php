@@ -52,3 +52,6 @@ app_logout:
 
 app_client:
     resource: 'routes/client.yaml'
+
+app_user:
+    resource: 'routes/user.yaml'

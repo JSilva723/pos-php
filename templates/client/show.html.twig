@@ -1,27 +1,26 @@
-{% extends 'components/detail.html.twig' %}
+{% extends 'components/layout.html.twig' %}
 
-{% block showProfile %}
-	<div class="card card-primary card-outline">
-		<div class="card-body box-profile">
-			<div class="text-center">
-				<img class="img-fluid" src="{{ asset('img/avatar.png')}}" alt="User profile picture">
-			</div>
-			<h3 class="profile-username text-center">{{client.name }}</h3>
-			<p class="text-muted text-center">{{ client.address }}</p>
-
-			<div class="d-flex flex-column gap-2">
-				<a href="{{ path('app_client_edit', {'id': client.id}) }}" class="btn btn-primary">{{ 'Edit'|trans }}</a>
-				{{ include('components/btn_delete.html.twig',{
-						'path': 'app_client_delete',
-						'id': client.id,
-						'confirm_delete': 'Are you sure you want to delete this item?'
-					}) 
-				}}
+{% block main %}
+	<div class="row p-3">
+		<div class="col-md-3 mb-3">
+			<div class="card card-primary card-outline">
+				<div class="card-body box-profile">
+					<div class="text-center">
+						<img class="img-fluid" src="{{ asset('img/avatar.png')}}" alt="{{ 'Client picture'|trans }}">
+					</div>
+					<h3 class="profile-username text-center">{{client.name }}</h3>
+					<p class="text-muted text-center">{{ client.address }}</p>
+					<div class="d-flex flex-column gap-2">
+						<a href="{{ path('app_client_edit', {'id': client.id}) }}" class="btn btn-primary">{{ 'Edit'|trans }}</a>
+						{{ include('components/btn_delete.html.twig',{
+									'path': 'app_client_delete',
+									'id': client.id,
+									'confirm_delete': 'Are you sure you want to delete this item?'
+								}) 
+							}}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-{% endblock %}
-
-{% block showDetail %}
-	<div class="card card-primary card-outline"></div>
 {% endblock %}

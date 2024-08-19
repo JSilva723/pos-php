@@ -1,0 +1,49 @@
+{% extends 'components/layout.html.twig' %}
+
+{% block main %}
+	<div class="row p-3">
+		<div class="col-md-3 mb-4">
+			<div class="card card-primary card-outline">
+				<div class="card-body box-profile">
+					<div class="text-center mb-3">
+						<img class="img-fluid" src="{{ asset('img/avatar.png')}}" alt="{{ 'User picture'|trans }}">
+					</div>
+					<h3 class="profile-username text-center">{{ name }}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<div class="card card-primary card-outline mb-4">
+				{{ form_start(userForm) }}
+				<div class="card-header">
+					{{ 'Basic data'|trans }}
+				</div>
+				<div class="card-body">
+					{{ form_row(userForm.username) }}
+				</div>
+				<div class="card-footer">
+					<button class="btn btn-success float-end">
+						{{ 'Save'|trans }}
+					</button>
+				</div>
+				{{ form_end(userForm) }}
+			</div>
+			<div class="card card-primary card-outline">
+				{{ form_start(passForm) }}
+				<div class="card-header">
+					{{ 'Change password'|trans }}
+				</div>
+				<div class="card-body">
+					{{ form_row(passForm.old_password) }}
+					{{ form_row(passForm.plainPassword) }}
+				</div>
+				<div class="card-footer">
+					<button class="btn btn-success float-end">
+						{{ 'Save'|trans }}
+					</button>
+				</div>
+				{{ form_end(passForm) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+app_user_show:
+    path: 
+        en: /{_locale}/user
+        es: /{_locale}/usuario
+    methods: GET|POST
+    controller: App\Controller\UserController::show
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
