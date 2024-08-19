@@ -3816,7 +3816,8 @@ fieldset:disabled .btn {
   margin-left: 0;
 }
 
-.dropdown-menu {
+.dropdown-menu,
+.dropdown-menu-right {
   --bs-dropdown-zindex: 1000;
   --bs-dropdown-min-width: 10rem;
   --bs-dropdown-padding-x: 0;
@@ -3858,6 +3859,11 @@ fieldset:disabled .btn {
   border: var(--bs-dropdown-border-width) solid var(--bs-dropdown-border-color);
   border-radius: var(--bs-dropdown-border-radius);
   box-shadow: var(--bs-dropdown-box-shadow);
+}
+
+.dropdown-menu-right {
+  right: 0;
+  left: auto;
 }
 
 .dropdown-menu[data-bs-popper] {

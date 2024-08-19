@@ -7,12 +7,15 @@
 				</a>
 			</li>
 		</ul>
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+			<div class="m-auto">PRODUCTION</div>
+		{% endif %}
 		<ul class="navbar-nav ms-auto">
 			<li class="nav-item" data-lte-toggle="treeview">
 				<a class="nav-link" href="#" role="button">
 					<i class="bi bi-globe-americas"></i>
 				</a>
-				<div class="dropdown-menu nav-treeview">
+				<div class="dropdown-menu-right nav-treeview">
 					<a href="{{ path('app_lang', {'lang': 'es'}) }}" class="dropdown-item">
 						ES
 					</a>
@@ -25,9 +28,8 @@
 			<li class="nav-item" data-lte-toggle="treeview">
 				<a class="nav-link" href="#" role="button">
 					<i class="bi bi-gear"></i>
-					<span>{{ 'Configuration'|trans}}</span>
 				</a>
-				<div class="dropdown-menu nav-treeview">
+				<div class="dropdown-menu-right nav-treeview">
 					<a href="#" class="dropdown-item">
 						<i class="bi bi-gear me-2"></i>
 						{{ 'Preferences'|trans}}
