@@ -19,7 +19,7 @@
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
-						<table class="table table-bordered">
+						<table class="table table-bordered table-striped">
 							<thead>
 								{% block tHead %}{% endblock %}
 							</thead>
@@ -30,15 +30,8 @@
 					</table>
 				</div>
 			</div>
-			<div class="card-footer clearfix">
-				<ul class="pagination m-0 float-end">
-					<li class="page-item">
-						<a class="page-link" href="#">&laquo;</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">&raquo;</a>
-					</li>
-				</ul>
+			<div class="card-footer">
+				{{ knp_pagination_render(pagination) }}
 			</div>
 		</div>
 	</div>

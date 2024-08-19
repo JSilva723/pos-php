@@ -8,25 +8,26 @@ use App\Entity\Client;
 use App\Form\ClientType;
 use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ClientController extends AbstractController
 {
-    public function index(Request $request, ClientRepository $clientRepository): Response
+    public function index(Request $request, ClientRepository $clientRepository, PaginatorInterface $paginator): Response
     {
         $q = $request->get('q', '');
-        $clients = [];
+        $query = $clientRepository->findByQ($q);
 
-        if ($q !== '') {
-            $clients = $clientRepository->findByQ($q);
-        } else {
-            $clients = $clientRepository->findAll();
-        }
+        $pagination = $paginator->paginate(
+            $query, // query NOT result
+            $request->query->getInt('page', 1), // page number
+            10, // limit per page
+        );
 
         return $this->render('client/index.html.twig', [
-            'clients' => $clients,
+            'pagination' => $pagination,
         ]);
     }
 

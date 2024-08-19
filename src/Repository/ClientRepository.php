@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,18 +19,22 @@ class ClientRepository extends ServiceEntityRepository
         parent::__construct($registry, Client::class);
     }
 
-    /**
-     * @return Client[] Returns an array of Client objects
-     */
-    public function findByQ(string $value): array
+    public function findByQ(string $value): Query
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.name like :val')
-            ->setParameter('val', '%' . $value . '%')
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $query = 'SELECT c.id, c.name, c.address FROM App\Entity\Client c';
+
+        if ($value !== '') {
+            $query .= ' WHERE (c.name LIKE :value) ';
+        }
+
+        $query .= ' ORDER BY c.name ASC ';
+
+        $qb = $this->getEntityManager()->createQuery($query);
+
+        if ($value !== '') {
+            $qb->setParameter('value', '%' . $value . '%');
+        }
+
+        return $qb;
     }
 }

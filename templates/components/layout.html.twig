@@ -1,16 +1,12 @@
 {% extends 'components/base.html.twig' %}
 
 {% block body %}
-	<body class="layout-fixed sidebar-expand-lg">
+	<body class="layout-fixed sidebar-expand-lg" data-bs-theme="dark">
 		<div class="app-wrapper">
 			{% include 'components/header.html.twig' %}
 			{% include 'components/sidebar.html.twig' %}
 			<main class="app-main">
-				<div class="row p-3">
-					<div class="col-12">
-						{% block main %}{% endblock %}
-					</div>
-				</div>
+				{% block main %}{% endblock %}
 			</main>
 		</div>
 	</body>
