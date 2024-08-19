@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Client;
@@ -16,6 +18,7 @@ class ClientController extends AbstractController
     {
         $q = $request->get('q', '');
         $clients = [];
+
         if ($q !== '') {
             $clients = $clientRepository->findByQ($q);
         } else {

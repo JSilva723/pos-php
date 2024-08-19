@@ -65,6 +65,12 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "lint": [
+            "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --dry-run --verbose --show-progress=dots"
+        ],
+        "lint:fix": [
+            "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --verbose --show-progress=dots"
         ]
     },
     "conflict": {

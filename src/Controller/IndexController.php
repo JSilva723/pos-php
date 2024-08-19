@@ -1,12 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
+
+use function array_filter;
+use function parse_url;
+use function str_starts_with;
+
+use const ARRAY_FILTER_USE_KEY;
+use const PHP_URL_PATH;
 
 class IndexController extends AbstractController
 {
@@ -25,7 +34,7 @@ class IndexController extends AbstractController
             $routeInfo = $router->match(parse_url($referer, PHP_URL_PATH));
             $routeName = $routeInfo['_route'];
             $routeParams = array_filter($routeInfo, function ($key) {
-                return strpos($key, '_') !== 0;
+                return !str_starts_with($key, '_');
             }, ARRAY_FILTER_USE_KEY);
 
             $routeParams += ['_locale' => $lang];

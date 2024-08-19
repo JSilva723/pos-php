@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Event\Subscriber\Locale;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -7,7 +9,15 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use UnexpectedValueException;
+
+use function array_unique;
+use function array_unshift;
+use function explode;
+use function in_array;
+use function sprintf;
 use function Symfony\Component\String\u;
+use function trim;
 
 class RedirectToPreferredLocaleSubscriber implements EventSubscriberInterface
 {
@@ -17,17 +27,18 @@ class RedirectToPreferredLocaleSubscriber implements EventSubscriberInterface
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
         string $locales,
-        ?string $defaultLocale = null
+        ?string $defaultLocale = null,
     ) {
         $this->locales = explode('|', trim($locales));
+
         if (empty($this->locales)) {
-            throw new \UnexpectedValueException('The list of supported locales must not be empty.');
+            throw new UnexpectedValueException('The list of supported locales must not be empty.');
         }
 
         $this->defaultLocale = $defaultLocale ?: $this->locales[0];
 
-        if (!\in_array($this->defaultLocale, $this->locales, true)) {
-            throw new \UnexpectedValueException(sprintf('The default locale ("%s") must be one of "%s".', $this->defaultLocale, $locales));
+        if (!in_array($this->defaultLocale, $this->locales, true)) {
+            throw new UnexpectedValueException(sprintf('The default locale ("%s") must be one of "%s".', $this->defaultLocale, $locales));
         }
 
         // Add the default locale at the first position of the array,
@@ -47,6 +58,7 @@ class RedirectToPreferredLocaleSubscriber implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
+
         // Ignore sub-requests and all URLs but the homepage
         if (!$event->isMainRequest() || '/' !== $request->getPathInfo()) {
             return;
@@ -55,6 +67,7 @@ class RedirectToPreferredLocaleSubscriber implements EventSubscriberInterface
         // Ignore requests from referrers with the same HTTP host in order to prevent
         // changing language for users who possibly already selected it for this application.
         $referrer = $request->headers->get('referer');
+
         if (null !== $referrer && u($referrer)->ignoreCase()->startsWith($request->getSchemeAndHttpHost())) {
             return;
         }
