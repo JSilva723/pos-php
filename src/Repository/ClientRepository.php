@@ -21,7 +21,7 @@ class ClientRepository extends ServiceEntityRepository
     /**
      * @return Client[] Returns an array of Client objects
      */
-    public function findByQ($value): array
+    public function findByQ(string $value): array
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.name like :val')

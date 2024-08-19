@@ -21,6 +21,7 @@ use function trim;
 
 class RedirectToPreferredLocaleSubscriber implements EventSubscriberInterface
 {
+    /** @var list<string> The supported locales */
     private array $locales;
     private string $defaultLocale;
 

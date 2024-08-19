@@ -31,7 +31,7 @@ class IndexController extends AbstractController
         $referer = $request->headers->get('referer');
 
         if ($referer) {
-            $routeInfo = $router->match(parse_url($referer, PHP_URL_PATH));
+            $routeInfo = $router->match((string) parse_url($referer, PHP_URL_PATH));
             $routeName = $routeInfo['_route'];
             $routeParams = array_filter($routeInfo, function ($key) {
                 return !str_starts_with($key, '_');
