@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace Tenant\Controller;
 
-use App\Entity\Client;
-use App\Form\ClientType;
-use App\Repository\ClientRepository;
+use Tenant\Entity\Client;
+use Tenant\Form\ClientType;
+use Tenant\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +41,7 @@ class ClientController extends AbstractController
             $entityManager->persist($client);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('tenant_client_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('client/new.html.twig', [
@@ -65,7 +65,7 @@ class ClientController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('tenant_client_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('client/edit.html.twig', [
@@ -81,6 +81,6 @@ class ClientController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('tenant_client_index', [], Response::HTTP_SEE_OTHER);
     }
 }

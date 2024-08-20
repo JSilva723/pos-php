@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Repository;
+namespace Tenant\Repository;
 
-use App\Entity\Client;
+use Tenant\Entity\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,7 +21,7 @@ class ClientRepository extends ServiceEntityRepository
 
     public function findByQ(string $value): Query
     {
-        $query = 'SELECT c.id, c.name, c.address FROM App\Entity\Client c';
+        $query = 'SELECT c.id, c.name, c.address FROM Tenant\Entity\Client c';
 
         if ($value !== '') {
             $query .= ' WHERE (c.name LIKE :value) ';

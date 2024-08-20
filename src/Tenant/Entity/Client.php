@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace Tenant\Entity;
 
-use App\Repository\ClientRepository;
+use Tenant\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
+#[ORM\Table(name: 'client')]
 class Client
 {
     #[ORM\Id]

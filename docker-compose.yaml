@@ -1,41 +1,33 @@
 services:
-  main-app:
-    container_name: main-app
+  web-pos:
+    container_name: web-pos
     build:
       context: ./docker
       args:
         UID: $U_ID
     volumes:
       - ./:/var/www/html
-    ###> XDEBUG 3 ###
-    # Use your client IP here
-    # Linux: run "ip a | grep docker0"
-    # Windows (with WSL2) and Mac: host.docker.internal
-    environment:
-      XDEBUG_CLIENT_HOST: 172.17.0.1
-      XDEBUG_CLIENT_PORT: 9003
-      PHP_IDE_CONFIG: serverName=symfony-server
     ports:
       - '3000:80'
     networks:
-      - main-app-network
+      - pos-network
     depends_on:
-      - main-app-mysql
+      - mysql-pos
 
-  main-app-mysql:
-    container_name: main-app-mysql
+  mysql-pos:
+    container_name: mysql-pos
     image: mysql:8.2.0
     ports:
       - '3336:3306'
     environment:
-      MYSQL_DATABASE: main-app
+      MYSQL_DATABASE: landlord
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ../db-data:/var/lib/mysql
     networks:
-      - main-app-network
+      - pos-network
     command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci' ]
 
 networks:
-  main-app-network:
-    name: main-app-network
+  pos-network:
+    name: pos-network

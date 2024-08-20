@@ -2,7 +2,7 @@
 
 {% block tTitle %}
 	<h3 class="card-title">{{ 'Clients'|trans}}</h3>
-	<a class="btn btn-success" href="{{ path('app_client_new') }}">{{ 'New'|trans}}</a>
+	<a class="btn btn-success" href="{{ path('tenant_client_new') }}">{{ 'New'|trans}}</a>
 {% endblock %}
 
 {% block tHead %}
@@ -21,8 +21,8 @@
 			<td>{{ client.name }}</td>
 			<td>{{ client.address }}</td>
 			<td class="d-flex justify-content-center gap-2">
-				<a class="btn btn-success" href="{{ path('app_client_show', {'id': client.id}) }}">{{ 'Show'|trans}}</a>
-				<a class="btn btn-primary" href="{{ path('app_client_edit', {'id': client.id}) }}">{{ 'Edit'|trans}}</a>
+				<a class="btn btn-success" href="{{ path('tenant_client_show', {'id': client.id}) }}">{{ 'Show'|trans}}</a>
+				<a class="btn btn-primary" href="{{ path('tenant_client_edit', {'id': client.id}) }}">{{ 'Edit'|trans}}</a>
 			</td>
 		</tr>
 	{% else %}

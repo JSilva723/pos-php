@@ -16,11 +16,11 @@
 					<i class="bi bi-globe-americas"></i>
 				</a>
 				<div class="dropdown-menu-right nav-treeview">
-					<a href="{{ path('app_lang', {'lang': 'es'}) }}" class="dropdown-item">
+					<a href="{{ path('tenant_lang', {'lang': 'es'}) }}" class="dropdown-item">
 						ES
 					</a>
 					<div class="dropdown-divider"></div>
-					<a href="{{ path('app_lang', {'lang': 'en'}) }}" class="dropdown-item">
+					<a href="{{ path('tenant_lang', {'lang': 'en'}) }}" class="dropdown-item">
 						EN
 					</a>
 				</div>
@@ -37,12 +37,12 @@
 				</div>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="{{ path('app_user_show') }}" role="button">
+				<a class="nav-link" href="{{ path('tenant_user_show') }}" role="button">
 					<i class="bi bi-person-fill"></i>
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link text-danger" href="{{ path('app_logout') }}" role="button">
+				<a class="nav-link text-danger" href="{{ path('tenant_logout') }}" role="button">
 					<i class="bi bi-power"></i>
 				</a>
 			</li>

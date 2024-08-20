@@ -1,6 +1,6 @@
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
 	<div class="sidebar-brand">
-		<a href="{{ path('app_index') }}" class="brand-link">
+		<a href="{{ path('tenant_index') }}" class="brand-link">
 			<img src="{{ asset('img/logo.png') }}" alt="Logo" class="brand-image opacity-75 shadow">
 		</a>
 	</div>
@@ -8,7 +8,7 @@
 		<nav class="mt-2">
 			<ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 				<li class="nav-item">
-					<a href="{{ path('app_index') }}" class="nav-link">
+					<a href="{{ path('tenant_index') }}" class="nav-link">
 						<i class="nav-icon bi bi-house-door"></i>
 						<p>
 							{{ 'Home'|trans }}
@@ -25,7 +25,7 @@
 					</a>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
-							<a href="{{ path('app_client_index') }}" class="nav-link">
+							<a href="{{ path('tenant_client_index') }}" class="nav-link">
 								<i class="nav-icon bi bi-people"></i>
 								<p>{{ 'Clients'|trans }}</p>
 							</a>

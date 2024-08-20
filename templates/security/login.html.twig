@@ -6,7 +6,7 @@
 			<div class="card">
 				<div class="card-body login-card-body">
 					<p class="login-box-msg">{{ 'Login'|trans }}</p>
-					<form action="{{ url('app_login') }}" method="post">
+					<form action="{{ url('tenant_login') }}" method="post">
 						<div class="input-group mb-3">
 							<input type="text" class="form-control" placeholder={{ 'Username'|trans }} value="{{ last_username }}" name="_username" id="username" autocomplete="username" required autofocus>
 						</div>

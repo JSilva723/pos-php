@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Event\Subscriber\Locale;
+namespace Tenant\Event\Subscriber\Locale;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -76,7 +76,7 @@ class RedirectToPreferredLocaleSubscriber implements EventSubscriberInterface
         $preferredLanguage = $request->getPreferredLanguage($this->locales);
 
         if ($preferredLanguage !== $this->defaultLocale) {
-            $response = new RedirectResponse($this->urlGenerator->generate('app_index', ['_locale' => $preferredLanguage]));
+            $response = new RedirectResponse($this->urlGenerator->generate('tenant_index', ['_locale' => $preferredLanguage]));
             $event->setResponse($response);
         }
     }

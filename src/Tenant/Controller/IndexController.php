@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace Tenant\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -40,6 +40,6 @@ class IndexController extends AbstractController
             return $this->redirectToRoute($routeName, $routeParams);
         }
 
-        return $this->redirectToRoute('app_index', ['_locale' => $lang]);
+        return $this->redirectToRoute('tenant_index', ['_locale' => $lang]);
     }
 }

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 UID = $(shell id -u)
-DOCKER_BE = main-app
-DOCKER_DB = main-app-mysql
+DOCKER_BE = web-pos
+DOCKER_DB = mysql-pos
 
 start:
 	U_ID=${UID} docker compose up -d
@@ -15,22 +15,6 @@ restart:
 
 build:
 	U_ID=${UID} docker compose build
-
-prepare:
-	$(MAKE) composer-install
-	$(MAKE) migrations-migrate
-
-run:
-	U_ID=${UID} docker exec -it --user ${UID} ${DOCKER_BE} symfony serve -d
-
-logs:
-	U_ID=${UID} docker exec -it --user ${UID} ${DOCKER_BE} symfony server:log
-
-composer-install:
-	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} composer install --no-interaction
-
-migrations-migrate:
-	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} bin/console doctrine:migrations:migrate --no-interaction
 
 ssh:
 	U_ID=${UID} docker exec -it --user ${UID} ${DOCKER_BE} bash

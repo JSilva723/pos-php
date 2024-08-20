@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace Tenant\Controller;
 
-use App\Entity\User;
-use App\Form\ChangePasswordType;
-use App\Form\UserType;
+use Tenant\Entity\User;
+use Tenant\Form\ChangePasswordType;
+use Tenant\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ class UserController extends AbstractController
         if ($userForm->isSubmitted() && $userForm->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_show', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('tenant_user_show', [], Response::HTTP_SEE_OTHER);
         }
 
         $passForm = $this->createForm(ChangePasswordType::class);
@@ -41,7 +41,7 @@ class UserController extends AbstractController
             $user->setPassword($hashedPassword);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_logout', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('tenant_logout', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/show.html.twig', [

@@ -1,9 +1,9 @@
-app_user_show:
+tenant_user_show:
     path: 
         en: /{_locale}/user
         es: /{_locale}/usuario
     methods: GET|POST
-    controller: App\Controller\UserController::show
+    controller: Tenant\Controller\UserController::show
     requirements:
         _locale: '%app_locales%'
     defaults:
