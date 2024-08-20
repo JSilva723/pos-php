@@ -19,6 +19,7 @@ class UserController extends AbstractController
     {
         /** @var User */
         $user = $this->getUser();
+
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);
 
@@ -40,7 +41,7 @@ class UserController extends AbstractController
             $user->setPassword($hashedPassword);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_show', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_logout', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/show.html.twig', [
