@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tenant\Entity;
 
-use Tenant\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Tenant\Repository\ClientRepository;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 #[ORM\Table(name: 'client')]

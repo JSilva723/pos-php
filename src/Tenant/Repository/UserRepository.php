@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tenant\Repository;
 
-use Tenant\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Tenant\Entity\User;
 
 use function sprintf;
 

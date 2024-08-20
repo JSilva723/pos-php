@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tenant\Repository;
 
-use Tenant\Entity\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Tenant\Entity\Client;
 
 /**
  * @extends ServiceEntityRepository<Client>

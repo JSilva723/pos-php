@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tenant\Controller;
 
-use Tenant\Entity\User;
-use Tenant\Form\ChangePasswordType;
-use Tenant\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Tenant\Entity\User;
+use Tenant\Form\ChangePasswordType;
+use Tenant\Form\UserType;
 
 class UserController extends AbstractController
 {
