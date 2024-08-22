@@ -17,7 +17,61 @@
 				</li>
 				<li class="nav-item">
 					<a href="#" class="nav-link">
-						<i class="nav-icon bi bi-speedometer"></i>
+						<i class="nav-icon bi bi-gear"></i>
+						<p>
+							{{ 'Products'|trans }}
+						</p>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="nav-icon bi bi-gear"></i>
+						<p>
+							{{ 'Orders'|trans }}
+							<i class="nav-arrow bi bi-chevron-right"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="nav-icon bi bi-people"></i>
+								<p>{{ 'Orders'|trans }}</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ path('tenant_client_index') }}" class="nav-link">
+								<i class="nav-icon bi bi-people"></i>
+								<p>{{ 'Clients'|trans }}</p>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="nav-icon bi bi-gear"></i>
+						<p>
+							{{ 'Reports'|trans }}
+							<i class="nav-arrow bi bi-chevron-right"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview">
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="nav-icon bi bi-people"></i>
+								<p>{{ 'Orders'|trans }}</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="nav-icon bi bi-people"></i>
+								<p>{{ 'Sales'|trans }}</p>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="nav-icon bi bi-gear"></i>
 						<p>
 							{{ 'Administration'|trans }}
 							<i class="nav-arrow bi bi-chevron-right"></i>
@@ -25,15 +79,15 @@
 					</a>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
-							<a href="{{ path('tenant_client_index') }}" class="nav-link">
+							<a href="#" class="nav-link">
 								<i class="nav-icon bi bi-people"></i>
-								<p>{{ 'Clients'|trans }}</p>
+								<p>{{ 'Payment methods'|trans }}</p>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="#" class="nav-link">
 								<i class="nav-icon bi bi-people"></i>
-								<p>{{ 'Suppliers'|trans }}</p>
+								<p>{{ 'Categories'|trans }}</p>
 							</a>
 						</li>
 					</ul>
