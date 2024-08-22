@@ -13,11 +13,11 @@
 					<div class="d-flex flex-column gap-2">
 						<a href="{{ path('tenant_client_edit', {'id': client.id}) }}" class="btn btn-primary">{{ 'Edit'|trans }}</a>
 						{{ include('components/btn_delete.html.twig',{
-									'path': 'tenant_client_delete',
-									'id': client.id,
-									'confirm_delete': 'Are you sure you want to delete this item?'
-								}) 
-							}}
+								'path': 'tenant_client_delete',
+								'id': client.id,
+								'confirm_delete': 'Are you sure you want to delete this item?'
+							}) 
+						}}
 					</div>
 				</div>
 			</div>

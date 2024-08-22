@@ -1,0 +1,43 @@
+tenant_category_index:
+    path: 
+        en: /{_locale}/category
+        es: /{_locale}/categoria
+    methods: GET
+    controller: Tenant\Controller\CategoryController::index
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_category_new:
+    path: 
+        en: /{_locale}/category/new
+        es: /{_locale}/categoria/nueva
+    methods: GET|POST
+    controller: Tenant\Controller\CategoryController::new
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_category_edit:
+    path: 
+        en: /{_locale}/category/{id}/edit
+        es: /{_locale}/categoria/{id}/editar
+    methods: GET|POST
+    controller: Tenant\Controller\CategoryController::edit
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_category_delete:
+    path: 
+        en: /{_locale}/category/{id}
+        es: /{_locale}/categoria/{id}
+    methods: POST
+    controller: Tenant\Controller\CategoryController::delete
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
