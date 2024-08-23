@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tenant\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Tenant\Repository\CategoryRepository;
+use Tenant\Repository\PaymentRepository;
 
-#[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ORM\Table(name: 'category')]
-class Category
+#[ORM\Entity(repositoryClass: PaymentRepository::class)]
+#[ORM\Table(name: 'payment')]
+class Payment
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

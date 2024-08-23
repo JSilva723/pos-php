@@ -1,0 +1,43 @@
+tenant_payment_index:
+    path: 
+        en: /{_locale}/payment
+        es: /{_locale}/pago
+    methods: GET
+    controller: Tenant\Controller\PaymentController::index
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_payment_new:
+    path: 
+        en: /{_locale}/payment/new
+        es: /{_locale}/pago/nuevo
+    methods: GET|POST
+    controller: Tenant\Controller\PaymentController::new
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_payment_edit:
+    path: 
+        en: /{_locale}/payment/{id}/edit
+        es: /{_locale}/pago/{id}/editar
+    methods: GET|POST
+    controller: Tenant\Controller\PaymentController::edit
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_payment_delete:
+    path: 
+        en: /{_locale}/payment/{id}
+        es: /{_locale}/pago/{id}
+    methods: POST
+    controller: Tenant\Controller\PaymentController::delete
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'

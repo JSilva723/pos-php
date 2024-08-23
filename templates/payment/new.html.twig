@@ -1,0 +1,10 @@
+{% extends 'components/layout.html.twig' %}
+
+{% block main %}
+	{{ include(
+        'payment/_form.html.twig', {
+            'form_header': 'New payment',
+            'button_label': 'Save'
+        }) 
+    }}
+{% endblock %}

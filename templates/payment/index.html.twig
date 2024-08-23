@@ -1,0 +1,36 @@
+{% extends 'components/table.html.twig' %}
+
+{% block tTitle %}
+	<h3 class="card-title">{{ 'Payment methods'|trans}}</h3>
+	<a class="btn btn-success" href="{{ path('tenant_payment_new') }}">{{ 'New'|trans}}</a>
+{% endblock %}
+
+{% block tHead %}
+	<tr>
+		<th style="width: 10px;">Id</th>
+		<th>{{ 'Name'|trans}}</th>
+		<th style="width: 150px;">{{ 'Actions'|trans}}</th>
+	</tr>
+{% endblock %}
+
+{% block tBody %}
+	{% for payment in pagination %}
+		<tr class="align-middle">
+			<td>{{ payment.id }}</td>
+			<td>{{ payment.name }}</td>
+			<td class="d-flex justify-content-center gap-2">
+				<a class="btn btn-primary" href="{{ path('tenant_payment_edit', {'id': payment.id}) }}">{{ 'Edit'|trans}}</a>
+				{{ include('components/btn_delete.html.twig',{
+						'path': 'tenant_payment_delete',
+						'id': payment.id,
+						'confirm_delete': 'Are you sure you want to delete this item?'
+					}) 
+				}}
+			</td>
+		</tr>
+	{% else %}
+		<tr class="align-middle">
+			<td colspan="4">{{ 'no records found'|trans}}</td>
+		</tr>
+	{% endfor %}
+{% endblock %}
