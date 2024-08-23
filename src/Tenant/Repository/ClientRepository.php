@@ -21,10 +21,13 @@ class ClientRepository extends ServiceEntityRepository
 
     public function findByQ(string $value): Query
     {
-        $query = 'SELECT c.id, c.name, c.address FROM Tenant\Entity\Client c';
+        $query = '
+        SELECT c.id, c.name, c.address 
+        FROM Tenant\Entity\Client c
+        WHERE c.isEnable = true';
 
         if ($value !== '') {
-            $query .= ' WHERE (c.name LIKE :value) ';
+            $query .= ' AND (c.name LIKE :value) ';
         }
 
         $query .= ' ORDER BY c.name ASC ';
@@ -36,5 +39,18 @@ class ClientRepository extends ServiceEntityRepository
         }
 
         return $qb;
+    }
+
+    public function disable(int $id): void
+    {
+        $query = '
+        UPDATE Tenant\Entity\Client c 
+        SET c.isEnable = false 
+        WHERE c.id = :id';
+
+        $qb = $this->getEntityManager()->createQuery($query);
+        $qb->setParameter('id', $id);
+
+        $qb->execute();
     }
 }

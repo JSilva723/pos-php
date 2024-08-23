@@ -21,13 +21,16 @@ class PaymentRepository extends ServiceEntityRepository
 
     public function findByQ(string $value): Query
     {
-        $query = 'SELECT c.id, c.name FROM Tenant\Entity\Payment c';
+        $query = '
+        SELECT p.id, p.name 
+        FROM Tenant\Entity\Payment p
+        WHERE p.isEnable = true';
 
         if ($value !== '') {
-            $query .= ' WHERE (c.name LIKE :value) ';
+            $query .= ' AND (p.name LIKE :value) ';
         }
 
-        $query .= ' ORDER BY c.name ASC ';
+        $query .= ' ORDER BY p.name ASC ';
 
         $qb = $this->getEntityManager()->createQuery($query);
 
@@ -36,5 +39,18 @@ class PaymentRepository extends ServiceEntityRepository
         }
 
         return $qb;
+    }
+
+    public function disable(int $id): void
+    {
+        $query = '
+        UPDATE Tenant\Entity\Payment p 
+        SET p.isEnable = false 
+        WHERE p.id = :id';
+
+        $qb = $this->getEntityManager()->createQuery($query);
+        $qb->setParameter('id', $id);
+
+        $qb->execute();
     }
 }

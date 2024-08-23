@@ -14,7 +14,7 @@ class Client
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 100)]
     private string $name;
@@ -22,7 +22,10 @@ class Client
     #[ORM\Column(length: 100)]
     private string $address;
 
-    public function getId(): ?int
+    #[ORM\Column(type: 'boolean', name: 'is_enable')]
+    private bool $isEnable = true;
+
+    public function getId(): int
     {
         return $this->id;
     }
@@ -47,6 +50,18 @@ class Client
     public function setAddress(string $address): static
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getIsEnable(): bool
+    {
+        return $this->isEnable;
+    }
+
+    public function setIsEnable(bool $isEnable): static
+    {
+        $this->isEnable = $isEnable;
 
         return $this;
     }

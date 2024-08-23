@@ -74,11 +74,10 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($category);
-            $entityManager->flush();
+            $categoryRepository->disable($category->getId());
         }
 
         return $this->redirectToRoute('tenant_category_index', [], Response::HTTP_SEE_OTHER);

@@ -19,7 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 180)]
     private string $username;
@@ -36,12 +36,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(name: 'is_dark_theme')]
     private bool $isDarkTheme = true;
 
+    #[ORM\Column(type: 'boolean', name: 'is_enable')]
+    private bool $isEnable = true;
+
     public function __construct()
     {
         $this->isDarkTheme = true;
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -124,6 +127,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsDarkTheme(bool $isDarkTheme): static
     {
         $this->isDarkTheme = $isDarkTheme;
+
+        return $this;
+    }
+
+    public function getIsEnable(): bool
+    {
+        return $this->isEnable;
+    }
+
+    public function setIsEnable(bool $isEnable): static
+    {
+        $this->isEnable = $isEnable;
 
         return $this;
     }

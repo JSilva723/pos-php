@@ -74,11 +74,10 @@ class ClientController extends AbstractController
         ]);
     }
 
-    public function delete(Request $request, Client $client, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Client $client, ClientRepository $clientRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $client->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($client);
-            $entityManager->flush();
+            $clientRepository->disable($client->getId());
         }
 
         return $this->redirectToRoute('tenant_client_index', [], Response::HTTP_SEE_OTHER);
