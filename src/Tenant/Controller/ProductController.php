@@ -88,18 +88,24 @@ class ProductController extends AbstractController
     {
         $file = $request->files->get('img');
 
-        if (!$file) return new Response('File not uploaded', 400);
+        if (!$file) {
+            return new Response('File not uploaded', 400);
+        }
 
         $imgData = file_get_contents($file->getPathname());
 
-        if (!$imgData) return new Response('File not content', 400);
+        if (!$imgData) {
+            return new Response('File not content', 400);
+        }
 
         $imgBase64 = base64_encode($imgData);
 
         $id = $request->get('id');
         $product = $entityManager->getRepository(Product::class)->find($id);
 
-        if (!$product) return new Response('Product not found', 400);
+        if (!$product) {
+            return new Response('Product not found', 400);
+        }
 
         $product->setImg($imgBase64);
         $product->setMimeType($file->getMimeType());

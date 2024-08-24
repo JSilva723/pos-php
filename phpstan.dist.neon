@@ -10,7 +10,6 @@ parameters:
 
     ignoreErrors:
         - '#Property Tenant\\Entity\\Category::\$id is never written, only read#'
-        - '#Property Tenant\\Entity\\Client::\$id is never written, only read#'
         - '#Property Tenant\\Entity\\Payment::\$id is never written, only read#'
         - '#Property Tenant\\Entity\\User::\$id is never written, only read#'
         - '#Property Tenant\\Entity\\Product::\$id is never written, only read#'

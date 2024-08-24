@@ -50,8 +50,5 @@ tenant_logout:
     defaults:
         _locale: '%locale%'
 
-tenant_client:
-    resource: 'routes/client.yaml'
-
 tenant_user:
     resource: 'routes/user.yaml'

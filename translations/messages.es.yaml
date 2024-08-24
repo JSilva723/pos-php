@@ -6,12 +6,10 @@ Home: Inicio
 Administration: Administración
 Tanks: Tanques
 Products: Productos
-Clients: Clientes
 Suppliers: Proveedores
 New client: Nuevo cliente
 New: Nuevo
 Name: Nombre
-Address: Dirección
 Actions: Acciones
 Show: Ver
 Edit: Editar
@@ -21,7 +19,6 @@ Update: Actualizar
 Are you sure you want to delete this item?: ¿Estás seguro de que deseas eliminar este elemento?
 Configuration: Configuración
 Delete: Borrar
-Client picture: Cliente imagen
 User picture: Usuario imagen
 The password fields must match: Los campos de contraseña deben coincidir
 Theme: Tema
