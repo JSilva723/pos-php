@@ -1,0 +1,7 @@
+<form action="{{ path(path) }}" method="post" enctype="multipart/form-data">
+	<button type="button" class="btn" style="background-color: rgba(0, 0, 0, 0.5); color: white" onclick="document.getElementById('file-input').click();">
+		<i class="bi bi-upload"></i>
+	</button>
+	<input type="hidden" name="id" value="{{ id }}">
+	<input id="file-input" type="file" name="img" style="display: none;" accept="image/jpeg, image/png, image/webp" onchange="this.form.submit()"/>
+</form>

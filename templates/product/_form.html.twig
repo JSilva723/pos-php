@@ -1,0 +1,29 @@
+{{ form_start(form) }}
+<div class="row p-3">
+	<div class="col-12">
+		<div class="card mb-4">
+			<div class="card-header">
+				{{ form_header|trans }}
+			</div>
+			<div class="card-body card-body-c">
+				<div class="row">
+					<div class="col-6">
+						{{ form_row(form.name) }}
+						{{ form_row(form.sku) }}
+						{{ form_row(form.category) }}
+					</div>
+					<div class="col-6">
+						{{ form_row(form.price) }}
+						{{ form_row(form.stockQuantity) }}
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
+				<button class="btn btn-success float-end">
+					{{ button_label|trans }}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+{{ form_end(form) }}

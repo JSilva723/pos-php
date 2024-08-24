@@ -6,7 +6,7 @@
 			<div class="card card-primary card-outline">
 				<div class="card-body box-profile">
 					<div class="text-center">
-						<img class="img-fluid" src="{{ asset('img/avatar.png')}}" alt="{{ 'Client picture'|trans }}">
+						{{ include('components/camera.html.twig',{ 'width': 100, 'height': 100 }) }}
 					</div>
 					<h3 class="profile-username text-center">{{client.name }}</h3>
 					<p class="text-muted text-center">{{ client.address }}</p>

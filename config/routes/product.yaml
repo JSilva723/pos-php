@@ -1,0 +1,59 @@
+tenant_product_index:
+    path: 
+        en: /{_locale}/product
+        es: /{_locale}/producto
+    methods: GET
+    controller: Tenant\Controller\ProductController::index
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_product_new:
+    path: 
+        en: /{_locale}/product/new
+        es: /{_locale}/producto/nuevo
+    methods: GET|POST
+    controller: Tenant\Controller\ProductController::new
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_product_show:
+    path: 
+        en: /{_locale}/product/{id}
+        es: /{_locale}/product/{id}
+    methods: GET
+    controller: Tenant\Controller\ProductController::show
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_product_edit:
+    path: 
+        en: /{_locale}/product/{id}/edit
+        es: /{_locale}/producto/{id}/editar
+    methods: GET|POST
+    controller: Tenant\Controller\ProductController::edit
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_product_delete:
+    path: 
+        en: /{_locale}/product/{id}
+        es: /{_locale}/producto/{id}
+    methods: POST
+    controller: Tenant\Controller\ProductController::delete
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_product_upload:
+    path: /product-upload
+    methods: POST
+    controller: Tenant\Controller\ProductController::upload

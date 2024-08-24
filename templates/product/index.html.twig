@@ -1,0 +1,31 @@
+{% extends 'components/table.html.twig' %}
+
+{% block tTitle %}
+	<h3 class="card-title">{{ 'Products'|trans}}</h3>
+	<a class="btn btn-success" href="{{ path('tenant_product_new') }}">{{ 'New'|trans}}</a>
+{% endblock %}
+
+{% block tHead %}
+	<tr>
+		<th style="width: 10px;">Id</th>
+		<th>{{ 'Name'|trans}}</th>
+		<th style="width: 150px;">{{ 'Actions'|trans}}</th>
+	</tr>
+{% endblock %}
+
+{% block tBody %}
+	{% for product in pagination %}
+		<tr class="align-middle">
+			<td>{{ product.id }}</td>
+			<td>{{ product.name }}</td>
+			<td class="d-flex justify-content-center gap-2">
+				<a class="btn btn-success" href="{{ path('tenant_product_show', {'id': product.id}) }}">{{ 'Show'|trans}}</a>
+				<a class="btn btn-primary" href="{{ path('tenant_product_edit', {'id': product.id}) }}">{{ 'Edit'|trans}}</a>
+			</td>
+		</tr>
+	{% else %}
+		<tr class="align-middle">
+			<td colspan="4">{{ 'no records found'|trans}}</td>
+		</tr>
+	{% endfor %}
+{% endblock %}
