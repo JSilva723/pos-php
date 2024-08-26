@@ -19,7 +19,7 @@ class Payment
     #[ORM\Column(length: 100)]
     private string $name;
 
-    #[ORM\Column(type: 'boolean', name: 'is_enable')]
+    #[ORM\Column(name: 'is_enable')]
     private bool $isEnable = true;
 
     public function getId(): int

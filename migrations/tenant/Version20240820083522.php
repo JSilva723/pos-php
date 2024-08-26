@@ -20,7 +20,7 @@ final class Version20240820083522 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user ADD is_dark_theme TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE user ADD is_dark_theme TINYINT(1) NOT NULL DEFAULT 1');
     }
 
     public function down(Schema $schema): void

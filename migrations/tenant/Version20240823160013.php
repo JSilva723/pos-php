@@ -21,7 +21,6 @@ final class Version20240823160013 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE category ADD is_enable TINYINT(1) NOT NULL DEFAULT 1');
-        $this->addSql('ALTER TABLE client ADD is_enable TINYINT(1) NOT NULL DEFAULT 1');
         $this->addSql('ALTER TABLE payment ADD is_enable TINYINT(1) NOT NULL DEFAULT 1');
         $this->addSql('ALTER TABLE user ADD is_enable TINYINT(1) NOT NULL DEFAULT 1');
     }
@@ -30,7 +29,6 @@ final class Version20240823160013 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE category DROP is_enable');
-        $this->addSql('ALTER TABLE client DROP is_enable');
         $this->addSql('ALTER TABLE payment DROP is_enable');
         $this->addSql('ALTER TABLE user DROP is_enable');
     }

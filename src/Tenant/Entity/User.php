@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(name: 'is_dark_theme')]
     private bool $isDarkTheme = true;
 
-    #[ORM\Column(type: 'boolean', name: 'is_enable')]
+    #[ORM\Column(name: 'is_enable')]
     private bool $isEnable = true;
 
     public function __construct()

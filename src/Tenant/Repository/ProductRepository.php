@@ -22,7 +22,7 @@ class ProductRepository extends ServiceEntityRepository
     public function findByQ(string $value): Query
     {
         $query = '
-        SELECT p.id, p.name 
+        SELECT p.id, p.name, p.price
         FROM Tenant\Entity\Product p
         WHERE p.isEnable = true';
 

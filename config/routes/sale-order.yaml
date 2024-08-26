@@ -1,0 +1,32 @@
+tenant_sale_order_index:
+    path: 
+        en: /{_locale}/sale
+        es: /{_locale}/venta
+    methods: GET
+    controller: Tenant\Controller\SaleOrderController::index
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_sale_order_new:
+    path: 
+        en: /{_locale}/sale/new
+        es: /{_locale}/venta/nueva
+    methods: GET
+    controller: Tenant\Controller\SaleOrderController::new
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_sale_order_show:
+    path: 
+        en: /{_locale}/sale/{id}
+        es: /{_locale}/venta/{id}
+    methods: GET
+    controller: Tenant\Controller\SaleOrderController::show
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
