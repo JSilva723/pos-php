@@ -24,8 +24,6 @@
 			</td>
 		</tr>
 	{% else %}
-		<tr class="align-middle">
-			<td colspan="4">{{ 'no records found'|trans}}</td>
-		</tr>
+		{{ include('components/no_records.html.twig') }}
 	{% endfor %}
 {% endblock %}

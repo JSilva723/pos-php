@@ -1,0 +1,23 @@
+<div class="flex w-full flex-col">
+	<div class="flex items-center flex-shrink-0 mb-2">
+		<a href="{{ path(new) }}" type="button" class="flex items-center gap-3 px-2 bg-primary-700 hover:bg-primary-800 rounded-lg dark:text-white dark:bg-primary-600 dark:hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-800">
+			{{ include('components/icon_add.html.twig') }}
+			{{ 'New'|trans }}
+		</a>
+        <h5 class="{{ tt_class }}">{{ title|trans }}</h5>
+	</div>
+	<div class="flex w-full">
+		<form class="flex items-center w-full" method="GET">
+			<input type="text" name="q" class="block w-full pl-10 p-2 text-sm bg-gray-50 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-primary-500 focus:border-primary-500">
+			<button type="submit" class="flex items-center justify-center px-4 py-2 text-sm text-white bg-primary-700 hover:bg-primary-800 rounded-lg dark:bg-primary-600 dark:hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-800">
+				{{ include('components/icon_search.html.twig') }}
+			</button>
+		</form>
+		<form method="GET">
+			<input hidden type="text" name="q" value="">
+			<button type="submit" class="flex items-center justify-center px-4 py-2 text-sm text-white bg-primary-700 hover:bg-primary-800 rounded-lg dark:bg-primary-600 dark:hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-800">
+				{{ include('components/icon_trash.html.twig') }}
+			</button>
+		</form>
+	</div>
+</div>

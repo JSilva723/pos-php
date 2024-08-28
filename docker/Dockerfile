@@ -1,14 +1,5 @@
 FROM php:8.2-apache
 
-ARG UID
-
-# Create user with same permissions as host and some useful stuff
-RUN adduser -u ${UID} --disabled-password --gecos "" appuser
-RUN mkdir /home/appuser/.ssh
-RUN chown -R appuser:appuser /home/appuser/
-RUN echo "StrictHostKeyChecking no" >> /home/appuser/.ssh/config
-RUN echo "alias sf=/appdata/www/bin/console" >> /home/appuser/.bashrc
-
 # Install packages and PHP extensions
 RUN apt update \
     # common libraries and extensions
@@ -29,6 +20,10 @@ RUN composer self-update
 ## Install Symfony binary
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash
 RUN apt install symfony-cli
+
+# Install NODE 18 and Yarn
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt -y install nodejs
 
 RUN mkdir -p /var/www/html
 

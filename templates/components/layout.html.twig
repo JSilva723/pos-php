@@ -1,22 +1,13 @@
 {% extends 'components/base.html.twig' %}
 
-{% set theme = 'dark' %}
-
-{% if not is_granted('ROLE_SUPER_ADMIN') %}
-	{% if not app.user.isDarkTheme %}
-		{% set theme = 'light' %}
-	{% endif %}
-{% endif %}
-
 {% block body %}
-	<body class="layout-fixed sidebar-expand-lg" data-bs-theme="{{ theme }}" id="theme">
-		<div class="app-wrapper">
-			{% include 'components/header.html.twig' %}
-			{% include 'components/sidebar.html.twig' %}
-			<main class="app-main">
-				{% block main %}{% endblock %}
-			</main>
-		</div>
-		{% block javascripts %}{% endblock %}
+	<body class="bg-gray-50 dark:bg-gray-900">
+		{% include 'components/header.html.twig' %}
+		<main class="py-2.5">
+			{% block main %}{% endblock %}
+		</main>
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
 	</body>
 {% endblock %}
