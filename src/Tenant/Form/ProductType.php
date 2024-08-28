@@ -16,30 +16,33 @@ use Symfony\Component\Validator\Constraints\PositiveOrZero;
 use Tenant\Entity\Category;
 use Tenant\Entity\Product;
 
-class ProductType extends AbstractType
+class ProductType extends StyledType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Name',
-                'attr' => ['class' => 'form-control mb-3'],
+                'row_attr' => ['class' => 'w-full'],
+                'label_attr' => ['class' => self::LABEL_ATTR],
+                'attr' => ['class' => self::INPUT_ATTR],
                 'constraints' => [
                     new NotBlank(),
                     new Length(['max' => 100]),
                 ],
             ])
             ->add('sku', TextType::class, [
-                'label' => 'SKU',
-                'attr' => ['class' => 'form-control mb-3'],
+                'row_attr' => ['class' => 'w-full'],
+                'label_attr' => ['class' => self::LABEL_ATTR],
+                'attr' => ['class' => self::INPUT_ATTR],
                 'constraints' => [
                     new Length(['max' => 100]),
                 ],
                 'required' => false,
             ])
             ->add('price', NumberType::class, [
-                'label' => 'Price',
-                'attr' => ['class' => 'form-control mb-3'],
+                'row_attr' => ['class' => 'w-full'],
+                'label_attr' => ['class' => self::LABEL_ATTR],
+                'attr' => ['class' => self::INPUT_ATTR],
                 'constraints' => [
                     new NotBlank(),
                     new PositiveOrZero(),
@@ -47,18 +50,20 @@ class ProductType extends AbstractType
                 'scale' => 2,
             ])
             ->add('stockQuantity', NumberType::class, [
-                'label' => 'Stock',
-                'attr' => ['class' => 'form-control mb-3'],
+                'row_attr' => ['class' => 'w-full'],
+                'label_attr' => ['class' => self::LABEL_ATTR],
+                'attr' => ['class' => self::INPUT_ATTR],
                 'constraints' => [
                     new NotBlank(),
                     new PositiveOrZero(),
                 ],
             ])
             ->add('category', EntityType::class, [
-                'label' => 'Category',
+                'row_attr' => ['class' => 'w-full'],
+                'label_attr' => ['class' => self::LABEL_ATTR],
+                'attr' => ['class' => self::INPUT_ATTR],
                 'class' => Category::class,
                 'choice_label' => 'name',
-                'attr' => ['class' => 'form-control mb-3'],
                 'placeholder' => 'Select a category',
             ]);
     }

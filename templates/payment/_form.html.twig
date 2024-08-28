@@ -1,21 +1,13 @@
-{{ form_start(form) }}
-<div class="row p-3">
-	<div class="col-12">
-		<div class="card mb-4">
-			<div class="card-header">
-				{{ form_header|trans }}
-			</div>
-			<div class="card-body card-body-c">
-				<div class="col-6">
-					{{ form_row(form.name) }}
-				</div>
-			</div>
-			<div class="card-footer">
-				<button class="btn btn-success float-end">
+<div class="{{ mc_class }}">
+	<div class="{{ fc_class }}">
+		{{ form_start(form) }}
+			<h5 class="{{ mt_class }}">	{{ form_header|trans }}</h5>
+			{{ form_row(form.name) }}
+			<div class="mt-2 w-full flex justify-end">
+				<button type="submit" class="{{ btn_success_class }}">
 					{{ button_label|trans }}
 				</button>
 			</div>
-		</div>
+		{{ form_end(form) }}
 	</div>
 </div>
-{{ form_end(form) }}
