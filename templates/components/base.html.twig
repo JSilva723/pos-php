@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 
 {# Taildwind #}
-{# table #}
 
+{# table #}
 {% set tt_class = 'w-full text-center text-lg font-normal text-gray-500 dark:text-gray-400' %}
 {% set tr_class = 'border-b dark:border-gray-700' %}
 {% set th_class = 'px-4 py-3' %}
@@ -12,19 +12,15 @@
 {% set tb_more_class = 'inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100' %}
 {% set tb_more_container_class = 'hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600' %}
 {% set tb_more_content_class = 'py-1 text-sm text-gray-700 dark:text-gray-200' %}
-
 {# ------- #}
 
-{% set theme = 'dark' %}
-
 {# Theme #}
-
 {% set theme = 'dark' %}
 
-	{% if not is_granted('ROLE_SUPER_ADMIN') %}
-		{% if not app.user.isDarkTheme %}
-	{% set theme = 'light' %}
-{% endif %}
+{% if not is_granted('ROLE_SUPER_ADMIN') %}
+	{% if not app.user.isDarkTheme %}
+		{% set theme = 'light' %}
+	{% endif %}
 {% endif %}
 
 	<html class="{{ theme }}"> <head>

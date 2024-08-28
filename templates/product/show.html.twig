@@ -28,7 +28,7 @@
 								{% if product.img %}
 									<img src="data:image/{{ product.mimeType }};base64,{{ product.img }}" alt="Logo" width="200px" height="200px">
 								{% else %}
-									{{ include('components/camera.html.twig',{ 'width': 200, 'height': 200 }) }}
+									{{ include('components/icon_camera.html.twig',{ 'width': 200, 'height': 200 }) }}
 								{% endif %}
 								<div class="position-absolute top-0 end-0">
 									{{ include('components/btn_upload.html.twig',{ 'path': 'tenant_product_upload', 'id': product.id }) }}

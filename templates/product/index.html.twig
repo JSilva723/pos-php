@@ -1,26 +1,42 @@
 {% extends 'components/table.html.twig' %}
 
 {% block tTitle %}
-	<h3 class="card-title">{{ 'Products'|trans}}</h3>
-	<a class="btn btn-success" href="{{ path('tenant_product_new') }}">{{ 'New'|trans}}</a>
+	{{ include('components/search.html.twig',{ 'new': 'tenant_product_new','title': 'Products' }) }}
 {% endblock %}
 
 {% block tHead %}
 	<tr>
-		<th style="width: 10px;">Id</th>
-		<th>{{ 'Name'|trans}}</th>
-		<th style="width: 150px;">{{ 'Actions'|trans}}</th>
+		<th scope="col" class="{{ th_class }}">ID</th>
+		<th scope="col" class="{{ th_class }}">{{ 'Name'|trans}}</th>
+		<th scope="col" class="{{ th_end_class }}">
+			{{ 'Actions'|trans}}
+		</th>
 	</tr>
 {% endblock %}
 
 {% block tBody %}
 	{% for product in pagination %}
-		<tr class="align-middle">
-			<td>{{ product.id }}</td>
-			<td>{{ product.name }}</td>
-			<td class="d-flex justify-content-center gap-2">
-				<a class="btn btn-success" href="{{ path('tenant_product_show', {'id': product.id}) }}">{{ 'Show'|trans}}</a>
-				<a class="btn btn-primary" href="{{ path('tenant_product_edit', {'id': product.id}) }}">{{ 'Edit'|trans}}</a>
+		<tr class="{{ tr_class }}">
+			<th scope="row" class="{{ th_class }}">
+				{{ product.id }}
+			</th>
+			<td class="{{ td_class }}">
+				{{ product.name }}
+			</td>
+			<td class="{{ td_end_class }}">
+				<button id="xbox-series-s-dropdown-button{{ product.id }}" data-dropdown-toggle="xbox-series-s-dropdown{{ product.id }}" data-dropdown-placement="left" class="{{ tb_more_class }}" type="button">
+					{{ include('components/icon_more.html.twig') }}
+				</button>
+				<div id="xbox-series-s-dropdown{{ product.id }}" class="{{ tb_more_container_class }}">
+					<ul class="{{ tb_more_content_class }}" aria-labelledby="xbox-series-s-dropdown-button{{ product.id }}">
+						<li>
+							{{ include('components/btn_show_edit.html.twig', { 'path' : 'tenant_product_show', 'id': product.id, 'label': 'Show' }) }}
+						</li>
+						<li>
+							{{ include('components/btn_show_edit.html.twig', { 'path' : 'tenant_product_edit', 'id': product.id, 'label': 'Edit' }) }}
+						</li>
+					</ul>
+				</div>
 			</td>
 		</tr>
 	{% else %}
