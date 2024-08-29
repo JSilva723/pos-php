@@ -1,0 +1,45 @@
+{% extends 'components/table.html.twig' %}
+
+{% block tTitle %}
+	{{ include('components/search.html.twig',{ 'new': 'tenant_price_list_new','title': 'Price list' }) }}
+{% endblock %}
+
+{% block tHead %}
+	<tr>
+		<th scope="col" class="{{ th_class }}">ID</th>
+		<th scope="col" class="{{ th_class }}">{{ 'Name'|trans}}</th>
+		<th scope="col" class="{{ th_end_class }}">
+			{{ 'Actions'|trans}}
+		</th>
+	</tr>
+{% endblock %}
+
+{% block tBody %}
+	{% for priceList in pagination %}
+		<tr class="{{ tr_class }}">
+			<th scope="row" class="{{ th_class }}">
+				{{ priceList.id }}
+			</th>
+			<td class="{{ td_class }}">
+				{{ priceList.name }}
+			</td>
+			<td class="{{ td_end_class }}">
+				<button id="xbox-series-s-dropdown-button{{ priceList.id }}" data-dropdown-toggle="xbox-series-s-dropdown{{ priceList.id }}" data-dropdown-placement="left" class="{{ tb_more_class }}" type="button">
+					{{ include('components/icon_more.html.twig') }}
+				</button>
+				<div id="xbox-series-s-dropdown{{ priceList.id }}" class="{{ tb_more_container_class }}">
+					<ul class="{{ tb_more_content_class }}" aria-labelledby="xbox-series-s-dropdown-button{{ priceList.id }}">
+						<li>
+							{{ include('components/btn_more_show_edit.html.twig', { 'path' : 'tenant_price_list_edit', 'id': priceList.id, 'label': 'Edit' }) }}
+						</li>
+						<li>
+							{{ include('components/btn_more_delete.html.twig', {'path': 'tenant_price_list_delete', 'id': priceList.id, 'confirm_delete': 'Are you sure you want to delete this item?'}) }}
+						</li>
+					</ul>
+				</div>
+			</td>
+		</tr>
+	{% else %}
+		{{ include('components/no_records.html.twig') }}
+	{% endfor %}
+{% endblock %}

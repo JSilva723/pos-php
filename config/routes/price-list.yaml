@@ -1,0 +1,43 @@
+tenant_price_list_index:
+    path: 
+        en: /{_locale}/price-list
+        es: /{_locale}/lista-de-precio
+    methods: GET
+    controller: Tenant\Controller\PriceListController::index
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_price_list_new:
+    path: 
+        en: /{_locale}/price-list/new
+        es: /{_locale}/lista-de-precio/nueva
+    methods: GET|POST
+    controller: Tenant\Controller\PriceListController::new
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_price_list_edit:
+    path: 
+        en: /{_locale}/price-list/{id}/edit
+        es: /{_locale}/lista-de-precio/{id}/editar
+    methods: GET|POST
+    controller: Tenant\Controller\PriceListController::edit
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_price_list_delete:
+    path: 
+        en: /{_locale}/price-list/{id}
+        es: /{_locale}/lista-de-precio/{id}
+    methods: POST
+    controller: Tenant\Controller\PriceListController::delete
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
