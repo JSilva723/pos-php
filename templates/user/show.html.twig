@@ -1,55 +1,41 @@
 {% extends 'components/layout.html.twig' %}
 
 {% block main %}
-	<div class="row p-3">
-		<div class="col-md-3 mb-4">
-			<div class="card card-primary card-outline">
-				<div class="card-body box-profile">
-					<div class="text-center mb-3">
+	<div class="{{ mc_class }}">
+		<div class="{{ mct_class }}">
+			<div class="flex flex-col gap-4 md:flex-row">
+				<div class="w-full md:w-1/2">
+					<div class="flex justify-center">
 						{{ include('components/icon_camera.html.twig',{ 'width': 100, 'height': 100 }) }}
 					</div>
-					<h3 class="profile-username text-center">{{ name }}</h3>
+					<h3 class="{{ mt_class }}">{{ name }}</h3>
 				</div>
-			</div>
-		</div>
-		<div class="col-md-9">
-			<div class="card card-primary card-outline mb-4">
-				{{ form_start(userForm) }}
-				<div class="card-header">
-					{{ 'Basic data'|trans }}
-				</div>
-				<div class="card-body">
-					<div class="row">
-						<div class="col-md-6">
-							{{ form_row(userForm.username) }}
+				<div class="w-full md:w-1/2">
+					{{ form_start(userForm) }}
+						<div class="w-full text-lg font-normal text-gray-500 dark:text-gray-400 mb-2">
+							{{ 'Basic data'|trans }}
 						</div>
-						<div class="col-md-6">
-							{{ form_row(userForm.isDarkTheme) }}
+						{{ form_row(userForm.username) }}
+						{{ form_row(userForm.isDarkTheme) }}
+						<div class="mt-2 w-full flex justify-end">
+							<button class="{{ btn_success_class }}">
+								{{ 'Save'|trans }}
+							</button>
 						</div>
-					</div>
+					{{ form_end(userForm) }}
+					{{ form_start(passForm) }}
+						<div class="w-full text-lg font-normal text-gray-500 dark:text-gray-400 mb-2">
+							{{ 'Change password'|trans }}
+						</div>
+						{{ form_row(passForm.old_password) }}
+						{{ form_row(passForm.plainPassword) }}
+						<div class="mt-2 w-full flex justify-end">
+							<button class="{{ btn_success_class }}">
+								{{ 'Save'|trans }}
+							</button>
+						</div>
+					{{ form_end(passForm) }}
 				</div>
-				<div class="card-footer">
-					<button class="btn btn-success float-end">
-						{{ 'Save'|trans }}
-					</button>
-				</div>
-				{{ form_end(userForm) }}
-			</div>
-			<div class="card card-primary card-outline">
-				{{ form_start(passForm) }}
-				<div class="card-header">
-					{{ 'Change password'|trans }}
-				</div>
-				<div class="card-body">
-					{{ form_row(passForm.old_password) }}
-					{{ form_row(passForm.plainPassword) }}
-				</div>
-				<div class="card-footer">
-					<button class="btn btn-success float-end">
-						{{ 'Save'|trans }}
-					</button>
-				</div>
-				{{ form_end(passForm) }}
 			</div>
 		</div>
 	</div>
