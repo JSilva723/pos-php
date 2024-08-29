@@ -33,7 +33,7 @@
 							{{ include('components/btn_more_show_edit.html.twig', { 'path' : 'tenant_payment_edit', 'id': payment.id, 'label': 'Edit' }) }}
 						</li>
 						<li>
-							{{ include('components/btn_more_show_edit.html.twig', {'path': 'tenant_payment_delete', 'id': payment.id, 'confirm_delete': 'Are you sure you want to delete this item?'}) }}
+							{{ include('components/btn_more_delete.html.twig', {'path': 'tenant_payment_delete', 'id': payment.id, 'confirm_delete': 'Are you sure you want to delete this item?'}) }}
 						</li>
 					</ul>
 				</div>
