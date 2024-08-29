@@ -30,10 +30,10 @@
 				<div id="xbox-series-s-dropdown{{ product.id }}" class="{{ tb_more_container_class }}">
 					<ul class="{{ tb_more_content_class }}" aria-labelledby="xbox-series-s-dropdown-button{{ product.id }}">
 						<li>
-							{{ include('components/btn_show_edit.html.twig', { 'path' : 'tenant_product_show', 'id': product.id, 'label': 'Show' }) }}
+							{{ include('components/btn_more_show_edit.html.twig', { 'path' : 'tenant_product_show', 'id': product.id, 'label': 'Show' }) }}
 						</li>
 						<li>
-							{{ include('components/btn_show_edit.html.twig', { 'path' : 'tenant_product_edit', 'id': product.id, 'label': 'Edit' }) }}
+							{{ include('components/btn_more_show_edit.html.twig', { 'path' : 'tenant_product_edit', 'id': product.id, 'label': 'Edit' }) }}
 						</li>
 					</ul>
 				</div>

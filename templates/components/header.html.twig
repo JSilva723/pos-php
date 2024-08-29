@@ -1,4 +1,5 @@
 {% set hb_class = 'block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700' %}
+{% set hi_class = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5' %}
 
 <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
 	<div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
@@ -9,16 +10,12 @@
 			<div style="color: red;">PRODUCTION</div>
 		{% endif %}
 		<div class="flex items-center lg:order-2">
-			<button type="button" class="me-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
-				<a href="{{ path('tenant_logout') }}">
-					<i class="bi bi-power"></i>
-				</a>
-			</button>
-			<button type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
-				<a href="{{ path('tenant_user_show') }}">
-					<i class="bi bi-person-fill"></i>
-				</a>
-			</button>
+			<a href="{{ path('tenant_logout') }}"  type="button" class="me-2 {{ hi_class }}">
+				<i class="bi bi-power"></i>
+			</a>
+			<a href="{{ path('tenant_user_show') }}" type="button" class="{{ hi_class }}">
+				<i class="bi bi-person-fill"></i>
+			</a>
 			<button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
 				<span class="sr-only">Open main menu</span>
 				<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

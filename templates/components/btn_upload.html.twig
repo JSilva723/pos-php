@@ -1,5 +1,5 @@
-<form action="{{ path(path) }}" method="post" enctype="multipart/form-data">
-	<button type="button" class="btn" style="background-color: rgba(0, 0, 0, 0.5); color: white" onclick="document.getElementById('file-input').click();">
+<form action="{{ path(path) }}" method="post" enctype="multipart/form-data" class="absolute top-0 left-0">
+	<button type="button" class="focus:ring-4 rounded-lg p-2.5" style="background-color: rgba(0, 0, 0, 0.5); color: white" onclick="document.getElementById('file-input').click();">
 		<i class="bi bi-upload"></i>
 	</button>
 	<input type="hidden" name="id" value="{{ id }}">
