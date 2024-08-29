@@ -21,8 +21,8 @@
 				{{ include('components/icon_hamb.html.twig') }}
 			</button>
 		</div>
-		<div class="items-center justify-between hidden w-full" id="mobile-menu-2">
-			<ul class="flex flex-col mt-4 font-medium">
+		<div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+			<ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
 				<li>
 					<a href="{{ path('tenant_index') }}" class="{{ hb_class }}">
 						{{ 'Home'|trans }}
