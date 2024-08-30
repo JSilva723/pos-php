@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 
-{# Taildwind #}
+{# Tailwind #}
 {# main #}
-{% set mc_class = 'container mx-auto p-4 max-w-screen-xl' %}
-{% set mct_class = 'w-full p-4 bg-white border border-gray-200 rounded-lg shadow md:p-8 dark:bg-gray-800 dark:border-gray-700' %}
+{% set mc_class = 'mx-auto p-4 max-w-screen-2xl' %}
+{% set mct_class = 'w-full bg-white border border-gray-200 rounded-lg shadow p-4 dark:bg-gray-800 dark:border-gray-700' %}
 {% set mt_class = 'w-full text-center text-lg font-normal text-gray-500 dark:text-gray-400' %}
+{% set input_class = 'block w-full pl-10 p-2 text-sm bg-gray-50 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-primary-500 focus:border-primary-500' %}
 {% set btn_class = 'text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center' %}
 {% set btn_primary_class = btn_class ~ ' bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' %}
 {% set btn_success_class = btn_class ~ ' bg-green-700 hover:bg-green-800 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' %}
 {% set btn_danger_class = btn_class ~ ' bg-red-700 hover:bg-red-800 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800' %}
+{% set btn_icon_class = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5' %}
 {# table #}
 {% set tr_class = 'border-b dark:border-gray-700' %}
 {% set th_class = 'px-4 py-3' %}
@@ -22,16 +24,9 @@
 {% set dl_class = 'block mb-2 mt-2 text-sm font-medium text-gray-900 dark:text-white' %}
 {% set dc_class = 'text-lg font-semibold text-gray-900 text-end rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:text-white' %}
 {% set di_class = 'h-full w-full rounded-lg' %}
-{# Theme #}
-{% set theme = 'dark' %}
 
-{% if not is_granted('ROLE_SUPER_ADMIN') %}
-	{% if not app.user.isDarkTheme %}
-		{% set theme = 'light' %}
-	{% endif %}
-{% endif %}
-
-	<html class="{{ theme }}"> <head>
+<html> 
+	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Dashboard</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -38,16 +38,6 @@ class ProductType extends StyledType
                 ],
                 'required' => false,
             ])
-            ->add('price', NumberType::class, [
-                'row_attr' => ['class' => 'w-full'],
-                'label_attr' => ['class' => self::LABEL_ATTR],
-                'attr' => ['class' => self::INPUT_ATTR],
-                'constraints' => [
-                    new NotBlank(),
-                    new PositiveOrZero(),
-                ],
-                'scale' => 2,
-            ])
             ->add('stockQuantity', NumberType::class, [
                 'row_attr' => ['class' => 'w-full'],
                 'label_attr' => ['class' => self::LABEL_ATTR],

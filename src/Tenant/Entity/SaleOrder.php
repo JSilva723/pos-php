@@ -24,14 +24,14 @@ class SaleOrder
     #[ORM\Column(length: 10)]
     private string $status;
 
-    #[ORM\ManyToOne(targetEntity: Payment::class, inversedBy: 'saleOrders')]
+    #[ORM\ManyToOne(targetEntity: Payment::class, inversedBy: 'sale_order')]
     #[ORM\JoinColumn(name: 'payment_id', referencedColumnName: 'id')]
     private ?Payment $payment;
 
     #[ORM\Column(type: 'datetime')]
     private DateTimeInterface $date;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'saleOrders')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'sale_order')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private User $user;
 

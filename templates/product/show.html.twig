@@ -6,20 +6,16 @@
 		<div class="flex flex-col gap-4 md:flex-row">
 			<div class="w-full md:w-1/2">
 				<h5 class="class={{ mt_class }}">{{ product.name }}</h5>
-				<div class="w-full md:w-1/2">
-					<p class="{{ dl_class }}">{{ 'Price'|trans }}</p>
-					<p class="{{ dc_class }}">{{ product.price }}</p>
-				</div>
-				<div class="w-full md:w-1/2">
+				<div class="w-full">
 					<p class="{{ dl_class }}">{{ 'Category'|trans }}</p>
-					<p class="{{ dc_class }}">{{ product.price }}</p>
+					<p class="{{ dc_class }}">{{ product.category.name }}</p>
 				</div>
-				<div class="w-full md:w-1/2">
+				<div class="w-full">
 					<p class="{{ dl_class }}">{{ 'Stock'|trans }}</p>
 					<p class="{{ dc_class }}">{{ product.stockQuantity }}</p>
 				</div>
 				{% if  product.sku  %}
-					<div class="w-full md:w-1/2">
+					<div class="w-full">
 						<p class="{{ dl_class }}">{{ 'SKU' }}</p>
 						<p class="{{ dc_class }}">{{ product.sku }}</p>
 					</div>
@@ -34,7 +30,7 @@
 				{{ include('components/btn_upload.html.twig',{ 'path': 'tenant_product_upload', 'id': product.id }) }}
 			</div>
 		</div>
-		<div class="mt-2 w-full flex justify-end gap-3">
+		<div class="mt-4 w-full flex justify-end gap-3">
 			{{ include('components/btn_show_edit.html.twig', { 'path' : 'tenant_product_edit', 'id': product.id, 'label': 'Edit' }) }}
 			{{ include('components/btn_delete.html.twig', { 'path': 'tenant_product_delete', 'id': product.id, 'confirm_delete': 'Are you sure you want to delete this item?' }) }}
 		</div>

@@ -1,0 +1,9 @@
+tenant_product_price_list_create:
+    path: /product-price-list/create
+    methods: POST
+    controller: Tenant\Controller\ProductPriceListController::create
+
+tenant_product_price_list_update:
+    path: /product-price-list/{pplid}/update
+    methods: POST
+    controller: Tenant\Controller\ProductPriceListController::update

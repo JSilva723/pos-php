@@ -1,0 +1,59 @@
+{% extends 'components/table.html.twig' %}
+
+{% block flash %}
+	{% for message in app.session.flashBag.get('error') %}
+		{{ include('components/flash_error.html.twig',{ 'message': message }) }}
+	{% endfor %}
+	{% for message in app.session.flashBag.get('success') %}
+		{{ include('components/flash_success.html.twig',{ 'message': message }) }}
+	{% endfor %}
+{% endblock %}
+
+{% block tTitle %}
+	{{ include('components/search.html.twig',{ 'new': '','title': 'Products' }) }}
+{% endblock %}
+
+{% block tHead %}
+	<tr>
+		<th scope="col" class="{{ th_class }}">ID</th>
+		<th scope="col" class="{{ th_class }}">{{ 'Name'|trans}}</th>
+		<th scope="col" class="{{ th_class }}">
+			{{ 'Price'|trans}}
+		</th>
+	</tr>
+{% endblock %}
+
+{% block tBody %}
+	{% for product in pagination %}
+		<tr class="{{ tr_class }}">
+			<th scope="row" class="{{ th_class }}">
+				{{ product.id }}
+			</th>
+			<td class="{{ td_class }}">
+				{{ product.name }}
+			</td>
+			<td class="{{ td_class }}">
+			{% if product.pplid %}
+				<form class="flex items-center w-full" method="POST" action="/product-price-list/{{ product.pplid }}/update">
+					<input type="number" name="price" class="{{ input_class }}" value={{ product.price }}>
+					<input hidden name="lid"  value={{ priceList.id }}>
+					<button type="submit" class="{{ btn_icon_class }}">
+						{{ include('components/icon_sync.html.twig') }}
+					</button>
+				</form>
+			{% else %}
+				<form class="flex items-center w-full" method="POST" action="/product-price-list/create">
+				<input hidden name="pid"  value={{ product.id }}>
+					<input hidden name="lid"  value={{ priceList.id }}>
+					<input type="number" name="price" class="{{ input_class }}" value={{ product.price }}>
+					<button type="submit" class="{{ btn_icon_class }}">
+						{{ include('components/icon_sync.html.twig') }}
+					</button>
+				</form>
+			{% endif %}
+			</td>
+		</tr>
+	{% else %}
+		{{ include('components/no_records.html.twig') }}
+	{% endfor %}
+{% endblock %}

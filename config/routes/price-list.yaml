@@ -9,6 +9,17 @@ tenant_price_list_index:
     defaults:
         _locale: '%locale%'
 
+tenant_price_list_show:
+    path: 
+        en: /{_locale}/price-list/{id}
+        es: /{_locale}/lista-de-precio/{id}
+    methods: GET
+    controller: Tenant\Controller\PriceListController::show
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
 tenant_price_list_new:
     path: 
         en: /{_locale}/price-list/new

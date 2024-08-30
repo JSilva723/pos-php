@@ -25,13 +25,10 @@ class Product
     #[ORM\Column(length: 100, unique: true, nullable: true)]
     private ?string $sku = null;
 
-    #[ORM\Column(type: 'decimal', scale: 2, precision: 14)]
-    private float $price;
-
     #[ORM\Column(name: 'stock_quantity')]
     private int $stockQuantity;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'product')]
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
     private Category $category;
 
@@ -90,18 +87,6 @@ class Product
     public function setStockQuantity(int $stockQuantity): static
     {
         $this->stockQuantity = $stockQuantity;
-
-        return $this;
-    }
-
-    public function getPrice(): float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): static
-    {
-        $this->price = $price;
 
         return $this;
     }

@@ -12,13 +12,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Tenant\Entity\PriceList;
 use Tenant\Form\PriceListType;
 use Tenant\Repository\PriceListRepository;
+use Tenant\Repository\ProductPriceListRepository;
 
 class PriceListController extends AbstractController
 {
-    public function index(Request $request, PriceListRepository $prideListRepository, PaginatorInterface $paginator): Response
-    {
+    public function index(
+        Request $request,
+        PriceListRepository $priceListRepository,
+        PaginatorInterface $paginator,
+    ): Response {
+        // Search by name
         $q = $request->get('q', '');
-        $query = $prideListRepository->findByQ($q);
+        $query = $priceListRepository->findByQ($q);
 
         $pagination = $paginator->paginate(
             $query, // query NOT result
@@ -50,9 +55,22 @@ class PriceListController extends AbstractController
         ]);
     }
 
-    public function show(PriceList $priceList): Response
-    {
+    public function show(
+        PriceList $priceList,
+        Request $request,
+        ProductPriceListRepository $productPriceListRepository,
+        PaginatorInterface $paginator,
+    ): Response {
+        $q = $request->get('q', '');
+        $query = $productPriceListRepository->findByQ($q);
+        $pagination = $paginator->paginate(
+            $query, // query NOT result
+            $request->query->getInt('page', 1), // page number
+            10, // limit per page
+        );
+
         return $this->render('price-list/show.html.twig', [
+            'pagination' => $pagination,
             'priceList' => $priceList,
         ]);
     }

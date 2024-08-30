@@ -3,6 +3,7 @@
 {% block body %}
 	<body class="bg-gray-50 dark:bg-gray-900">
 		{% include 'components/header.html.twig' %}
+		{% block flash %}{% endblock %}
 		<main class="py-2.5">
 			{% block main %}{% endblock %}
 		</main>
