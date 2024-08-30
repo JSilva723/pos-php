@@ -32,17 +32,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private string $password;
 
-    /** @var bool The UI theme */
-    #[ORM\Column(name: 'is_dark_theme')]
-    private bool $isDarkTheme = true;
-
     #[ORM\Column(name: 'is_enable')]
     private bool $isEnable = true;
-
-    public function __construct()
-    {
-        $this->isDarkTheme = true;
-    }
 
     public function getId(): int
     {
@@ -117,18 +108,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getIsDarkTheme(): bool
-    {
-        return $this->isDarkTheme;
-    }
-
-    public function setIsDarkTheme(bool $isDarkTheme): static
-    {
-        $this->isDarkTheme = $isDarkTheme;
-
-        return $this;
     }
 
     public function getIsEnable(): bool

@@ -26,13 +26,6 @@ class UserType extends StyledType
                     new Length(['max' => 180]),
                 ],
             ]);
-
-        $builder
-            ->add('isDarkTheme', CheckboxType::class, [
-                'label' => 'Theme',
-                'attr' => ['class' => 'form-check'],
-                'required' => false,
-            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

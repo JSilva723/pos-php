@@ -38,5 +38,5 @@ make db-ssh
 mysql -u root -p main-app # pass -> root
 ```
 ```sql
-insert into user (username, roles, password, is_dark_theme) values ('admin', '["ROLE_USER"]' , '$2y$13$O6TxZOXywpOYKmgzc1Zn4uU9dtvCMWlHT1p/8.aFRYn2k7AidSOPO', 1);
+insert into user (username, roles, password) values ('admin', '["ROLE_USER"]' , '$2y$13$O6TxZOXywpOYKmgzc1Zn4uU9dtvCMWlHT1p/8.aFRYn2k7AidSOPO', 1);
 ```
