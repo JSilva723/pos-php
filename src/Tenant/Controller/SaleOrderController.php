@@ -62,10 +62,21 @@ class SaleOrderController extends AbstractController
         }
     }
 
-    public function show(SaleOrder $saleOrder): Response
-    {
+    public function show(
+        SaleOrder $saleOrder,
+        EntityManagerInterface $entityManager,
+    ): Response {
+        $query = $entityManager->createQuery('
+            SELECT p.id, p.name, ppl.price
+            FROM Tenant\Entity\Product p
+            LEFT JOIN Tenant\Entity\ProductPriceList ppl WITH p.id = ppl.product
+            WHERE p.isEnable = true
+        ');
+        $products = $query->getResult();
+
         return $this->render('sale-order/show.html.twig', [
             'saleOrder' => $saleOrder,
+            'products' => $products,
         ]);
     }
 }

@@ -1,8 +1,54 @@
 {% extends 'components/layout.html.twig' %}
 
 {% block main %}
-	<h1>
-		Sale
-		{{ saleOrder.id }}
-	</h1>
+	<div class="{{ mc_class }}">
+		<div class="{{ mct_class }}">
+			<div class="flex flex-col">
+				<h5 class="class={{ mt_class }}">{{ 'Order'|trans}} N° {{ saleOrder.id }}</h5>
+				<div class="flex flex-col gap-4 md:flex-row">
+					<button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch" data-dropdown-placement="bottom" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+						{{ 'Product'|trans }}
+					</button>
+					<div id="dropdownSearch" class="z-10 hidden bg-white rounded-lg shadow w-60 dark:bg-gray-700">
+						<div class="p-3">
+							<label for="input-group-search" class="sr-only">{{ 'Search'|trans }}</label>
+							<div class="relative">
+								<div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+									{{ include('components/icon_search.html.twig') }}
+								</div>
+								<input type="text" id="input-group-search" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search user">
+							</div>
+						</div>
+						<ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200 slist" aria-labelledby="dropdownSearchButton">
+							{% for product in products %}
+								<li class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white psearch" onclick="addProduct(this)" data-id="{{ product.id }}" data-price="{{ product.price }}">
+									{{ product.name }}
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+					<form class="w-full flex flex-col items-center md:flex-row gap-4">
+						<input hidden type="number" id="input-product-id"/>
+						<input hidden type="text" id="input-product-name"/>
+						<div class="w-full">
+							<label for="product-items" class="mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ 'Price'|trans}}</label>
+							<input type="number" id="input-product-price" name="price" class="{{ input_class }}"/> 
+						</div>
+						<div class="w-full">
+							<label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ 'Quantity'|trans}}</label>
+							<input type="number" name="quantity" id="input-product-quantity" class="{{ input_class }}"/> 
+						</div>
+						<button type="submit" class="{{ btn_success_class }} self-end">
+							{{ 'Add'|trans }}
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('sale-order') }}
 {% endblock %}
