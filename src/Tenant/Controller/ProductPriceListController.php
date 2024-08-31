@@ -45,7 +45,8 @@ class ProductPriceListController extends AbstractController
             $price = $this->getValidatedPrice($request->get('price'));
 
             $productPriceList = $entityManager->getRepository(ProductPriceList::class)->find($productPriceListId);
-            if(!$productPriceList){
+
+            if (!$productPriceList) {
                 throw new Exception('Product price not found');
             }
             $productPriceList->setPrice($price);

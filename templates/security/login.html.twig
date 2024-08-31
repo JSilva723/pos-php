@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Dashboard</title>
@@ -10,28 +10,28 @@
 		{% endblock %}
 	</head>
 	<body class="bg-gray-50 dark:bg-gray-900 p-4">
-			<div class="w-full md:w-1/2 p-4 bg-white border border-gray-200 rounded-lg shadow mx-auto dark:bg-gray-800 dark:border-gray-700">
-				<form action="{{ url('tenant_login') }}" method="post">
-					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-					<div class="flex flex-col gap-4 mb-4">
-						<div>
-							<label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-								{{ 'Username'|trans }}
-							</label>
-							<input type="text" name="_username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ last_username }}" placeholder="{{ 'Username'|trans }}" autocomplete="username" required autofocus>
-						</div>
-						<div>
-							<label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-								{{ 'Password'|trans }}
-							</label>
-							<input type="password" name="_password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="{{ 'Password'|trans }}" required autocomplete="current-password">
-						</div>
+		<div class="w-full md:w-1/2 p-4 bg-white border border-gray-200 rounded-lg shadow mx-auto dark:bg-gray-800 dark:border-gray-700">
+			<form action="{{ url('tenant_login') }}" method="post">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<div class="flex flex-col gap-4 mb-4">
+					<div>
+						<label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+							{{ 'Username'|trans }}
+						</label>
+						<input type="text" name="_username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ last_username }}" placeholder="{{ 'Username'|trans }}" autocomplete="username" required autofocus>
 					</div>
-					<button type="submit" class="flex gap-3 text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-						{{ include('components/icon_add.html.twig') }}
-						{{ 'Login'|trans }}
-					</button>
-				</form>
+					<div>
+						<label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+							{{ 'Password'|trans }}
+						</label>
+						<input type="password" name="_password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="{{ 'Password'|trans }}" required autocomplete="current-password">
+					</div>
+				</div>
+				<button type="submit" class="flex gap-3 text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+					{{ include('components/icon_add.html.twig') }}
+					{{ 'Login'|trans }}
+				</button>
+			</form>
 		</div>
 		{{ encore_entry_script_tags('app') }}
 	</body>
