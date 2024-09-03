@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tenant\Entity\SaleOrder;
 use Tenant\Entity\User;
+use Tenant\Repository\SaleOrderLineRepository;
 use Tenant\Repository\SaleOrderRepository;
 
 class SaleOrderController extends AbstractController
@@ -64,19 +65,16 @@ class SaleOrderController extends AbstractController
 
     public function show(
         SaleOrder $saleOrder,
-        EntityManagerInterface $entityManager,
+        SaleOrderRepository $saleOrderRepository,
+        SaleOrderLineRepository $saleOrderLineRepository,
     ): Response {
-        $query = $entityManager->createQuery('
-            SELECT p.id, p.name, ppl.price
-            FROM Tenant\Entity\Product p
-            LEFT JOIN Tenant\Entity\ProductPriceList ppl WITH p.id = ppl.product
-            WHERE p.isEnable = true
-        ');
-        $products = $query->getResult();
+        $products = $saleOrderRepository->getProductsWhitPrice();
+        $orderLines = $saleOrderLineRepository->getLinesById($saleOrder->getId());
 
         return $this->render('sale-order/show.html.twig', [
             'saleOrder' => $saleOrder,
             'products' => $products,
+            'orderLines' => $orderLines,
         ]);
     }
 }

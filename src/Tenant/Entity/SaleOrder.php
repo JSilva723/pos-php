@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tenant\Entity;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Tenant\Repository\SaleOrderRepository;
 
@@ -24,16 +26,25 @@ class SaleOrder
     #[ORM\Column(length: 10)]
     private string $status;
 
-    #[ORM\ManyToOne(targetEntity: Payment::class, inversedBy: 'sale_order')]
-    #[ORM\JoinColumn(name: 'payment_id', referencedColumnName: 'id')]
-    private ?Payment $payment;
-
     #[ORM\Column(type: 'datetime')]
     private DateTimeInterface $date;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'sale_order')]
+    #[ORM\ManyToOne(targetEntity: Payment::class, inversedBy: 'saleOrders')]
+    #[ORM\JoinColumn(name: 'payment_id', referencedColumnName: 'id')]
+    private ?Payment $payment;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'saleOrders')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private User $user;
+
+    /** @var Collection<int, SaleOrderLine> */
+    #[ORM\OneToMany(targetEntity: SaleOrderLine::class, mappedBy: 'saleOrder')]
+    private Collection $saleOrderLines;
+
+    public function __construct()
+    {
+        $this->saleOrderLines = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -86,5 +97,13 @@ class SaleOrder
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, SaleOrderLine>
+     */
+    public function getOrderLines(): Collection
+    {
+        return $this->saleOrderLines;
     }
 }

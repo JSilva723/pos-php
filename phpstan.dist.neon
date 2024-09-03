@@ -16,3 +16,4 @@ parameters:
         - '#Property Tenant\\Entity\\SaleOrder::\$id is never written, only read#'
         - '#Property Tenant\\Entity\\PriceList::\$id is never written, only read#'
         - '#Property Tenant\\Entity\\ProductPriceList::\$id is never written, only read#'
+        - '#Property Tenant\\Entity\\SaleOrderLine::\$id is never written, only read#'

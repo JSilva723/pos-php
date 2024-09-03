@@ -39,4 +39,21 @@ class SaleOrderRepository extends ServiceEntityRepository
 
         return $qb;
     }
+
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function getProductsWhitPrice(): array
+    {
+        $query = '
+        SELECT p.id, p.name, ppl.price
+        FROM Tenant\Entity\Product p
+        LEFT JOIN Tenant\Entity\ProductPriceList ppl WITH p.id = ppl.product
+        WHERE p.isEnable = true
+        ';
+
+        $qb = $this->getEntityManager()->createQuery($query);
+
+        return $qb->getArrayResult();
+    }
 }

@@ -48,7 +48,6 @@ class ProductController extends AbstractController
         }
 
         return $this->render('product/new.html.twig', [
-            'product' => $product,
             'form' => $form,
         ]);
     }
@@ -113,6 +112,8 @@ class ProductController extends AbstractController
         $entityManager->persist($product);
         $entityManager->flush();
 
-        return $this->redirectToRoute('tenant_product_show', ['id' => $id]);
+        return $this->redirectToRoute('tenant_product_show', [
+            'id' => $id,
+        ], Response::HTTP_SEE_OTHER);
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tenant\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -34,6 +36,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(name: 'is_enable')]
     private bool $isEnable = true;
+
+    /** @var Collection<int, SaleOrder> */
+    #[ORM\OneToMany(targetEntity: SaleOrder::class, mappedBy: 'user')]
+    private Collection $saleOrders;
+
+    public function __construct()
+    {
+        $this->saleOrders = new ArrayCollection();
+        $this->isEnable = true;
+    }
 
     public function getId(): int
     {
@@ -120,5 +132,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isEnable = $isEnable;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, SaleOrder>
+     */
+    public function getSaleOrders(): Collection
+    {
+        return $this->saleOrders;
     }
 }

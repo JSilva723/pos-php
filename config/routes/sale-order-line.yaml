@@ -1,0 +1,4 @@
+tenant_sale_order_line_add:
+    path: /sale-order/{id}/line-add
+    methods: POST
+    controller: Tenant\Controller\SaleOrderLineController::addLine

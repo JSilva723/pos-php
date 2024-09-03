@@ -1,7 +1,14 @@
 {% extends 'components/table.html.twig' %}
 
 {% block tTitle %}
-	<h5 class="{{ mt_class }}">{{ 'Orders'|trans}}</h5>
+	<div class="flex w-full flex-col">
+		<div class="flex items-center flex-shrink-0 mb-2">
+			<a href="{{ path('tenant_sale_order_new') }}" type="button" class="{{ btn_primary_class }}">
+				{{ 'New'|trans }}
+			</a>
+			<h5 class="{{ mt_class }}">{{ 'Orders'|trans }}</h5>
+		</div>
+	</div>
 {% endblock %}
 
 {% block tHead %}

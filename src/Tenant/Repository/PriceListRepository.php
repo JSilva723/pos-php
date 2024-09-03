@@ -22,15 +22,15 @@ class PriceListRepository extends ServiceEntityRepository
     public function findByQ(string $value): Query
     {
         $query = '
-        SELECT c.id, c.name 
-        FROM Tenant\Entity\PriceList c
-        WHERE c.isEnable = true';
+        SELECT pl.id, pl.name 
+        FROM Tenant\Entity\PriceList pl
+        WHERE pl.isEnable = true';
 
         if ($value !== '') {
-            $query .= ' AND (c.name LIKE :value) ';
+            $query .= ' AND (pl.name LIKE :value) ';
         }
 
-        $query .= ' ORDER BY c.name ASC ';
+        $query .= ' ORDER BY pl.name ASC ';
 
         $qb = $this->getEntityManager()->createQuery($query);
 
@@ -44,9 +44,9 @@ class PriceListRepository extends ServiceEntityRepository
     public function disable(int $id): void
     {
         $query = '
-        UPDATE Tenant\Entity\PriceList c 
-        SET c.isEnable = false 
-        WHERE c.id = :id';
+        UPDATE Tenant\Entity\PriceList pl
+        SET pl.isEnable = false 
+        WHERE pl.id = :id';
 
         $qb = $this->getEntityManager()->createQuery($query);
         $qb->setParameter('id', $id);

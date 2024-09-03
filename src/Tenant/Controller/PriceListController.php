@@ -9,10 +9,11 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Tenant\Entity\PriceList;
 use Tenant\Form\PriceListType;
 use Tenant\Repository\PriceListRepository;
 use Tenant\Repository\ProductPriceListRepository;
+use Tenant\Entity\PriceList;
+use Symfony\Component\Routing\Attribute\Route;
 
 class PriceListController extends AbstractController
 {
@@ -39,8 +40,10 @@ class PriceListController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $priceList = new PriceList();
+
         $form = $this->createForm(PriceListType::class, $priceList);
         $form->handleRequest($request);
+   
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($priceList);
@@ -49,8 +52,10 @@ class PriceListController extends AbstractController
             return $this->redirectToRoute('tenant_price_list_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        // dump($form);
+        // die;
+
         return $this->render('price-list/new.html.twig', [
-            'priceList' => $priceList,
             'form' => $form,
         ]);
     }
@@ -75,29 +80,29 @@ class PriceListController extends AbstractController
         ]);
     }
 
-    public function edit(Request $request, PriceList $priceList, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(PriceListType::class, $priceList);
-        $form->handleRequest($request);
+    // public function edit(Request $request, PriceList $priceList, EntityManagerInterface $entityManager): Response
+    // {
+    //     $form = $this->createForm(PriceListType::class, $priceList);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('tenant_price_list_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('tenant_price_list_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->render('price-list/edit.html.twig', [
-            'priceList' => $priceList,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->render('price-list/edit.html.twig', [
+    //         'priceList' => $priceList,
+    //         'form' => $form,
+    //     ]);
+    // }
 
-    public function delete(Request $request, PriceList $priceList, PriceListRepository $prideListRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $priceList->getId(), $request->getPayload()->getString('_token'))) {
-            $prideListRepository->disable($priceList->getId());
-        }
+    // public function delete(Request $request, PriceList $priceList, PriceListRepository $priceListRepository): Response
+    // {
+    //     if ($this->isCsrfTokenValid('delete' . $priceList->getId(), $request->getPayload()->getString('_token'))) {
+    //         $priceListRepository->disable($priceList->getId());
+    //     }
 
-        return $this->redirectToRoute('tenant_price_list_index', [], Response::HTTP_SEE_OTHER);
-    }
+    //     return $this->redirectToRoute('tenant_price_list_index', [], Response::HTTP_SEE_OTHER);
+    // }
 }

@@ -42,7 +42,7 @@ class ProductPriceListController extends AbstractController
         try {
             $productPriceListId = $request->get('pplid');
             $priceListId = $request->get('lid');
-            $price = $this->getValidatedPrice($request->get('price'));
+            $price = $request->get('price');
 
             $productPriceList = $entityManager->getRepository(ProductPriceList::class)->find($productPriceListId);
 

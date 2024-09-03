@@ -2,19 +2,8 @@ tenant_price_list_index:
     path: 
         en: /{_locale}/price-list
         es: /{_locale}/lista-de-precio
-    methods: GET
+    methods: GET|POST
     controller: Tenant\Controller\PriceListController::index
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        _locale: '%locale%'
-
-tenant_price_list_show:
-    path: 
-        en: /{_locale}/price-list/{id}
-        es: /{_locale}/lista-de-precio/{id}
-    methods: GET
-    controller: Tenant\Controller\PriceListController::show
     requirements:
         _locale: '%app_locales%'
     defaults:
@@ -26,6 +15,17 @@ tenant_price_list_new:
         es: /{_locale}/lista-de-precio/nueva
     methods: GET|POST
     controller: Tenant\Controller\PriceListController::new
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_price_list_show:
+    path: 
+        en: /{_locale}/price-list/{id}
+        es: /{_locale}/lista-de-precio/{id}
+    methods: GET
+    controller: Tenant\Controller\PriceListController::show
     requirements:
         _locale: '%app_locales%'
     defaults:

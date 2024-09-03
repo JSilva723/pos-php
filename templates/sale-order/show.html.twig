@@ -21,15 +21,14 @@
 						</div>
 						<ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200 slist" aria-labelledby="dropdownSearchButton">
 							{% for product in products %}
-								<li class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white psearch" onclick="addProduct(this)" data-id="{{ product.id }}" data-price="{{ product.price }}">
+								<li class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white psearch" onclick="addProduct(this)" data-id="{{ product.id }}" data-price="{{ product.price }}">
 									{{ product.name }}
 								</li>
 							{% endfor %}
 						</ul>
 					</div>
-					<form class="w-full flex flex-col items-center md:flex-row gap-4">
-						<input hidden type="number" id="input-product-id"/>
-						<input hidden type="text" id="input-product-name"/>
+					<form class="w-full flex flex-col items-center md:flex-row gap-4" method="POST" action="/sale-order/{{ saleOrder.id }}/line-add">
+						<input hidden type="number" id="input-product-id" name="pid"/>
 						<div class="w-full">
 							<label for="product-items" class="mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ 'Price'|trans}}</label>
 							<input type="number" id="input-product-price" name="price" class="{{ input_class }}"/> 
@@ -44,6 +43,46 @@
 					</form>
 				</div>
 			</div>
+		</div>
+	</div>
+		<div class="{{ mc_class }}">
+			<div class="{{ mct_class }}">
+				<div class="overflow-x-auto">
+					<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+						<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+							<tr>
+								<th scope="col" class="{{ th_class }}">Name</th>
+								<th scope="col" class="{{ th_class }}">Qty</th>
+								<th scope="col" class="{{ th_class }}">Price</th>
+								<th scope="col" class="{{ th_end_class }}">
+									{{ 'Actions'|trans}}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for line in orderLines %}
+								<tr class="{{ tr_class }}">
+									<td class="{{ td_class }}">
+										{{ line.name }}
+									</td>
+									<td class="{{ td_class }}">
+										{{ line.quantity }}
+									</td>
+									<td class="{{ td_class }}">
+										{{ line.price }}
+									</td>
+									<td class="{{ td_end_class }}">
+										<button id="xbox-series-s-dropdown-button{{ line.id }}" data-dropdown-toggle="xbox-series-s-dropdown{{ line.id }}" data-dropdown-placement="left" class="{{ tb_more_class }}" type="button">
+											{{ include('components/icon_more.html.twig') }}
+										</button>
+									</td>
+								</tr>
+							{% else %}
+								{{ include('components/no_records.html.twig') }}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 		</div>
 	</div>
 {% endblock %}

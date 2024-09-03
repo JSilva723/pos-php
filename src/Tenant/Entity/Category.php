@@ -31,6 +31,7 @@ class Category
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->isEnable = true;
     }
 
     public function getId(): int

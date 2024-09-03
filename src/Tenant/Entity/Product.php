@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tenant\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Tenant\Repository\ProductRepository;
 
@@ -28,7 +30,7 @@ class Product
     #[ORM\Column(name: 'stock_quantity')]
     private int $stockQuantity;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'product')]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
     private Category $category;
 
@@ -37,6 +39,21 @@ class Product
 
     #[ORM\Column(name: 'mime_type', nullable: true)]
     private ?string $mimeType = null;
+
+    /** @var Collection<int, ProductPriceList> */
+    #[ORM\OneToMany(targetEntity: ProductPriceList::class, mappedBy: 'product')]
+    private Collection $productPriceLists;
+
+    /** @var Collection<int, SaleOrderLine> */
+    #[ORM\OneToMany(targetEntity: SaleOrderLine::class, mappedBy: 'product')]
+    private Collection $saleOrderLines;
+
+    public function __construct()
+    {
+        $this->productPriceLists = new ArrayCollection();
+        $this->saleOrderLines = new ArrayCollection();
+        $this->isEnable = true;
+    }
 
     public function getId(): int
     {
@@ -125,5 +142,21 @@ class Product
         $this->mimeType = $mimeType;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductPriceList>
+     */
+    public function getProductPriceLists(): Collection
+    {
+        return $this->productPriceLists;
+    }
+
+    /**
+     * @return Collection<int, SaleOrderLine>
+     */
+    public function getOrderLines(): Collection
+    {
+        return $this->saleOrderLines;
     }
 }

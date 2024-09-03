@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tenant\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Tenant\Repository\PaymentRepository;
 
@@ -21,6 +23,16 @@ class Payment
 
     #[ORM\Column(name: 'is_enable')]
     private bool $isEnable = true;
+
+    /** @var Collection<int, SaleOrder> */
+    #[ORM\OneToMany(targetEntity: SaleOrder::class, mappedBy: 'payment')]
+    private Collection $saleOrders;
+
+    public function __construct()
+    {
+        $this->saleOrders = new ArrayCollection();
+        $this->isEnable = true;
+    }
 
     public function getId(): int
     {
@@ -49,5 +61,13 @@ class Payment
         $this->isEnable = $isEnable;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, SaleOrder>
+     */
+    public function getSaleOrders(): Collection
+    {
+        return $this->saleOrders;
     }
 }

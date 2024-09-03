@@ -30,3 +30,4 @@ tenant_sale_order_show:
         _locale: '%app_locales%'
     defaults:
         _locale: '%locale%'
+
