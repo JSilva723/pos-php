@@ -19,12 +19,12 @@ class ProductPriceListRepository extends ServiceEntityRepository
         parent::__construct($registry, ProductPriceList::class);
     }
 
-    public function findByQ(string $value): Query
+    public function findByQ(string $value, int $plid): Query
     {
         $query = '
         SELECT p.id, p.name, ppl.price, ppl.id as pplid
         FROM Tenant\Entity\Product p
-        LEFT JOIN Tenant\Entity\ProductPriceList ppl WITH p.id = ppl.product
+        LEFT JOIN Tenant\Entity\ProductPriceList ppl WITH p.id = ppl.product AND ppl.priceList = :plid
         WHERE p.isEnable = true';
 
         if ($value !== '') {
@@ -38,6 +38,8 @@ class ProductPriceListRepository extends ServiceEntityRepository
         if ($value !== '') {
             $qb->setParameter('value', '%' . $value . '%');
         }
+
+        $qb->setParameter('plid', $plid);
 
         return $qb;
     }

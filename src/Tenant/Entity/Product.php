@@ -21,6 +21,9 @@ class Product
     #[ORM\Column(length: 100)]
     private string $name;
 
+    #[ORM\Column(length: 100)]
+    private string $brand;
+
     #[ORM\Column(name: 'is_enable')]
     private bool $isEnable = true;
 
@@ -30,8 +33,10 @@ class Product
     #[ORM\Column(name: 'stock_quantity')]
     private int $stockQuantity;
 
+    #[ORM\Column(name: 'stock_min')]
+    private int $stockMin;
+
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
-    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
     private Category $category;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -48,11 +53,16 @@ class Product
     #[ORM\OneToMany(targetEntity: SaleOrderLine::class, mappedBy: 'product')]
     private Collection $saleOrderLines;
 
+    private string $price;
+
+    private PriceList $priceList;
+
     public function __construct()
     {
         $this->productPriceLists = new ArrayCollection();
         $this->saleOrderLines = new ArrayCollection();
         $this->isEnable = true;
+        $this->stockMin = 1;
     }
 
     public function getId(): int
@@ -68,6 +78,18 @@ class Product
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getBrand(): string
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(string $brand): static
+    {
+        $this->brand = $brand;
 
         return $this;
     }
@@ -104,6 +126,18 @@ class Product
     public function setStockQuantity(int $stockQuantity): static
     {
         $this->stockQuantity = $stockQuantity;
+
+        return $this;
+    }
+
+    public function getStockMin(): int
+    {
+        return $this->stockMin;
+    }
+
+    public function setStockMin(int $stockMin): static
+    {
+        $this->stockMin = $stockMin;
 
         return $this;
     }
@@ -158,5 +192,29 @@ class Product
     public function getOrderLines(): Collection
     {
         return $this->saleOrderLines;
+    }
+
+    public function getPrice(): string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(string $price): static
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getPriceList(): PriceList
+    {
+        return $this->priceList;
+    }
+
+    public function setPriceList(PriceList $priceList): static
+    {
+        $this->priceList = $priceList;
+
+        return $this;
     }
 }

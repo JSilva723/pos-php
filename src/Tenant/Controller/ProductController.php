@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tenant\Entity\Product;
 use Tenant\Form\ProductType;
+use Tenant\Repository\ProductPriceListRepository;
 use Tenant\Repository\ProductRepository;
 
 use function base64_encode;
@@ -34,7 +35,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ProductPriceListRepository $productPriceListRepository): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
@@ -43,6 +44,15 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($product);
             $entityManager->flush();
+
+            $priceList = $form->get('priceList')->getData();
+            $price = $form->get('price')->getData();
+
+            $productPriceListRepository->create(
+                $product->getId(),
+                $priceList->getId(),
+                (float) $price,
+            );
 
             return $this->redirectToRoute('tenant_product_index', [], Response::HTTP_SEE_OTHER);
         }

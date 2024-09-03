@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
 use Tenant\Entity\Category;
+use Tenant\Entity\PriceList;
 use Tenant\Entity\Product;
 
 class ProductType extends StyledType
@@ -21,6 +22,15 @@ class ProductType extends StyledType
     {
         $builder
             ->add('name', TextType::class, [
+                'row_attr' => ['class' => 'w-full'],
+                'label_attr' => ['class' => self::LABEL_ATTR],
+                'attr' => ['class' => self::INPUT_ATTR],
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['max' => 100]),
+                ],
+            ])
+            ->add('price', TextType::class, [
                 'row_attr' => ['class' => 'w-full'],
                 'label_attr' => ['class' => self::LABEL_ATTR],
                 'attr' => ['class' => self::INPUT_ATTR],
@@ -38,7 +48,25 @@ class ProductType extends StyledType
                 ],
                 'required' => false,
             ])
+            ->add('brand', TextType::class, [
+                'row_attr' => ['class' => 'w-full'],
+                'label_attr' => ['class' => self::LABEL_ATTR],
+                'attr' => ['class' => self::INPUT_ATTR],
+                'constraints' => [
+                    new Length(['max' => 100]),
+                ],
+                'required' => false,
+            ])
             ->add('stockQuantity', NumberType::class, [
+                'row_attr' => ['class' => 'w-full'],
+                'label_attr' => ['class' => self::LABEL_ATTR],
+                'attr' => ['class' => self::INPUT_ATTR],
+                'constraints' => [
+                    new NotBlank(),
+                    new PositiveOrZero(),
+                ],
+            ])
+            ->add('stockMin', NumberType::class, [
                 'row_attr' => ['class' => 'w-full'],
                 'label_attr' => ['class' => self::LABEL_ATTR],
                 'attr' => ['class' => self::INPUT_ATTR],
@@ -54,6 +82,14 @@ class ProductType extends StyledType
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Select a category',
+            ])
+            ->add('priceList', EntityType::class, [
+                'row_attr' => ['class' => 'w-full'],
+                'label_attr' => ['class' => self::LABEL_ATTR],
+                'attr' => ['class' => self::INPUT_ATTR],
+                'class' => PriceList::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Select a price list',
             ]);
     }
 
