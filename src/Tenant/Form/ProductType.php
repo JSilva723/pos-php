@@ -65,6 +65,7 @@ class ProductType extends StyledType
                     new NotBlank(),
                     new PositiveOrZero(),
                 ],
+                'label' => 'Stock',
             ])
             ->add('stockMin', NumberType::class, [
                 'row_attr' => ['class' => 'w-full'],
