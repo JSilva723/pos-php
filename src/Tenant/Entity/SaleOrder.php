@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tenant\Entity;
 
+use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -44,9 +45,15 @@ class SaleOrder
     #[ORM\ManyToOne(targetEntity: Client::class, inversedBy: 'saleOrders')]
     private ?Client $client;
 
+    #[ORM\ManyToOne(targetEntity: PriceList::class, inversedBy: 'saleOrders')]
+    #[ORM\JoinColumn(name: 'price_list_id', referencedColumnName: 'id')]
+    private PriceList $priceList;
+
     public function __construct()
     {
         $this->saleOrderLines = new ArrayCollection();
+        $this->date = new DateTime();
+        $this->status = self::STATUS_OPEN;
     }
 
     public function getId(): int
@@ -118,6 +125,18 @@ class SaleOrder
     public function setClient(?Client $client): static
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getPriceList(): PriceList
+    {
+        return $this->priceList;
+    }
+
+    public function setPriceList(PriceList $priceList): static
+    {
+        $this->priceList = $priceList;
 
         return $this;
     }

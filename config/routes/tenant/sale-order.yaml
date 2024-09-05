@@ -13,7 +13,7 @@ tenant_sale_order_new:
     path: 
         en: /{_locale}/sale/new
         es: /{_locale}/venta/nueva
-    methods: GET
+    methods: GET|POST
     controller: Tenant\Controller\SaleOrderController::new
     requirements:
         _locale: '%app_locales%'

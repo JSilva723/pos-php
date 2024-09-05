@@ -28,9 +28,14 @@ class PriceList
     #[ORM\OneToMany(targetEntity: ProductPriceList::class, mappedBy: 'priceList')]
     private Collection $productPriceLists;
 
+    /** @var Collection<int, SaleOrder> */
+    #[ORM\OneToMany(targetEntity: SaleOrder::class, mappedBy: 'priceList')]
+    private Collection $saleOrders;
+
     public function __construct()
     {
         $this->productPriceLists = new ArrayCollection();
+        $this->saleOrders = new ArrayCollection();
         $this->isEnable = true;
     }
 
@@ -69,5 +74,13 @@ class PriceList
     public function getProductPriceLists(): Collection
     {
         return $this->productPriceLists;
+    }
+
+    /**
+     * @return Collection<int, SaleOrder>
+     */
+    public function getSaleOrders(): Collection
+    {
+        return $this->saleOrders;
     }
 }
