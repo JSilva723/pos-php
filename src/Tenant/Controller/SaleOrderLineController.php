@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Tenant\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tenant\Entity\SaleOrderLine;
 use Tenant\Repository\SaleOrderLineRepository;
 
 use function is_numeric;
@@ -23,6 +25,30 @@ class SaleOrderLineController extends AbstractController
             $price = $this->getValidatedFloat($request->get('price'), 'price');
 
             $saleOrderLineRepository->add($productId, $saleOrderId, $quantity, $price);
+
+            return $this->redirectToRoute('tenant_sale_order_show', [
+                'id' => $saleOrderId,
+            ], Response::HTTP_SEE_OTHER);
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+
+            return $this->redirectToRoute('tenant_sale_order_index', [], Response::HTTP_SEE_OTHER);
+        }
+    }
+
+    public function removeLine(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        try {
+            $saleOrderId = $this->getValidatedInt($request->get('id'), 'sale order');
+            $saleOrderLineId = $this->getValidatedInt($request->get('solid'), 'product');
+            $saleOrderLine = $entityManager->getRepository(SaleOrderLine::class)->find($saleOrderLineId);
+
+            if (!$saleOrderLine) {
+                throw new Exception('Order line not found');
+            }
+
+            $entityManager->remove($saleOrderLine);
+            $entityManager->flush();
 
             return $this->redirectToRoute('tenant_sale_order_show', [
                 'id' => $saleOrderId,

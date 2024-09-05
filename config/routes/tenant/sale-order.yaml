@@ -24,7 +24,7 @@ tenant_sale_order_show:
     path: 
         en: /{_locale}/sale/{id}
         es: /{_locale}/venta/{id}
-    methods: GET
+    methods: GET|POST
     controller: Tenant\Controller\SaleOrderController::show
     requirements:
         _locale: '%app_locales%'
