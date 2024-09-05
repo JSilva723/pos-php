@@ -1,0 +1,26 @@
+controllers:
+    resource: ../../../src/Tenant/Controller/
+    type: attribute
+    prefix: /{_locale}
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_index:
+    path: /{_locale}/
+    controller: Tenant\Controller\IndexController::index
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        template: index/index.html.twig
+        _locale: '%locale%'
+
+tenant_index_lang:
+    path: /{_locale}/lang/{lang}
+    controller: Tenant\Controller\IndexController::lang
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        template: index/index.html.twig
+        _locale: '%locale%'

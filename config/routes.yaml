@@ -1,12 +1,3 @@
-controllers:
-    resource: ../src/Tenant/Controller/
-    type: attribute
-    prefix: /{_locale}
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        _locale: '%locale%'
-
 root_route_redirect:
     path: /
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
@@ -14,41 +5,5 @@ root_route_redirect:
         path: '/%locale%/'
         permanent: false
 
-tenant_index:
-    path: /{_locale}/
-    controller: Tenant\Controller\IndexController::index
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        template: index/index.html.twig
-        _locale: '%locale%'
-
-tenant_lang:
-    path: /{_locale}/lang/{lang}
-    controller: Tenant\Controller\IndexController::lang
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        template: index/index.html.twig
-        _locale: '%locale%'
-
-tenant_login:
-    path: /{_locale}/login
-    methods: GET|POST
-    controller: Tenant\Controller\SecurityController::login
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        template: security/login.html.twig
-        _locale: '%locale%'
-
-tenant_logout:
-    path: /{_locale}/logout
-    controller: Tenant\Controller\SecurityController::logout
-    requirements:
-        _locale: '%app_locales%'
-    defaults:
-        _locale: '%locale%'
-
-tenant_user:
-    resource: 'routes/user.yaml'
+tenant:
+    resource: ./routes/tenant/*.yaml
