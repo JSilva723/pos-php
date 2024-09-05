@@ -1,0 +1,43 @@
+tenant_client_index:
+    path: 
+        en: /{_locale}/client
+        es: /{_locale}/cliente
+    methods: GET
+    controller: Tenant\Controller\ClientController::index
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_client_new:
+    path: 
+        en: /{_locale}/client/new
+        es: /{_locale}/cliente/nuevo
+    methods: GET|POST
+    controller: Tenant\Controller\ClientController::new
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_client_edit:
+    path: 
+        en: /{_locale}/client/{id}/edit
+        es: /{_locale}/cliente/{id}/editar
+    methods: GET|POST
+    controller: Tenant\Controller\ClientController::edit
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
+
+tenant_client_delete:
+    path: 
+        en: /{_locale}/client/{id}
+        es: /{_locale}/cliente/{id}
+    methods: POST
+    controller: Tenant\Controller\ClientController::delete
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'

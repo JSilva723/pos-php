@@ -21,7 +21,7 @@ class Product
     #[ORM\Column(length: 100)]
     private string $name;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, nullable: true)]
     private string $brand;
 
     #[ORM\Column(name: 'is_enable')]
