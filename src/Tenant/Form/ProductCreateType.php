@@ -16,7 +16,7 @@ use Tenant\Entity\Category;
 use Tenant\Entity\PriceList;
 use Tenant\Entity\Product;
 
-class ProductType extends StyledType
+class ProductCreateType extends StyledType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

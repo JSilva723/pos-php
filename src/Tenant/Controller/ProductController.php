@@ -10,7 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tenant\Entity\Product;
-use Tenant\Form\ProductType;
+use Tenant\Form\ProductCreateType;
+use Tenant\Form\ProductEditType;
 use Tenant\Repository\ProductPriceListRepository;
 use Tenant\Repository\ProductRepository;
 
@@ -38,7 +39,7 @@ class ProductController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, ProductPriceListRepository $productPriceListRepository): Response
     {
         $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductCreateType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -69,7 +70,7 @@ class ProductController extends AbstractController
 
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductEditType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

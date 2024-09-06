@@ -17,6 +17,8 @@ use Tenant\Form\SaleOrderOpenType;
 use Tenant\Repository\SaleOrderLineRepository;
 use Tenant\Repository\SaleOrderRepository;
 
+use function count;
+
 class SaleOrderController extends AbstractController
 {
     public function index(
@@ -100,17 +102,17 @@ class SaleOrderController extends AbstractController
         $total = 0;
 
         for ($i = 0; $i < count($orderLines); $i++) {
-            $subTotal = $orderLines[$i]['quantity'] * (int)$orderLines[$i]['price'];
+            $subTotal = $orderLines[$i]['quantity'] * (int) $orderLines[$i]['price'];
             $total += $subTotal;
-            $orderLines[$i]['subTotal'] = $subTotal; 
+            $orderLines[$i]['subTotal'] = $subTotal;
         }
-        
+
         return $this->render('sale-order/show.html.twig', [
             'saleOrder' => $saleOrder,
             'products' => $products,
             'orderLines' => $orderLines,
             'form' => $form,
-            'total' => $total
+            'total' => $total,
         ]);
     }
 }
