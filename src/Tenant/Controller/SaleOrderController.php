@@ -97,11 +97,20 @@ class SaleOrderController extends AbstractController
         $products = $saleOrderRepository->getProductsWhitPrice($saleOrder->getPriceList()->getId());
         $orderLines = $saleOrderLineRepository->getLinesById($saleOrder->getId());
 
+        $total = 0;
+
+        for ($i = 0; $i < count($orderLines); $i++) {
+            $subTotal = $orderLines[$i]['quantity'] * (int)$orderLines[$i]['price'];
+            $total += $subTotal;
+            $orderLines[$i]['subTotal'] = $subTotal; 
+        }
+        
         return $this->render('sale-order/show.html.twig', [
             'saleOrder' => $saleOrder,
             'products' => $products,
             'orderLines' => $orderLines,
             'form' => $form,
+            'total' => $total
         ]);
     }
 }

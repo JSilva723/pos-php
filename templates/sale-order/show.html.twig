@@ -4,22 +4,33 @@
 	<div class="{{ mc_class }}">
 		<div class="{{ mct_class }}">
 			<div class="flex flex-col">
-				<h5 class="class={{ mt_class }}">{{ 'Order'|trans}} N° {{ saleOrder.id }}</h5>
+				<h5 class="{{ mt_class }}">{{ 'Order'|trans}} N° {{ saleOrder.id }}</h5>
 				<div class="flex flex-col gap-4 md:flex-row">
 					<div class="w-full md:w-1/2">
 						<div class="w-full">
 							<p class="{{ dl_class }}">{{ 'Client'|trans }}</p>
 							<p class="{{ dc_class }}">{{ saleOrder.client.name }}</p>
 						</div>
+						{% if saleOrder.status != 'OPEN' %}
+							<div class="w-full">
+								<p class="{{ dl_class }}">{{ 'Payment'|trans }}</p>
+								<p class="{{ dc_class }}">{{ saleOrder.payment.name }}</p>
+							</div>
+						{% endif %}
 					</div>
 					<div class="w-full md:w-1/2">
 						<div class="w-full">
 							<p class="{{ dl_class }}">{{ 'Price list'|trans }}</p>
 							<p class="{{ dc_class }}">{{ saleOrder.priceList.name }}</p>
 						</div>
+						{% if saleOrder.status != 'OPEN' %}
+							<div class="w-full">
+								<p class="{{ dl_class }}">{{ 'Total'|trans }}</p>
+								<p class="{{ dc_class }}">$ {{ total }}</p>
+							</div>
+						{% endif %}
 					</div>
 				</div>
-			
 			</div>
 		</div>
 		<div class="{{ mct_class }} mt-2 mb-2">
@@ -27,9 +38,10 @@
 				<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 					<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 						<tr>
-							<th scope="col" class="{{ th_class }}">PRoduct</th>
-							<th scope="col" class="{{ th_class }}">Qty</th>
-							<th scope="col" class="{{ th_class }}">Price</th>
+							<th scope="col" class="{{ th_class }}">{{ 'Product'|trans }}</th>
+							<th scope="col" class="{{ th_class }}">{{ 'Quantity'|trans }}</th>
+							<th scope="col" class="{{ th_class }}">{{ 'Price'|trans }}</th>
+							<th scope="col" class="{{ th_class }}">{{ 'Subtotal'|trans }}</th>
 							{% if saleOrder.status == 'OPEN' %}
 								<th scope="col" class="{{ th_end_class }}">
 									{{ 'Actions'|trans}}
@@ -48,6 +60,9 @@
 								</td>
 								<td class="{{ td_class }}">
 									{{ line.price }}
+								</td>
+								<td class="{{ td_class }}">
+									{{ line.subTotal }}
 								</td>
 								{% if saleOrder.status == 'OPEN' %}
 									<td class="{{ td_end_class }}">
@@ -68,46 +83,45 @@
 								{% endif %}
 							</tr>
 						{% endfor %}
-						{% if saleOrder.status == 'OPEN' %}
-							<tr>
-								<td class="{{ td_class }}">
-									<div >
-										<label for="input-group-search" class="sr-only">{{ 'Search'|trans }}</label>
-										<div class="relative">
-											<div class="absolute ps-3 inset-y-0 rtl:inset-r-0 start-0 flex items-center pointer-events-none">
-												{{ include('components/icon_search.html.twig') }}
-											</div>
-											<input type="text" id="input-group-search" class="block w-full md:w-60 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{ 'Search'|trans }}">
-										</div>
-										<div class="absolute z-10 mt-2 bg-white rounded-lg shadow w-full md:w-60 dark:bg-gray-700 slistc" hidden>
-											<ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200 slist" aria-labelledby="dropdownSearchButton">
-												{% for product in products %}
-													<li class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white psearch" onclick="addProduct(this)" data-id="{{ product.id }}" data-price="{{ product.price }}">
-														{{ product.name }}
-													</li>
-												{% endfor %}
-											</ul>
-										</div>
-									</div>
-								</td>
-								<form method="POST" action="/sale-order/{{ saleOrder.id }}/line-add">
-									<input hidden type="number" id="input-product-id" name="pid"/>
-									<td class="{{ td_class }}">
-										<input type="number" name="quantity" id="input-product-quantity" class="{{ input_class }}"/>
-									</td>
-									<td class="{{ td_class }}">
-										<input type="number" id="input-product-price" name="price" class="{{ input_class }}"/> 
-									</td>
-									<td class="{{ td_end_class }}">
-										<button type="submit" class="{{ btn_success_class }} self-end">
-											{{ 'Add'|trans }}
-										</button>
-									</td>
-								</form>
-							</tr>
-						{% endif %}
 					</tbody>
 				</table>
+				{% if saleOrder.status == 'OPEN' %}
+					<form class="flex flex-col md:flex-row md:justify-between"  method="POST" action="/sale-order/{{ saleOrder.id }}/line-add">
+						<div class="{{ td_class }}">
+							<span class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ 'Product'|trans }}</span>
+							<label for="input-group-search" class="sr-only">{{ 'Search'|trans }}</label>
+							<div class="relative">
+								<div class="absolute ps-3 inset-y-0 rtl:inset-r-0 start-0 flex items-center pointer-events-none">
+									{{ include('components/icon_search.html.twig') }}
+								</div>
+								<input type="text" id="input-group-search" class="block w-full md:w-60 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{ 'Search'|trans }}">
+							</div>
+							<div class="absolute z-10 mt-2 bg-white rounded-lg shadow max-w-fit dark:bg-gray-700 slistc" hidden>
+								<ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200 slist">
+									{% for product in products %}
+										<li class="w-60 block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white psearch" onclick="addProduct(this)" data-id="{{ product.id }}" data-price="{{ product.price }}">
+											{{ product.name }}
+										</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+						<input hidden type="number" id="input-product-id" name="pid"/>
+						<div class="{{ td_class }}">
+							<label for="quantity" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ 'Quantity'|trans }}</label>
+							<input type="number" name="quantity" id="input-product-quantity" class="{{ input_class }}"/>
+						</div>
+						<div class="{{ td_class }}">
+							 <label for="price" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ 'Price'|trans }}</label>
+							<input type="number" id="input-product-price" name="price" class="{{ input_class }}"/> 
+						</div>
+						<div class="{{ td_end_class }}">
+							<button type="submit" class="{{ btn_success_class }} self-end">
+								{{ 'Add'|trans }}
+							</button>
+						</div>
+					</form>
+				{% endif %}
 			</div>
 		</div>
 		{% if saleOrder.status == 'OPEN' %}
@@ -119,7 +133,7 @@
 						</div>
 						<div class="w-full md:w-1/2">
 							<p class="{{ dl_class }}">{{ 'Total'|trans }}</p>
-							<p class="{{ dc_class }}">$ 1000</p>
+							<p class="{{ dc_class }}">$ {{ total }}</p>
 						</div>
 					</div>
 					<div class="mt-2 w-full flex justify-end">
