@@ -1,9 +1,2 @@
-root_route_redirect:
-    path: /
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
-    defaults:
-        path: '/%locale%/'
-        permanent: false
-
 tenant:
     resource: ./routes/tenant/*.yaml

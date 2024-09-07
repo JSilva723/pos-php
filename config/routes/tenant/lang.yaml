@@ -1,0 +1,8 @@
+tenant_index_lang:
+    path: /{_locale}/lang/{lang}
+    controller: Tenant\Controller\IndexController::lang
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        template: index/index.html.twig
+        _locale: '%locale%'

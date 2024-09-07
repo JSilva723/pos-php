@@ -30,7 +30,7 @@ security:
             form_login:
                 login_path: tenant_login
                 check_path: tenant_login
-                default_target_path: tenant_index
+                default_target_path: tenant_sale_order_index
                 enable_csrf: true
             logout:
                 path: tenant_logout

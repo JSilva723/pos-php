@@ -1,7 +1,5 @@
 tenant_sale_order_index:
-    path: 
-        en: /{_locale}/sale
-        es: /{_locale}/venta
+    path: /{_locale}/
     methods: GET
     controller: Tenant\Controller\SaleOrderController::index
     requirements:

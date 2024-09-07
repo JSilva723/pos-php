@@ -7,7 +7,6 @@ namespace Tenant\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
 use function array_filter;
@@ -19,11 +18,6 @@ use const PHP_URL_PATH;
 
 class IndexController extends AbstractController
 {
-    public function index(): Response
-    {
-        return $this->render('index/index.html.twig');
-    }
-
     public function lang(Request $request, string $lang, RouterInterface $router): RedirectResponse
     {
         $referer = $request->headers->get('referer');
@@ -40,6 +34,6 @@ class IndexController extends AbstractController
             return $this->redirectToRoute($routeName, $routeParams);
         }
 
-        return $this->redirectToRoute('tenant_index', ['_locale' => $lang]);
+        return $this->redirectToRoute('tenant_sale_order_index', ['_locale' => $lang]);
     }
 }
