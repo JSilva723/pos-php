@@ -58,4 +58,19 @@ class SaleOrderRepository extends ServiceEntityRepository
 
         return $qb->getArrayResult();
     }
+
+    public function closeOrder(int $saleOrderId, int $payment): void
+    {
+        $query = '
+        UPDATE Tenant\Entity\SaleOrder so 
+        SET so.payment = :payment, so.status = :status
+        WHERE so.id = :saleOrderId';
+
+        $qb = $this->getEntityManager()->createQuery($query);
+        $qb->setParameter('saleOrderId', $saleOrderId);
+        $qb->setParameter('payment', $payment);
+        $qb->setParameter('status', SaleOrder::STATUS_SUCCESS);
+
+        $qb->getResult();
+    }
 }

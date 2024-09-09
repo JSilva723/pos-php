@@ -29,3 +29,8 @@ tenant_sale_order_show:
     defaults:
         _locale: '%locale%'
 
+tenant_sale_order_close:
+    path: /sale/{soid}/close
+    methods: POST
+    controller: Tenant\Controller\SaleOrderController::close
+

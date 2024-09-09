@@ -18,6 +18,7 @@ use Tenant\Repository\SaleOrderLineRepository;
 use Tenant\Repository\SaleOrderRepository;
 
 use function count;
+use function is_numeric;
 
 class SaleOrderController extends AbstractController
 {
@@ -69,32 +70,21 @@ class SaleOrderController extends AbstractController
                 'saleOrder' => $saleOrder,
                 'form' => $form,
             ]);
-        } catch (Exception $e) {
+        } catch (Exception) {
             // TODO: handle this execption
             return $this->redirectToRoute('tenant_sale_order_index');
         }
     }
 
     public function show(
-        Request $request,
         SaleOrder $saleOrder,
         SaleOrderRepository $saleOrderRepository,
         SaleOrderLineRepository $saleOrderLineRepository,
-        EntityManagerInterface $entityManager,
     ): Response {
-        $form = $this->createForm(SaleOrderCloseType::class, $saleOrder);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $saleOrder->setStatus(SaleOrder::STATUS_SUCCESS);
-            $entityManager->persist($saleOrder);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('tenant_sale_order_show', [
-                'id' => $saleOrder->getId(),
-                'saleOrder' => $saleOrder,
-            ], Response::HTTP_SEE_OTHER);
-        }
+        $form = $this->createForm(SaleOrderCloseType::class, $saleOrder, [
+            'action' => $this->generateUrl('tenant_sale_order_close', ['soid' => $saleOrder->getId()]),
+            'method' => 'POST',
+        ]);
 
         $products = $saleOrderRepository->getProductsWhitPrice($saleOrder->getPriceList()->getId());
         $orderLines = $saleOrderLineRepository->getLinesById($saleOrder->getId());
@@ -114,5 +104,33 @@ class SaleOrderController extends AbstractController
             'form' => $form,
             'total' => $total,
         ]);
+    }
+
+    public function close(
+        Request $request,
+        SaleOrderRepository $saleOrderRepository,
+    ): Response {
+        try {
+            $saleOrderId = $this->getValidatedInt($request->get('soid'), 'sale order');
+            $paymentId = $this->getValidatedInt($request->get('sale_order_close')['payment'], 'payment');
+
+            $saleOrderRepository->closeOrder($saleOrderId, $paymentId);
+
+            return $this->redirectToRoute('tenant_sale_order_show', [
+                'id' => $saleOrderId,
+            ], Response::HTTP_SEE_OTHER);
+        } catch (Exception) {
+            // TODO: handle this execption
+            return $this->redirectToRoute('tenant_sale_order_index', [], Response::HTTP_SEE_OTHER);
+        }
+    }
+
+    private function getValidatedInt(string $value, string $type): int
+    {
+        if (!$value || !is_numeric($value)) {
+            throw new Exception("{$type} is required and must be a number");
+        }
+
+        return (int) $value;
     }
 }
