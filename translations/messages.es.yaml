@@ -42,3 +42,5 @@ Select a price list: Selecione una lista de precio
 Brand: Marca
 Select a client: Selecione un cliente
 Client: Cliente
+validation.number_required: property es requerido y debe ser un número
+validation.property.product: producto

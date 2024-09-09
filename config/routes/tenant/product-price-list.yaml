@@ -1,9 +1,17 @@
 tenant_product_price_list_create:
-    path: /product-price-list/create
+    path: /{_locale}/product-price-list/create
     methods: POST
     controller: Tenant\Controller\ProductPriceListController::create
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
 
 tenant_product_price_list_update:
-    path: /product-price-list/{pplid}/update
+    path: /{_locale}/product-price-list/{pplid}/update
     methods: POST
     controller: Tenant\Controller\ProductPriceListController::update
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'

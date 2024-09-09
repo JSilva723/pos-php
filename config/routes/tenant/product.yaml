@@ -54,6 +54,10 @@ tenant_product_delete:
         _locale: '%locale%'
 
 tenant_product_upload:
-    path: /product-upload
+    path:  /{_locale}/product-upload
     methods: POST
     controller: Tenant\Controller\ProductController::upload
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'

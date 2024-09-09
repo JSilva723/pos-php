@@ -21,32 +21,45 @@ class SaleOrderLineRepository extends ServiceEntityRepository
     /**
      * @return array<array<string, mixed>>
      */
-    public function getLinesById(int $soid): array
+    public function getLinesById(int $saleOrderId): array
     {
         $query = '
         SELECT p.name, sol.quantity, sol.price, sol.id
         FROM Tenant\Entity\SaleOrderLine sol
         INNER JOIN Tenant\Entity\Product p WITH p.id = sol.product
-        WHERE sol.saleOrder = :soid';
+        WHERE sol.saleOrder = :saleOrderId';
 
         $qb = $this->getEntityManager()->createQuery($query);
-        $qb->setParameter('soid', $soid);
+        $qb->setParameter('saleOrderId', $saleOrderId);
 
         return $qb->getArrayResult();
     }
 
-    public function add(int $pid, int $soid, int $quantity, float $price): void
+    public function addLine(int $productId, int $saleOrderId, int $quantity, float $price): void
     {
         $query = '
         INSERT INTO sale_order_line (product_id, sale_order_id, quantity, price)
-        VALUES (:pid, :soid, :quantity, :price)';
+        VALUES (:productId, :saleOrderId, :quantity, :price)';
 
         // SQL Prepared Statements: Named
         $stmt = $this->getEntityManager()->getConnection()->prepare($query);
-        $stmt->bindValue('pid', $pid);
-        $stmt->bindValue('soid', $soid);
+        $stmt->bindValue('productId', $productId);
+        $stmt->bindValue('saleOrderId', $saleOrderId);
         $stmt->bindValue('quantity', $quantity);
         $stmt->bindValue('price', $price);
+        $stmt->executeQuery();
+    }
+
+    public function removeLine(int $saleOrderLineId): void
+    {
+        $query = '
+        DELETE FROM sale_order_line
+        WHERE id = :saleOrderLineId';
+
+        // SQL Prepared Statements: Named
+        $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+        $stmt->bindValue('saleOrderLineId', $saleOrderLineId);
+
         $stmt->executeQuery();
     }
 }

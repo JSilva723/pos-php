@@ -1,14 +1,5 @@
 {% extends 'components/table.html.twig' %}
 
-{% block flash %}
-	{% for message in app.session.flashBag.get('error') %}
-		{{ include('components/flash_error.html.twig',{ 'message': message }) }}
-	{% endfor %}
-	{% for message in app.session.flashBag.get('success') %}
-		{{ include('components/flash_success.html.twig',{ 'message': message }) }}
-	{% endfor %}
-{% endblock %}
-
 {% block tTitle %}
 	{{ include('components/search.html.twig',{ 'new': '','title': priceList.name }) }}
 {% endblock %}
@@ -34,7 +25,7 @@
 			</td>
 			<td class="{{ td_class }}">
 			{% if product.pplid %}
-				<form class="flex items-center w-full" method="POST" action="/product-price-list/{{ product.pplid }}/update">
+				<form class="flex items-center w-full" method="POST" action="{{ path('tenant_product_price_list_update', { 'pplid': product.pplid }) }}">
 					<input type="number" name="price" class="{{ input_class }}" value={{ product.price }}>
 					<input hidden name="lid"  value={{ priceList.id }}>
 					<button type="submit" class="{{ btn_icon_class }}">
@@ -42,8 +33,8 @@
 					</button>
 				</form>
 			{% else %}
-				<form class="flex items-center w-full" method="POST" action="/product-price-list/create">
-				<input hidden name="pid"  value={{ product.id }}>
+				<form class="flex items-center w-full" method="POST" action="{{ path('tenant_product_price_list_create') }}">
+					<input hidden name="pid"  value={{ product.id }}>
 					<input hidden name="lid"  value={{ priceList.id }}>
 					<input type="number" name="price" class="{{ input_class }}" value={{ product.price }}>
 					<button type="submit" class="{{ btn_icon_class }}">

@@ -1,9 +1,17 @@
 tenant_sale_order_line_add:
-    path: /sale-order/{id}/line-add
+    path: /{_locale}/sale-order/{soid}/line-add
     methods: POST
     controller: Tenant\Controller\SaleOrderLineController::addLine
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
 
 tenant_sale_order_line_remove:
-    path: /sale-order/{id}/line-remove/{solid}
+    path: /{_locale}/sale-order/{soid}/line-remove/{solid}
     methods: POST
     controller: Tenant\Controller\SaleOrderLineController::removeLine
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _locale: '%locale%'
