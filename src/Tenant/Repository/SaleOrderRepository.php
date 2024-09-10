@@ -59,7 +59,7 @@ class SaleOrderRepository extends ServiceEntityRepository
         return $qb->getArrayResult();
     }
 
-    public function closeOrder(int $saleOrderId, int $payment): void
+    public function updatePayment(int $saleOrderId, int $payment): void
     {
         $query = '
         UPDATE Tenant\Entity\SaleOrder so 
@@ -72,5 +72,27 @@ class SaleOrderRepository extends ServiceEntityRepository
         $qb->setParameter('status', SaleOrder::STATUS_SUCCESS);
 
         $qb->getResult();
+    }
+
+    /**
+     * @param array<array<string, mixed>> $orderLines
+     */
+    public function updateStock(array $orderLines): void
+    {
+        $query = '
+        UPDATE Tenant\Entity\Product p
+        SET p.stock = p.stock - :quantity
+        WHERE p.id = :productId';
+
+        $qbBase = $this->getEntityManager()->createQuery($query);
+
+        foreach ($orderLines as $line) {
+            $qb = clone $qbBase;
+
+            $qb->setParameter('productId', $line['id']);
+            $qb->setParameter('quantity', $line['quantity']);
+
+            $qb->execute();
+        }
     }
 }

@@ -26,6 +26,7 @@ class SaleOrderController extends AbstractController
         private readonly SaleOrderRepository $saleOrderRepository,
         private readonly ValidateParams $validateParams,
         private readonly EntityManagerInterface $entityManager,
+        private readonly SaleOrderLineRepository $saleOrderLineRepository,
     ) {}
 
     public function index(Request $request, PaginatorInterface $paginator): Response
@@ -68,7 +69,7 @@ class SaleOrderController extends AbstractController
         ]);
     }
 
-    public function show(Request $request, SaleOrderLineRepository $saleOrderLineRepository): Response
+    public function show(Request $request): Response
     {
         try {
             $saleOrderId = $this->validateParams->validatedInt($request->get('id'), 'sale order');
@@ -84,7 +85,7 @@ class SaleOrderController extends AbstractController
             ]);
 
             $products = $this->saleOrderRepository->getProductsWhitPrice($saleOrder->getPriceList()->getId());
-            $orderLines = $saleOrderLineRepository->getLinesById($saleOrder->getId());
+            $orderLines = $this->saleOrderLineRepository->getLinesById($saleOrder->getId());
 
             $total = 0;
 
@@ -114,18 +115,29 @@ class SaleOrderController extends AbstractController
             $saleOrderId = $this->validateParams->validatedInt($request->get('soid'), 'sale order');
             $paymentId = $this->validateParams->validatedInt($request->get('sale_order_close')['payment'], 'payment');
 
-            $this->saleOrderRepository->closeOrder($saleOrderId, $paymentId);
+            $orderLines = $this->saleOrderLineRepository->getLinesById($saleOrderId);
+
+            $this->entityManager->beginTransaction();
+
+            try {
+                $this->saleOrderRepository->updatePayment($saleOrderId, $paymentId);
+                $this->saleOrderRepository->updateStock($orderLines);
+                $this->entityManager->commit();
+            } catch (Exception $e) {
+                $this->entityManager->rollback();
+
+                throw $e;
+            } finally {
+                $this->entityManager->close();
+            }
 
             return $this->redirectToRoute('tenant_sale_order_show', [
                 'id' => $saleOrderId,
             ], Response::HTTP_SEE_OTHER);
         } catch (Exception $e) {
             $this->addFlash('error', $e->getMessage());
-
-            $route = isset($saleOrderId) ? 'tenant_sale_order_show' : 'tenant_sale_order_index';
-            $params = isset($saleOrderId) ? ['id' => $saleOrderId] : [];
-
-            return $this->redirectToRoute($route, $params, Response::HTTP_SEE_OTHER);
         }
+
+        return $this->redirectToRoute('tenant_sale_order_show', ['id' => $saleOrderId], Response::HTTP_SEE_OTHER);
     }
 }
