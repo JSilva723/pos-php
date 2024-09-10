@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tenant\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,34 +13,39 @@ use Symfony\Component\HttpFoundation\Response;
 use Tenant\Entity\Category;
 use Tenant\Form\CategoryType;
 use Tenant\Repository\CategoryRepository;
+use Tenant\Services\ValidateParams;
 
 class CategoryController extends AbstractController
 {
-    public function index(Request $request, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
+    public function __construct(
+        private readonly CategoryRepository $categoryRepository,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly ValidateParams $validateParams,
+    ) {}
+
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $q = $request->get('q', '');
-        $query = $categoryRepository->findByQ($q);
+        $query = $this->categoryRepository->findByQ($q);
+        $pageNumber =  $request->query->getInt('page', 1);
+        $limit = 10;
 
-        $pagination = $paginator->paginate(
-            $query, // query NOT result
-            $request->query->getInt('page', 1), // page number
-            10, // limit per page
-        );
+        $pagination = $paginator->paginate($query, $pageNumber, $limit);
 
         return $this->render('category/index.html.twig', [
             'pagination' => $pagination,
         ]);
     }
 
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($category);
-            $entityManager->flush();
+            $this->entityManager->persist($category);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('tenant_category_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -50,34 +56,66 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    public function show(Category $category): Response
+    public function show(Request $request): Response
     {
-        return $this->render('category/show.html.twig', [
-            'category' => $category,
-        ]);
-    }
+        try {
+            $categoryId = $this->validateParams->validatedInt($request->get('id'), 'category');
+            $category = $this->entityManager->getRepository(Category::class)->find($categoryId);
 
-    public function edit(Request $request, Category $category, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
+            if (!$category) {
+                throw new Exception('Category not found');
+            }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            return $this->render('category/show.html.twig', [
+                'category' => $category,
+            ]);
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
 
             return $this->redirectToRoute('tenant_category_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->render('category/edit.html.twig', [
-            'category' => $category,
-            'form' => $form,
-        ]);
     }
 
-    public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    public function edit(Request $request): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->getPayload()->getString('_token'))) {
-            $categoryRepository->disable($category->getId());
+        try {
+            $categoryId = $this->validateParams->validatedInt($request->get('id'), 'category');
+            $category = $this->entityManager->getRepository(Category::class)->find($categoryId);
+
+            if (!$category) {
+                throw new Exception('Category not found');
+            }
+
+            $form = $this->createForm(CategoryType::class, $category);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->flush();
+
+                return $this->redirectToRoute('tenant_category_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('category/edit.html.twig', [
+                'category' => $category,
+                'form' => $form,
+            ]);
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+
+            return $this->redirectToRoute('tenant_category_index', [], Response::HTTP_SEE_OTHER);
+        }
+    }
+
+    public function delete(Request $request): Response
+    {
+        try {
+            $categoryId = $this->validateParams->validatedInt($request->get('id'), 'category');
+
+            if ($this->isCsrfTokenValid('delete' . $categoryId, $request->getPayload()->getString('_token'))) {
+                $this->categoryRepository->disable($categoryId);
+            }
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
         }
 
         return $this->redirectToRoute('tenant_category_index', [], Response::HTTP_SEE_OTHER);
