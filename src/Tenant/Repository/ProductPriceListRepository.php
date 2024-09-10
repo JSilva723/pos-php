@@ -50,11 +50,24 @@ class ProductPriceListRepository extends ServiceEntityRepository
         INSERT INTO product_price_list (product_id, price_list_id, price)
         VALUES (:pid, :lid, :price)';
 
-        // SQL Prepared Statements: Named
         $stmt = $this->getEntityManager()->getConnection()->prepare($query);
         $stmt->bindValue('pid', $pid);
         $stmt->bindValue('lid', $lid);
         $stmt->bindValue('price', $price);
         $stmt->executeQuery();
+    }
+
+    public function update(float $price, int $productPriceListId): void
+    {
+        $query = '
+        UPDATE Tenant\Entity\ProductPriceList ppl
+        SET ppl.price = :price 
+        WHERE ppl.id = :productPriceListId';
+
+        $qb = $this->getEntityManager()->createQuery($query);
+        $qb->setParameter('productPriceListId', $productPriceListId);
+        $qb->setParameter('price', $price);
+
+        $qb->execute();
     }
 }
