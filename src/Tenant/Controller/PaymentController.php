@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tenant\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,34 +13,39 @@ use Symfony\Component\HttpFoundation\Response;
 use Tenant\Entity\Payment;
 use Tenant\Form\PaymentType;
 use Tenant\Repository\PaymentRepository;
+use Tenant\Services\ValidateParams;
 
 class PaymentController extends AbstractController
 {
-    public function index(Request $request, PaymentRepository $paymentRepository, PaginatorInterface $paginator): Response
+    public function __construct(
+        private readonly PaymentRepository $paymentRepository,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly ValidateParams $validateParams,
+    ) {}
+
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $q = $request->get('q', '');
-        $query = $paymentRepository->findByQ($q);
+        $query = $this->paymentRepository->findByQ($q);
+        $pageNeumber = $request->query->getInt('page', 1);
+        $limit = 10;
 
-        $pagination = $paginator->paginate(
-            $query, // query NOT result
-            $request->query->getInt('page', 1), // page number
-            10, // limit per page
-        );
+        $pagination = $paginator->paginate($query, $pageNeumber, $limit);
 
         return $this->render('payment/index.html.twig', [
             'pagination' => $pagination,
         ]);
     }
 
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request): Response
     {
         $payment = new Payment();
         $form = $this->createForm(PaymentType::class, $payment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($payment);
-            $entityManager->flush();
+            $this->entityManager->persist($payment);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('tenant_payment_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -50,34 +56,66 @@ class PaymentController extends AbstractController
         ]);
     }
 
-    public function show(Payment $payment): Response
+    public function show(Request $request): Response
     {
-        return $this->render('payment/show.html.twig', [
-            'payment' => $payment,
-        ]);
-    }
+        try {
+            $paymentId = $this->validateParams->validatedInt($request->get('id'), 'payment');
+            $payment = $this->entityManager->getRepository(Payment::class)->find($paymentId);
 
-    public function edit(Request $request, Payment $payment, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(PaymentType::class, $payment);
-        $form->handleRequest($request);
+            if (!$payment) {
+                throw new Exception('Payment not found');
+            }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            return $this->render('payment/show.html.twig', [
+                'payment' => $payment,
+            ]);
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
 
             return $this->redirectToRoute('tenant_payment_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->render('payment/edit.html.twig', [
-            'payment' => $payment,
-            'form' => $form,
-        ]);
     }
 
-    public function delete(Request $request, Payment $payment, PaymentRepository $paymentRepository): Response
+    public function edit(Request $request): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $payment->getId(), $request->getPayload()->getString('_token'))) {
-            $paymentRepository->disable($payment->getId());
+        try {
+            $paymentId = $this->validateParams->validatedInt($request->get('id'), 'payment');
+            $payment = $this->entityManager->getRepository(Payment::class)->find($paymentId);
+
+            if (!$payment) {
+                throw new Exception('Payment not found');
+            }
+
+            $form = $this->createForm(PaymentType::class, $payment);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->flush();
+
+                return $this->redirectToRoute('tenant_payment_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('payment/edit.html.twig', [
+                'payment' => $payment,
+                'form' => $form,
+            ]);
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+
+            return $this->redirectToRoute('tenant_payment_index', [], Response::HTTP_SEE_OTHER);
+        }
+    }
+
+    public function delete(Request $request): Response
+    {
+        try {
+            $paymentId = $this->validateParams->validatedInt($request->get('id'), 'payment');
+
+            if ($this->isCsrfTokenValid('delete' . $paymentId, $request->getPayload()->getString('_token'))) {
+                $this->paymentRepository->disable($paymentId);
+            }
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
         }
 
         return $this->redirectToRoute('tenant_payment_index', [], Response::HTTP_SEE_OTHER);
