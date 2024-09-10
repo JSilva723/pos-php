@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tenant\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,34 +13,39 @@ use Symfony\Component\HttpFoundation\Response;
 use Tenant\Entity\Client;
 use Tenant\Form\ClientType;
 use Tenant\Repository\ClientRepository;
+use Tenant\Services\ValidateParams;
 
 class ClientController extends AbstractController
 {
-    public function index(Request $request, ClientRepository $clientRepository, PaginatorInterface $paginator): Response
+    public function __construct(
+        private readonly ClientRepository $clientRepository,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly ValidateParams $validateParams,
+    ) {}
+
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $q = $request->get('q', '');
-        $query = $clientRepository->findByQ($q);
+        $query = $this->clientRepository->findByQ($q);
+        $pageNumber = $request->query->getInt('page', 1);
+        $limit = 10;
 
-        $pagination = $paginator->paginate(
-            $query, // query NOT result
-            $request->query->getInt('page', 1), // page number
-            10, // limit per page
-        );
+        $pagination = $paginator->paginate($query, $pageNumber, $limit);
 
         return $this->render('client/index.html.twig', [
             'pagination' => $pagination,
         ]);
     }
 
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request): Response
     {
         $client = new Client();
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($client);
-            $entityManager->flush();
+            $this->entityManager->persist($client);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('tenant_client_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -50,34 +56,66 @@ class ClientController extends AbstractController
         ]);
     }
 
-    public function show(Client $client): Response
+    public function show(Request $request): Response
     {
-        return $this->render('client/show.html.twig', [
-            'client' => $client,
-        ]);
-    }
+        try {
+            $cientId = $this->validateParams->validatedInt($request->get('id'), 'client');
+            $client = $this->entityManager->getRepository(Client::class)->find($cientId);
 
-    public function edit(Request $request, Client $client, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(ClientType::class, $client);
-        $form->handleRequest($request);
+            if (!$client) {
+                throw new Exception('Client not found');
+            }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            return $this->render('client/show.html.twig', [
+                'client' => $client,
+            ]);
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
 
             return $this->redirectToRoute('tenant_client_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->render('client/edit.html.twig', [
-            'client' => $client,
-            'form' => $form,
-        ]);
     }
 
-    public function delete(Request $request, Client $client, ClientRepository $clientRepository): Response
+    public function edit(Request $request): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $client->getId(), $request->getPayload()->getString('_token'))) {
-            $clientRepository->disable($client->getId());
+        try {
+            $cientId = $this->validateParams->validatedInt($request->get('id'), 'client');
+            $client = $this->entityManager->getRepository(Client::class)->find($cientId);
+
+            if (!$client) {
+                throw new Exception('Client not found');
+            }
+
+            $form = $this->createForm(ClientType::class, $client);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->flush();
+
+                return $this->redirectToRoute('tenant_client_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('client/edit.html.twig', [
+                'client' => $client,
+                'form' => $form,
+            ]);
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+
+            return $this->redirectToRoute('tenant_client_index', [], Response::HTTP_SEE_OTHER);
+        }
+    }
+
+    public function delete(Request $request): Response
+    {
+        try {
+            $cientId = $this->validateParams->validatedInt($request->get('id'), 'client');
+
+            if ($this->isCsrfTokenValid('delete' . $cientId, $request->getPayload()->getString('_token'))) {
+                $this->clientRepository->disable($cientId);
+            }
+        } catch (Exception $e) {
+            $this->addFlash('error', $e->getMessage());
         }
 
         return $this->redirectToRoute('tenant_client_index', [], Response::HTTP_SEE_OTHER);
