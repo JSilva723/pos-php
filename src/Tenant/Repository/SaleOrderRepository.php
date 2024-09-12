@@ -81,7 +81,7 @@ class SaleOrderRepository extends ServiceEntityRepository
     {
         $query = '
         UPDATE Tenant\Entity\Product p
-        SET p.stock = p.stock - :quantity
+        SET p.stockQuantity = p.stockQuantity - :quantity
         WHERE p.id = :productId';
 
         $qbBase = $this->getEntityManager()->createQuery($query);

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tenant\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,8 +14,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
+use Tenant\Config\UnitOfMeasure;
 use Tenant\Entity\Category;
 use Tenant\Entity\Product;
+
+use function array_combine;
+use function array_map;
 
 class ProductEditType extends StyledType
 {
@@ -66,11 +72,27 @@ class ProductEditType extends StyledType
                     new PositiveOrZero(),
                 ],
             ])
+            ->add('unitOfMeasure', ChoiceType::class, [
+                'label' => 'Unit of measure',
+                'row_attr' => ['class' => 'w-full'],
+                'label_attr' => ['class' => self::LABEL_ATTR],
+                'attr' => ['class' => self::INPUT_ATTR],
+                'choices' => array_combine(
+                    array_map(fn (UnitOfMeasure $uom) => $uom->getLabel(), UnitOfMeasure::cases()),
+                    UnitOfMeasure::cases(),
+                ),
+                'required' => true,
+            ])
             ->add('category', EntityType::class, [
                 'row_attr' => ['class' => 'w-full'],
                 'label_attr' => ['class' => self::LABEL_ATTR],
                 'attr' => ['class' => self::INPUT_ATTR],
                 'class' => Category::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->where('c.isEnable = :enabled')
+                        ->setParameter('enabled', true);
+                },
                 'choice_label' => 'name',
                 'placeholder' => 'Select a category',
             ]);

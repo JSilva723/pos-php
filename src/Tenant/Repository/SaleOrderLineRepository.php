@@ -24,7 +24,7 @@ class SaleOrderLineRepository extends ServiceEntityRepository
     public function getLinesById(int $saleOrderId): array
     {
         $query = '
-        SELECT p.id, p.name, sol.quantity, sol.price, sol.id as solid
+        SELECT p.id, p.name, p.unitOfMeasure as uom, sol.quantity, sol.price, sol.id as solid
         FROM Tenant\Entity\SaleOrderLine sol
         INNER JOIN Tenant\Entity\Product p WITH p.id = sol.product
         WHERE sol.saleOrder = :saleOrderId';

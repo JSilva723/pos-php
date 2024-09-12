@@ -101,7 +101,9 @@ class ProductController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->entityManager->flush();
 
-                return $this->redirectToRoute('tenant_product_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('tenant_product_show', [
+                    'id' => $productId,
+                ], Response::HTTP_SEE_OTHER);
             }
 
             return $this->render('product/edit.html.twig', [
@@ -111,7 +113,10 @@ class ProductController extends AbstractController
         } catch (Exception $e) {
             $this->addFlash('error', $e->getMessage());
 
-            return $this->redirectToRoute('tenant_product_index', [], Response::HTTP_SEE_OTHER);
+            $route = $productId ? 'tenant_product_show' : 'tenant_product_index';
+            $params = $productId ? ['id' => $productId] : [];
+
+            return $this->redirectToRoute($route, $params, Response::HTTP_SEE_OTHER);
         }
     }
 

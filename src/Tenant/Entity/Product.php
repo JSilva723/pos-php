@@ -7,6 +7,7 @@ namespace Tenant\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Tenant\Config\UnitOfMeasure;
 use Tenant\Repository\ProductRepository;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -57,12 +58,16 @@ class Product
 
     private PriceList $priceList;
 
+    #[ORM\Column(name: 'unit_of_measure')]
+    private UnitOfMeasure $unitOfMeasure;
+
     public function __construct()
     {
         $this->productPriceLists = new ArrayCollection();
         $this->saleOrderLines = new ArrayCollection();
         $this->isEnable = true;
         $this->stockMin = 1;
+        $this->unitOfMeasure = UnitOfMeasure::UNIT;
     }
 
     public function getId(): int
@@ -214,6 +219,18 @@ class Product
     public function setPriceList(PriceList $priceList): static
     {
         $this->priceList = $priceList;
+
+        return $this;
+    }
+
+    public function getUnitOfMeasure(): UnitOfMeasure
+    {
+        return $this->unitOfMeasure;
+    }
+
+    public function setUnitOfMeasure(UnitOfMeasure $unitOfMeasure): static
+    {
+        $this->unitOfMeasure = $unitOfMeasure;
 
         return $this;
     }

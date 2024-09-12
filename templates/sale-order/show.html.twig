@@ -40,6 +40,7 @@
 						<tr>
 							<th scope="col" class="{{ th_class }}">{{ 'Product'|trans }}</th>
 							<th scope="col" class="{{ th_class }}">{{ 'Quantity'|trans }}</th>
+							<th scope="col" class="{{ th_class }}">{{ 'UOM'|trans }}</th>
 							<th scope="col" class="{{ th_class }}">{{ 'Price'|trans }}</th>
 							<th scope="col" class="{{ th_class }}">{{ 'Subtotal'|trans }}</th>
 							{% if saleOrder.status == 'OPEN' %}
@@ -57,6 +58,9 @@
 								</td>
 								<td class="{{ td_class }}">
 									{{ line.quantity }}
+								</td>
+								<td class="{{ td_class }}">
+									{{ line.uom.getLabel()|trans }}
 								</td>
 								<td class="{{ td_class }}">
 									{{ line.price }}
