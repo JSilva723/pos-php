@@ -60,7 +60,11 @@
 									{{ line.quantity }}
 								</td>
 								<td class="{{ td_class }}">
-									{{ line.uom.getLabel()|trans }}
+									{% if line.uomfs %}
+										{{ line.uomfs.getLabel()|trans }}
+									{% else %}
+										{{ line.uom.getLabel()|trans }}
+									{% endif %}
 								</td>
 								<td class="{{ td_class }}">
 									{{ line.price }}
