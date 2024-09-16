@@ -14,6 +14,3 @@ import './bootstrap';
 
 // enable the interactive UI components from Flowbite
 import 'flowbite';
-
-// TODO: move to page
-import './js/validate-input-number.js'

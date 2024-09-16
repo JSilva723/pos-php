@@ -48,3 +48,8 @@
 		{{ include('components/no_records.html.twig') }}
 	{% endfor %}
 {% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('validate-input-number') }}
+{% endblock %}
