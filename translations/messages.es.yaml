@@ -27,7 +27,7 @@ Payment methods: Métodos de pago
 Categories: Categorías
 New product: Nuevo producto
 Price: Precio
-Category: Categoria
+Category: Categoría
 Select a category: Selecione una categoría
 Image: Imagen
 Add: Agregar
@@ -46,5 +46,11 @@ validation.number_required: property es requerido y debe ser un número
 validation.property.product: producto
 Unit of measure: Unidad de medida
 Unit: Unidad
+Kilogram: Kilogramo
+Liter: Litro
+Meter: Metro
 Gram: Gramos
 Milliliters: Mililitros
+Centimeter: Centimetros
+Is fractionable: Es fraccionable
+Stock minimum: Stock mínimo

@@ -9,6 +9,7 @@ enum UnitOfMeasure: int
     case UNIT = 0;
     case KILOGRAM = 1;
     case LITER = 2;
+    case METER = 3;
 
     public function getLabel(): string
     {
@@ -16,6 +17,7 @@ enum UnitOfMeasure: int
             self::UNIT => 'Unit',
             self::KILOGRAM => 'Kilogram',
             self::LITER => 'Liter',
+            self::METER => 'Meter',
         };
     }
 }

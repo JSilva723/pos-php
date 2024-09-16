@@ -49,6 +49,13 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $isFractionable = $form->get('isFractionable')->getData();
+
+            if ($isFractionable) {
+                $unitOfMeasure = $form->get('unitOfMeasure')->getData();
+                $product->setUnitOfMeasureForSale($unitOfMeasure);
+            }
+
             $this->entityManager->persist($product);
             $this->entityManager->flush();
 

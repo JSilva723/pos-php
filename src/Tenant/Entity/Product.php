@@ -8,12 +8,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Tenant\Config\UnitOfMeasure;
+use Tenant\Config\UnitOfMeasureForSale;
 use Tenant\Repository\ProductRepository;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ORM\Table(name: 'product')]
 class Product
 {
+    public const SUBUNITS = [
+        UnitOfMeasure::KILOGRAM->value => UnitOfMeasureForSale::GRAM,
+        UnitOfMeasure::LITER->value => UnitOfMeasureForSale::MILILITER,
+        UnitOfMeasure::METER->value => UnitOfMeasureForSale::CENTIMETER,
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -60,6 +67,9 @@ class Product
 
     #[ORM\Column(name: 'unit_of_measure')]
     private UnitOfMeasure $unitOfMeasure;
+
+    #[ORM\Column(name: 'unit_of_measure_for_sale', options: ['default' => null], nullable: true)]
+    private ?UnitOfMeasureForSale $unitOfMeasureForSale = null;
 
     public function __construct()
     {
@@ -231,6 +241,22 @@ class Product
     public function setUnitOfMeasure(UnitOfMeasure $unitOfMeasure): static
     {
         $this->unitOfMeasure = $unitOfMeasure;
+
+        return $this;
+    }
+
+    public function getUnitOfMeasureForSale(): ?UnitOfMeasureForSale
+    {
+        return $this->unitOfMeasureForSale;
+    }
+
+    public function setUnitOfMeasureForSale(?UnitOfMeasure $unitOfMeasure): static
+    {
+        if ($unitOfMeasure) {
+            $this->unitOfMeasureForSale = self::SUBUNITS[$unitOfMeasure->value];
+        } else {
+            $this->unitOfMeasureForSale = null;
+        }
 
         return $this;
     }

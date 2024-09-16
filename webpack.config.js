@@ -22,6 +22,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('sale-order', './assets/js/sale-order.js')
+    .addEntry('toggle-hidden', './assets/js/toggle-hidden.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
