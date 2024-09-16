@@ -45,6 +45,7 @@ Client: Cliente
 validation.number_required: property es requerido y debe ser un número
 validation.property.product: producto
 Unit of measure: Unidad de medida
+Unit of measure for sale: Unidad de medida para venta
 Unit: Unidad
 Kilogram: Kilogramo
 Liter: Litro

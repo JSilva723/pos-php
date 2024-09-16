@@ -11,17 +11,27 @@
 					<p class="{{ dc_class }}">{{ product.category.name }}</p>
 				</div>
 				<div class="w-full">
+					<p class="{{ dl_class }}">{{ 'Unit of measure'|trans }}</p>
+					<p class="{{ dc_class }}">{{ product.unitOfMeasure.getLabel()|trans }}</p>
+				</div>
+				<div class="w-full">
 					<p class="{{ dl_class }}">{{ 'Stock'|trans }}</p>
 					<p class="{{ dc_class }}">{{ product.stockQuantity }}</p>
 				</div>
 				<div class="w-full">
-					<p class="{{ dl_class }}">{{ 'Unit of measure'|trans }}</p>
-					<p class="{{ dc_class }}">{{ product.unitOfMeasure.getLabel() }}</p>
+					<p class="{{ dl_class }}">{{ 'Stock minimum'|trans }}</p>
+					<p class="{{ dc_class }}">{{ product.stockMin }}</p>
 				</div>
 				{% if  product.sku  %}
 					<div class="w-full">
 						<p class="{{ dl_class }}">{{ 'SKU' }}</p>
 						<p class="{{ dc_class }}">{{ product.sku }}</p>
+					</div>
+				{% endif %}
+				{% if  product.unitOfMeasureForSale  %}
+					<div class="w-full">
+						<p class="{{ dl_class }}">{{ 'Is fractionable'|trans }}. {{ 'Unit of measure for sale'|trans }}</p>
+						<p class="{{ dc_class }}">{{ product.unitOfMeasureForSale.getLabel()|trans }}</p>
 					</div>
 				{% endif %}
 			</div>
