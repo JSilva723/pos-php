@@ -6,6 +6,7 @@ namespace Tenant\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -82,6 +83,14 @@ class ProductEditType extends StyledType
                     UnitOfMeasure::cases(),
                 ),
                 'required' => true,
+            ])
+            ->add('isFractionable', CheckboxType::class, [
+                'label' => 'Is fractionable',
+                'row_attr' => ['class' => 'w-full'],
+                'label_attr' => ['class' => self::LABEL_ATTR],
+                'attr' => ['class' => self::INPUT_CHECK_ATTR],
+                'required' => false,
+                'mapped' => false,
             ])
             ->add('category', EntityType::class, [
                 'row_attr' => ['class' => 'w-full'],

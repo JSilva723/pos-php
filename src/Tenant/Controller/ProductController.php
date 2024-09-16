@@ -103,9 +103,24 @@ class ProductController extends AbstractController
             }
 
             $form = $this->createForm(ProductEditType::class, $product);
+
+            if ($product->getUnitOfMeasureForSale()) {
+                $form->get('isFractionable')->setData(true);
+            }
+
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $isFractionable = $form->get('isFractionable')->getData();
+
+                if ($isFractionable) {
+                    $unitOfMeasure = $form->get('unitOfMeasure')->getData();
+                    $product->setUnitOfMeasureForSale($unitOfMeasure);
+                } else {
+                    $product->setUnitOfMeasureForSale(null);
+                }
+
+                $this->entityManager->persist($product);
                 $this->entityManager->flush();
 
                 return $this->redirectToRoute('tenant_product_show', [
