@@ -1,45 +1,45 @@
 {% extends 'components/table.html.twig' %}
 
 {% block tTitle %}
-	<div class="flex w-full flex-col">
-		<div class="flex items-center flex-shrink-0 mb-2">
-			<a href="{{ path('tenant_sale_order_new') }}" type="button" class="{{ btn_primary_class }}">
-				{{ 'New'|trans }}
-			</a>
-			<h5 class="{{ mt_class }}">{{ 'Orders'|trans }}</h5>
-		</div>
-	</div>
+    <div class="flex w-full flex-col">
+        <div class="flex items-center flex-shrink-0 mb-2">
+            <a href="{{ path('tenant_sale_order_new') }}" type="button" class="{{ btn_primary_class }}">
+                {{ 'New'|trans }}
+            </a>
+            <h5 class="{{ mt_class }}">{{ 'Orders'|trans }}</h5>
+        </div>
+    </div>
 {% endblock %}
 
 {% block tHead %}
-	<tr>
-		<th scope="col" class="{{ th_class }}">ID</th>
-		<th scope="col" class="{{ th_end_class }}">
-			{{ 'Actions'|trans}}
-		</th>
-	</tr>
+    <tr>
+        <th scope="col" class="{{ th_class }}">ID</th>
+        <th scope="col" class="{{ th_end_class }}">
+            {{ 'Actions'|trans}}
+        </th>
+    </tr>
 {% endblock %}
 
 {% block tBody %}
-	{% for saleOrder in pagination %}
-		<tr class="{{ tr_class }}">
-			<th scope="row" class="{{ th_class }}">
-				{{ saleOrder.id }}
-			</th>
-			<td class="{{ td_end_class }}">
-				<button id="xbox-series-s-dropdown-button{{ saleOrder.id }}" data-dropdown-toggle="xbox-series-s-dropdown{{ saleOrder.id }}" data-dropdown-placement="left" class="{{ tb_more_class }}" type="button">
-					{{ include('components/icon_more.html.twig') }}
-				</button>
-				<div id="xbox-series-s-dropdown{{ saleOrder.id }}" class="{{ tb_more_container_class }}">
-					<ul class="{{ tb_more_content_class }}" aria-labelledby="xbox-series-s-dropdown-button{{ saleOrder.id }}">
-						<li>
-							{{ include('components/btn_more_show_edit.html.twig', { 'path' : 'tenant_sale_order_show', 'id': saleOrder.id , 'label': 'Show' }) }}
-						</li>
-					</ul>
-				</div>
-			</td>
-		</tr>
-	{% else %}
-		{{ include('components/no_records.html.twig') }}
-	{% endfor %}
+    {% for saleOrder in pagination %}
+        <tr class="{{ tr_class }}">
+            <th scope="row" class="{{ th_class }}">
+                {{ saleOrder.id }}
+            </th>
+            <td class="{{ td_end_class }}">
+                <button id="xbox-series-s-dropdown-button{{ saleOrder.id }}" data-dropdown-toggle="xbox-series-s-dropdown{{ saleOrder.id }}" data-dropdown-placement="left" class="{{ tb_more_class }}" type="button">
+                    {{ include('components/icon_more.html.twig') }}
+                </button>
+                <div id="xbox-series-s-dropdown{{ saleOrder.id }}" class="{{ tb_more_container_class }}">
+                    <ul class="{{ tb_more_content_class }}" aria-labelledby="xbox-series-s-dropdown-button{{ saleOrder.id }}">
+                        <li>
+                            {{ include('components/btn_more_show_edit.html.twig', { 'path' : 'tenant_sale_order_show', 'id': saleOrder.id , 'label': 'Show' }) }}
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    {% else %}
+        {{ include('components/no_records.html.twig') }}
+    {% endfor %}
 {% endblock %}

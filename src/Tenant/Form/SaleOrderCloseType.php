@@ -21,6 +21,7 @@ class SaleOrderCloseType extends StyledType
                 'attr' => ['class' => self::INPUT_ATTR],
                 'class' => Payment::class,
                 'choice_label' => 'name',
+                'label' => 'Payment method',
                 'placeholder' => 'Select a payment method',
             ]);
     }

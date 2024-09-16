@@ -1,0 +1,31 @@
+<div class="{{ mct_class }}">
+    <div class="flex flex-col">
+        <h5 class="{{ mt_class }}">{{ 'Order'|trans}} N° {{ saleOrder.id }}</h5>
+        <div class="flex flex-col gap-4 md:flex-row">
+            <div class="w-full md:w-1/2">
+                <div class="w-full">
+                    <p class="{{ dl_class }}">{{ 'Client'|trans }}</p>
+                    <p class="{{ dc_class }}">{{ saleOrder.client.name }}</p>
+                </div>
+                {% if saleOrder.status != 'OPEN' %}
+                    <div class="w-full">
+                        <p class="{{ dl_class }}">{{ 'Payment'|trans }}</p>
+                        <p class="{{ dc_class }}">{{ saleOrder.payment.name }}</p>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="w-full md:w-1/2">
+                <div class="w-full">
+                    <p class="{{ dl_class }}">{{ 'Price list'|trans }}</p>
+                    <p class="{{ dc_class }}">{{ saleOrder.priceList.name }}</p>
+                </div>
+                {% if saleOrder.status != 'OPEN' %}
+                    <div class="w-full">
+                        <p class="{{ dl_class }}">{{ 'Total'|trans }}</p>
+                        <p class="{{ dc_class }}">$ {{ total }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

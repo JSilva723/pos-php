@@ -1,0 +1,58 @@
+ <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+            <th scope="col" class="{{ th_class }}">{{ 'Product'|trans }}</th>
+            <th scope="col" class="{{ th_class }}">{{ 'Quantity'|trans }}</th>
+            <th scope="col" class="{{ th_class }}">{{ 'UOM'|trans }}</th>
+            <th scope="col" class="{{ th_class }}">{{ 'Price'|trans }}</th>
+            <th scope="col" class="{{ th_class }}">{{ 'Subtotal'|trans }}</th>
+            {% if saleOrder.status == 'OPEN' %}
+                <th scope="col" class="{{ th_end_class }}">
+                    {{ 'Actions'|trans}}
+                </th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for line in orderLines %}
+            <tr class="{{ tr_class }}">
+                <td class="{{ td_class }}">
+                    {{ line.name }}
+                </td>
+                <td class="{{ td_class }}">
+                    {{ line.quantity }}
+                </td>
+                <td class="{{ td_class }}">
+                    {% if line.uomfs %}
+                        {{ line.uomfs.getLabel()|trans }}
+                    {% else %}
+                        {{ line.uom.getLabel()|trans }}
+                    {% endif %}
+                </td>
+                <td class="{{ td_class }}">
+                    {{ line.price }}
+                </td>
+                <td class="{{ td_class }}">
+                    {{ line.subTotal }}
+                </td>
+                {% if saleOrder.status == 'OPEN' %}
+                    <td class="{{ td_end_class }}">
+                        <button id="xbox-series-s-dropdown-button{{ line.solid }}" data-dropdown-toggle="xbox-series-s-dropdown{{ line.solid }}" data-dropdown-placement="left" class="{{ tb_more_class }}" type="button">
+                            {{ include('components/icon_more.html.twig') }}
+                        </button>
+                        <div id="xbox-series-s-dropdown{{ line.solid }}" class="{{ tb_more_container_class }}">
+                            <ul class="{{ tb_more_content_class }}" aria-labelledby="xbox-series-s-dropdown-button{{ line.solid }}">
+                                <li>
+                                    <form method="post" action="{{ path('tenant_sale_order_line_remove', {'soid': saleOrder.id, 'solid': line.solid }) }}" onsubmit="return confirm('{{ 'Are you sure you want to delete this item?'|trans }}');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ line.solid) }}">
+                                        <button class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ 'Delete'|trans}}</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

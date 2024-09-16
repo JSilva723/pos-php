@@ -24,6 +24,7 @@ Theme: Tema
 Reports: Reportes
 Orders: Ordenes
 Payment methods: Métodos de pago
+Payment method: Método de pago
 Categories: Categorías
 New product: Nuevo producto
 Price: Precio
@@ -56,3 +57,4 @@ Centimeter: Centimetros
 Is fractionable: Es fraccionable
 Stock minimum: Stock mínimo
 UOM: UDM
+Select a payment method: Selecione un método de pago
