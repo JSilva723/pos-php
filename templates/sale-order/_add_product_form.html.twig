@@ -11,7 +11,7 @@
         <div class="absolute z-10 mt-2 bg-white rounded-lg shadow max-w-fit dark:bg-gray-700 slistc" hidden>
             <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200 slist">
                 {% for product in products %}
-                    <li class="w-60 block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white psearch" onclick="addProduct(this)" data-id="{{ product.id }}" data-price="{{ product.price }}">
+                    <li class="w-60 block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white psearch" onclick="addProduct(this)" data-id="{{ product.id }}" data-price="{{ product.price }}" data-uom="{{ product.uomfs ? product.uomfs.getLabel()|trans : product.uom.getLabel()|trans }}">
                         {{ product.name }}
                     </li>
                 {% endfor %}

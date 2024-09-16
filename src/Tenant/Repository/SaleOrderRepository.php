@@ -46,7 +46,7 @@ class SaleOrderRepository extends ServiceEntityRepository
     public function getProductsWhitPrice(int $plid): array
     {
         $query = '
-        SELECT p.id, p.name, ppl.price
+        SELECT p.id, p.name, p.unitOfMeasure as uom, p.unitOfMeasureForSale as uomfs, ppl.price
         FROM Tenant\Entity\Product p
         LEFT JOIN Tenant\Entity\ProductPriceList ppl WITH p.id = ppl.product AND ppl.priceList = :plid
         WHERE p.isEnable = true
