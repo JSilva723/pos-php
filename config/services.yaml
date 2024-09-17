@@ -19,6 +19,10 @@ services:
         tags:
             - { name: 'console.command', command: 'landlord:run-migrations' }
 
+    Landlord\Command\LoadInitialDataCommand:
+        tags:
+            - { name: 'console.command', command: 'landlord:load-initial-data' }
+
     Tenant\:
         resource: '../src/Tenant/'
         exclude: '../src/Tenant/Entity/'
