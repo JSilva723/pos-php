@@ -35,11 +35,11 @@ class SaleOrderLineRepository extends ServiceEntityRepository
         return $qb->getArrayResult();
     }
 
-    public function addLine(int $productId, int $saleOrderId, int $quantity, float $price): void
+    public function addLine(int $productId, int $saleOrderId, float $quantity, float $price, ?string $uom = null): void
     {
         $query = '
-        INSERT INTO sale_order_line (product_id, sale_order_id, quantity, price)
-        VALUES (:productId, :saleOrderId, :quantity, :price)';
+        INSERT INTO sale_order_line (product_id, sale_order_id, quantity, price, unit_of_measure)
+        VALUES (:productId, :saleOrderId, :quantity, :price, :uom)';
 
         // SQL Prepared Statements: Named
         $stmt = $this->getEntityManager()->getConnection()->prepare($query);
@@ -47,6 +47,7 @@ class SaleOrderLineRepository extends ServiceEntityRepository
         $stmt->bindValue('saleOrderId', $saleOrderId);
         $stmt->bindValue('quantity', $quantity);
         $stmt->bindValue('price', $price);
+        $stmt->bindValue('uom', $uom);
         $stmt->executeQuery();
     }
 

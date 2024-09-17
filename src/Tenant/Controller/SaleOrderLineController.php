@@ -13,6 +13,13 @@ use Tenant\Services\ValidateParams;
 
 class SaleOrderLineController extends AbstractController
 {
+    public const UNITS_TRANS = [
+        'Gram' => 'Gram',
+        'Gramos' => 'Gram',
+        'Kilogram' => 'Kilogram',
+        'Kilogramo' => 'Kilogram',
+    ];
+
     public function __construct(
         private readonly ValidateParams $validateParams,
         private readonly SaleOrderLineRepository $saleOrderLineRepository,
@@ -23,10 +30,11 @@ class SaleOrderLineController extends AbstractController
         try {
             $saleOrderId = $this->validateParams->validatedInt($request->get('soid'), 'sale order');
             $productId = $this->validateParams->validatedInt($request->get('pid'), 'product');
-            $quantity = $this->validateParams->validatedInt($request->get('quantity'), 'quantity');
+            $quantity = $this->validateParams->validatedFloat($request->get('quantity'), 'quantity');
             $price = $this->validateParams->validatedFloat($request->get('price'), 'price');
+            $uom = $request->get('uom');
 
-            $this->saleOrderLineRepository->addLine($productId, $saleOrderId, $quantity, $price);
+            $this->saleOrderLineRepository->addLine($productId, $saleOrderId, $quantity, $price, self::UNITS_TRANS[$uom]);
 
             return $this->redirectToRoute('tenant_sale_order_show', [
                 'id' => $saleOrderId,

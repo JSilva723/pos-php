@@ -25,10 +25,13 @@ class SaleOrderLine
     private SaleOrder $saleOrder;
 
     #[ORM\Column]
-    private int $quantity;
+    private string $quantity;
 
     #[ORM\Column(type: 'decimal', scale: 2, precision: 14)]
     private string $price;
+
+    #[ORM\Column(name: 'unit_of_measure', length: 15, options: ['default' => null], nullable: true)]
+    private ?string $unitOfMeasure = null;
 
     public function getId(): int
     {
@@ -59,12 +62,12 @@ class SaleOrderLine
         return $this;
     }
 
-    public function getQuantity(): int
+    public function getQuantity(): string
     {
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity): static
+    public function setQuantity(string $quantity): static
     {
         $this->quantity = $quantity;
 
@@ -79,6 +82,18 @@ class SaleOrderLine
     public function setPrice(string $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getUnitOfMeasure(): ?string
+    {
+        return $this->unitOfMeasure;
+    }
+
+    public function setUnitOfMeasure(?string $unitOfMeasure): static
+    {
+        $this->unitOfMeasure = $unitOfMeasure;
 
         return $this;
     }

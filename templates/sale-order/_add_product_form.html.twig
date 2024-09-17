@@ -11,7 +11,7 @@
         <div class="absolute z-10 mt-2 bg-white rounded-lg shadow max-w-fit dark:bg-gray-700 slistc" hidden>
             <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200 slist">
                 {% for product in products %}
-                    <li class="w-60 block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white psearch" onclick="addProduct(this)" data-id="{{ product.id }}" data-price="{{ product.price }}" data-uom="{{ product.uomfs ? product.uomfs.getLabel()|trans : product.uom.getLabel()|trans }}">
+                    <li class="w-60 block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white psearch" onclick="addProduct(this)" data-id="{{ product.id }}" data-price="{{ product.price }}" data-uom="{{ product.uom.getLabel()|trans }}" data-uomfs="{{ product.uomfs ? product.uomfs.getLabel()|trans : '' }}" >
                         {{ product.name }}
                     </li>
                 {% endfor %}
@@ -21,7 +21,11 @@
     <input hidden type="number" id="input-product-id" name="pid"/>
     <div class="{{ td_class }}">
         <label for="quantity" class="{{ dl_class }}">{{ 'Quantity'|trans }}</label>
-        <input type="number" name="quantity" id="input-product-quantity" class="{{ input_class }}" required="true"/>
+        <input type="text" name="quantity" id="input-product-quantity" class="{{ input_class }} input-float" required="true"/>
+    </div>
+    <div class="{{ td_class }} uom-container" hidden>
+        <label for="uom" class="{{ dl_class }}">{{ 'UOM'|trans }}</label>
+        <select name="uom" class="{{ input_class }} uom-select"></select>
     </div>
     <div class="{{ td_class }}">
         <label for="price" class="{{ dl_class }}">{{ 'Price'|trans }}</label>
