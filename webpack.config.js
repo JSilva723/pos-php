@@ -22,6 +22,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('sale-order', './assets/js/sale-order.js')
+    .addEntry('validate-input-float', './assets/js/validate-input-float.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
