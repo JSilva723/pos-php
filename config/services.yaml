@@ -15,6 +15,10 @@ services:
         tags:
             - { name: 'console.command', command: 'landlord:create-tenant-db' }
 
+    Landlord\Command\RunMigrationsCommand:
+        tags:
+            - { name: 'console.command', command: 'landlord:run-migrations' }
+
     Tenant\:
         resource: '../src/Tenant/'
         exclude: '../src/Tenant/Entity/'
