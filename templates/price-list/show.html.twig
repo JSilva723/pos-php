@@ -26,7 +26,7 @@
 			<td class="{{ td_class }}">
 			{% if product.pplid %}
 				<form class="flex items-center w-full" method="POST" action="{{ path('tenant_product_price_list_update', { 'pplid': product.pplid }) }}">
-					<input type="number" name="price" class="{{ input_class }}" value={{ product.price }}>
+					<input type="text" name="price" class="{{ input_class }} input-float" value={{ product.price }}>
 					<input hidden name="lid"  value={{ priceList.id }}>
 					<button type="submit" class="{{ btn_icon_class }}">
 						{{ include('components/icon_sync.html.twig') }}
@@ -36,7 +36,7 @@
 				<form class="flex items-center w-full" method="POST" action="{{ path('tenant_product_price_list_create') }}">
 					<input hidden name="pid"  value={{ product.id }}>
 					<input hidden name="lid"  value={{ priceList.id }}>
-					<input type="number" name="price" class="{{ input_class }}" value={{ product.price }}>
+					<input type="text" name="price" class="{{ input_class }} input-float" value={{ product.price }}>
 					<button type="submit" class="{{ btn_icon_class }}">
 						{{ include('components/icon_sync.html.twig') }}
 					</button>
@@ -47,4 +47,9 @@
 	{% else %}
 		{{ include('components/no_records.html.twig') }}
 	{% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('validate-input-float') }}
 {% endblock %}
