@@ -11,6 +11,11 @@ services:
             string $locales: '%app_locales%'
             string $defaultLocale: '%locale%'
 
+    Landlord\Command\CreateTenantDbCommand:
+        tags:
+            - { name: 'console.command', command: 'landlord:create-tenant-db' }
+
     Tenant\:
         resource: '../src/Tenant/'
         exclude: '../src/Tenant/Entity/'
+
