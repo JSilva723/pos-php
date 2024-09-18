@@ -29,14 +29,16 @@ make composer-install
 ```
 7. Open broeser -> http://localhost:3000
 
-## Create user - (admin, admin)
-1. Insert in DB - opent other terminal
+## Create tenant service
 ```sh
-make db-ssh
+make ssh
 ```
 ```sh
-mysql -u root -p main-app # pass -> root
+bin/console landlord:create-tenant-db tenant_name
 ```
-```sql
-insert into user (username, roles, password, is_enable) values ('admin', '["ROLE_USER"]' , '$2y$13$O6TxZOXywpOYKmgzc1Zn4uU9dtvCMWlHT1p/8.aFRYn2k7AidSOPO', 1);
+```sh
+bin/console landlord:run-migrations tenant_name
+```
+```sh
+bin/console landlord:load-initial-data tenant_name username
 ```
