@@ -1,0 +1,35 @@
+<form class="flex flex-col md:flex-row md:justify-between"  method="POST" action="{{ path('tenant_sale_order_line_add', { 'soid': saleOrder.id }) }}">
+    <div class="{{ td_class }}">
+        <span class="{{ dl_class }}">{{ 'Product'|trans }}</span>
+        <label for="input-group-search" class="sr-only">{{ 'Search'|trans }}</label>
+        <div class="relative">
+            <div class="absolute ps-3 inset-y-0 rtl:inset-r-0 start-0 flex items-center pointer-events-none">
+                {{ include('components/icon_search.html.twig') }}
+            </div>
+            <input type="text" id="input-group-search" required="true" class="{{ input_class }}" placeholder="{{ 'Search'|trans }}">
+        </div>
+        <div class="absolute z-10 mt-2 bg-white rounded-lg shadow max-w-fit dark:bg-gray-700 slistc" hidden>
+            <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200 slist">
+                {% for product in products %}
+                    <li class="w-60 block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white psearch" onclick="addProduct(this)" data-id="{{ product.id }}" data-price="{{ product.price }}">
+                        {{ product.name }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <input hidden type="number" id="input-product-id" name="pid"/>
+    <div class="{{ td_class }}">
+        <label for="quantity" class="{{ dl_class }}">{{ 'Quantity'|trans }}</label>
+        <input type="number" name="quantity" id="input-product-quantity" class="{{ input_class }}" required="true"/>
+    </div>
+    <div class="{{ td_class }}">
+        <label for="price" class="{{ dl_class }}">{{ 'Price'|trans }}</label>
+        <input type="text" id="input-product-price" name="price" class="{{ input_class }} input-float" required="true"/> 
+    </div>
+    <div class="{{ td_end_class }}">
+        <button type="submit" class="{{ btn_success_class }} self-end">
+            {{ 'Add'|trans }}
+        </button>
+    </div>
+</form>

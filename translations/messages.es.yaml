@@ -1,50 +1,52 @@
-Login: Ingresar
-Username: Usuario
-Password: Contraseña
-Preferences: Preferencias
-Home: Inicio
-Administration: Administración
-Tanks: Tanques
-Products: Productos
-Suppliers: Proveedores
-New: Nuevo
-Name: Nombre
 Actions: Acciones
-Show: Ver
-Edit: Editar
-no records found: no se encontraron registros
-Save: Guardar
-Update: Actualizar
+Add: Agregar
+Administration: Administración
 Are you sure you want to delete this item?: ¿Estás seguro de que deseas eliminar este elemento?
+Basic data: Datos básicos
+Brand: Marca
+Cash: Efectivo
+Categories: Categorías
+Category: Categoria
+Change password: Cambiar contraseña
+Client: Cliente
+Clients: Clientes
 Configuration: Configuración
 Delete: Borrar
-User picture: Usuario imagen
+Edit: Editar
+Final consumer: Consumidor final
+Home: Inicio
+Image: Imagen
+Login: Ingresar
+Name: Nombre
+New product: Nuevo producto
+New: Nuevo
+no records found: no se encontraron registros
+Order: Orden
+Orders: Ordenes
+Password: Contraseña
+Payment methods: Métodos de pago
+Payment: Pago
+Preferences: Preferencias
+Price list: Lista de precios
+Price: Precio
+Product: Producto
+Products: Productos
+Quantity: Cantidad
+Reports: Reportes
+Save: Guardar
+Search: Busqueda
+Select a category: Selecione una categoría
+Select a client: Selecione un cliente
+Select a payment method: Selecione un metodo de pago
+Select a price list: Selecione una lista de precio
+Show: Ver
+Suppliers: Proveedores
+Tanks: Tanques
 The password fields must match: Los campos de contraseña deben coincidir
 Theme: Tema
-Reports: Reportes
-Orders: Ordenes
-Payment methods: Métodos de pago
-Categories: Categorías
-New product: Nuevo producto
-Price: Precio
-Category: Categoria
-Select a category: Selecione una categoría
-Image: Imagen
-Add: Agregar
-Quantity: Cantidad
-Search: Busqueda
-Product: Producto
-Order: Orden
-Price list: Lista de precios
-Change password: Cambiar contraseña
-Basic data: Datos básicos
-Select a price list: Selecione una lista de precio
-Brand: Marca
-Select a client: Selecione un cliente
-Client: Cliente
+Uncategoryzed: Sin categoría
+Update: Actualizar
+User picture: Usuario imagen
+Username: Usuario
 validation.number_required: property es requerido y debe ser un número
 validation.property.product: producto
-Uncategoryzed: Sin categoría
-Cash: Efectivo
-Final consumer: Consumidor final
-Clients: Clientes

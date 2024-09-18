@@ -1,154 +1,24 @@
 {% extends 'components/layout.html.twig' %}
 
 {% block main %}
-	<div class="{{ mc_class }}">
-		<div class="{{ mct_class }}">
-			<div class="flex flex-col">
-				<h5 class="{{ mt_class }}">{{ 'Order'|trans}} N° {{ saleOrder.id }}</h5>
-				<div class="flex flex-col gap-4 md:flex-row">
-					<div class="w-full md:w-1/2">
-						<div class="w-full">
-							<p class="{{ dl_class }}">{{ 'Client'|trans }}</p>
-							<p class="{{ dc_class }}">{{ saleOrder.client.name }}</p>
-						</div>
-						{% if saleOrder.status != 'OPEN' %}
-							<div class="w-full">
-								<p class="{{ dl_class }}">{{ 'Payment'|trans }}</p>
-								<p class="{{ dc_class }}">{{ saleOrder.payment.name }}</p>
-							</div>
-						{% endif %}
-					</div>
-					<div class="w-full md:w-1/2">
-						<div class="w-full">
-							<p class="{{ dl_class }}">{{ 'Price list'|trans }}</p>
-							<p class="{{ dc_class }}">{{ saleOrder.priceList.name }}</p>
-						</div>
-						{% if saleOrder.status != 'OPEN' %}
-							<div class="w-full">
-								<p class="{{ dl_class }}">{{ 'Total'|trans }}</p>
-								<p class="{{ dc_class }}">$ {{ total }}</p>
-							</div>
-						{% endif %}
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="{{ mct_class }} mt-2 mb-2">
-			<div class="overflow-x-auto">
-				<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-					<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-						<tr>
-							<th scope="col" class="{{ th_class }}">{{ 'Product'|trans }}</th>
-							<th scope="col" class="{{ th_class }}">{{ 'Quantity'|trans }}</th>
-							<th scope="col" class="{{ th_class }}">{{ 'Price'|trans }}</th>
-							<th scope="col" class="{{ th_class }}">{{ 'Subtotal'|trans }}</th>
-							{% if saleOrder.status == 'OPEN' %}
-								<th scope="col" class="{{ th_end_class }}">
-									{{ 'Actions'|trans}}
-								</th>
-							{% endif %}
-						</tr>
-					</thead>
-					<tbody>
-						{% for line in orderLines %}
-							<tr class="{{ tr_class }}">
-								<td class="{{ td_class }}">
-									{{ line.name }}
-								</td>
-								<td class="{{ td_class }}">
-									{{ line.quantity }}
-								</td>
-								<td class="{{ td_class }}">
-									{{ line.price }}
-								</td>
-								<td class="{{ td_class }}">
-									{{ line.subTotal }}
-								</td>
-								{% if saleOrder.status == 'OPEN' %}
-									<td class="{{ td_end_class }}">
-										<button id="xbox-series-s-dropdown-button{{ line.solid }}" data-dropdown-toggle="xbox-series-s-dropdown{{ line.solid }}" data-dropdown-placement="left" class="{{ tb_more_class }}" type="button">
-											{{ include('components/icon_more.html.twig') }}
-										</button>
-										<div id="xbox-series-s-dropdown{{ line.solid }}" class="{{ tb_more_container_class }}">
-											<ul class="{{ tb_more_content_class }}" aria-labelledby="xbox-series-s-dropdown-button{{ line.solid }}">
-												<li>
-													<form method="post" action="{{ path('tenant_sale_order_line_remove', {'soid': saleOrder.id, 'solid': line.solid }) }}" onsubmit="return confirm('{{ 'Are you sure you want to delete this item?'|trans }}');">
-														<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ line.solid) }}">
-														<button class="py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ 'Delete'|trans}}</button>
-													</form>
-												</li>
-											</ul>
-										</div>
-									</td>
-								{% endif %}
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-				{% if saleOrder.status == 'OPEN' %}
-					<form class="flex flex-col md:flex-row md:justify-between"  method="POST" action="{{ path('tenant_sale_order_line_add', { 'soid': saleOrder.id }) }}">
-						<div class="{{ td_class }}">
-							<span class="{{ dl_class }}">{{ 'Product'|trans }}</span>
-							<label for="input-group-search" class="sr-only">{{ 'Search'|trans }}</label>
-							<div class="relative">
-								<div class="absolute ps-3 inset-y-0 rtl:inset-r-0 start-0 flex items-center pointer-events-none">
-									{{ include('components/icon_search.html.twig') }}
-								</div>
-								<input type="text" id="input-group-search" required="true" class="{{ input_class }}" placeholder="{{ 'Search'|trans }}">
-							</div>
-							<div class="absolute z-10 mt-2 bg-white rounded-lg shadow max-w-fit dark:bg-gray-700 slistc" hidden>
-								<ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200 slist">
-									{% for product in products %}
-										<li class="w-60 block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white psearch" onclick="addProduct(this)" data-id="{{ product.id }}" data-price="{{ product.price }}">
-											{{ product.name }}
-										</li>
-									{% endfor %}
-								</ul>
-							</div>
-						</div>
-						<input hidden type="number" id="input-product-id" name="pid"/>
-						<div class="{{ td_class }}">
-							<label for="quantity" class="{{ dl_class }}">{{ 'Quantity'|trans }}</label>
-							<input type="number" name="quantity" id="input-product-quantity" class="{{ input_class }}" required="true"/>
-						</div>
-						<div class="{{ td_class }}">
-							<label for="price" class="{{ dl_class }}">{{ 'Price'|trans }}</label>
-							<input type="text" id="input-product-price" name="price" class="{{ input_class }} input-float" required="true"/> 
-						</div>
-						<div class="{{ td_end_class }}">
-							<button type="submit" class="{{ btn_success_class }} self-end">
-								{{ 'Add'|trans }}
-							</button>
-						</div>
-					</form>
-				{% endif %}
-			</div>
-		</div>
-		{% if saleOrder.status == 'OPEN' %}
-			<div class="{{ mct_class }}">
-				{{ form_start(form) }}
-					<div class="flex flex-col md:flex-row gap-4">
-						<div class="w-full md:w-1/2">
-							{{ form_row(form.payment) }}
-						</div>
-						<div class="w-full md:w-1/2">
-							<p class="{{ dl_class }}">{{ 'Total'|trans }}</p>
-							<p class="{{ dc_class }}">$ {{ total }}</p>
-						</div>
-					</div>
-					<div class="mt-2 w-full flex justify-end">
-						<button type="submit" class="{{ btn_success_class }}">
-							{{ 'Save'|trans }}
-						</button>
-					</div>
-				{{ form_end(form) }}
-			</div>
-		{% endif %}
-	</div>
+    <div class="{{ mc_class }}">
+        {{ include('sale-order/_detail.html.twig', {'saleOrder': saleOrder}) }}
+        <div class="{{ mct_class }} mt-2 mb-2">
+            <div class="overflow-x-auto">
+                {{ include('sale-order/_lines.html.twig', {'saleOrder': saleOrder, 'orderLines': orderLines}) }}
+                {% if saleOrder.status == 'OPEN' %}
+                    {{ include('sale-order/_add_product_form.html.twig', {'saleOrder': saleOrder, 'products': products}) }}
+                {% endif %}
+            </div>
+        </div>
+        {% if saleOrder.status == 'OPEN' %}
+            {{ include('sale-order/_close_form.html.twig', {'total': total, 'form': form}) }}
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% block javascripts %}
-	{{ parent() }}
-	{{ encore_entry_script_tags('sale-order') }}
-	{{ encore_entry_script_tags('validate-input-float') }}
+    {{ parent() }}
+    {{ encore_entry_script_tags('sale-order') }}
+    {{ encore_entry_script_tags('validate-input-float') }}
 {% endblock %}
