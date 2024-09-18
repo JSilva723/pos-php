@@ -21,7 +21,7 @@
 				{{ payment.id }}
 			</th>
 			<td class="{{ td_class }}">
-				{{ payment.name }}
+				{{ payment.name|trans }}
 			</td>
 			<td class="{{ td_end_class }}">
 				<button id="xbox-series-s-dropdown-button{{ payment.id }}" data-dropdown-toggle="xbox-series-s-dropdown{{ payment.id }}" data-dropdown-placement="left" class="{{ tb_more_class }}" type="button">

@@ -21,7 +21,7 @@
 				{{ client.id }}
 			</th>
 			<td class="{{ td_class }}">
-				{{ client.name }}
+				{{ client.name|trans }}
 			</td>
 			<td class="{{ td_end_class }}">
 				<button id="xbox-series-s-dropdown-button{{ client.id }}" data-dropdown-toggle="xbox-series-s-dropdown{{ client.id }}" data-dropdown-placement="left" class="{{ tb_more_class }}" type="button">
