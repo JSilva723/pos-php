@@ -6,39 +6,22 @@ namespace Tenant\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Tenant\Repository\UserRepository;
 
 use function array_unique;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
-#[ORM\Table(name: 'user')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 180)]
     private string $username;
-
     /** @var list<string> The user roles */
-    #[ORM\Column]
     private array $roles = [];
-
     /** @var string The hashed password */
-    #[ORM\Column]
     private string $password;
-
-    #[ORM\Column(name: 'is_enable')]
     private bool $isEnable = true;
 
     /** @var Collection<int, SaleOrder> */
-    #[ORM\OneToMany(targetEntity: SaleOrder::class, mappedBy: 'user')]
     private Collection $saleOrders;
 
     public function __construct()

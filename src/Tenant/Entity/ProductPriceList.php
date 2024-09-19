@@ -4,28 +4,13 @@ declare(strict_types=1);
 
 namespace Tenant\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Tenant\Repository\ProductPriceListRepository;
-
-#[ORM\Entity(repositoryClass: ProductPriceListRepository::class)]
-#[ORM\Table(name: 'product_price_list')]
 class ProductPriceList
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
     private int $id;
-
-    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'productPriceLists')]
-    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id')]
-    private Product $product;
-
-    #[ORM\ManyToOne(targetEntity: PriceList::class, inversedBy: 'productPriceLists')]
-    #[ORM\JoinColumn(name: 'price_list_id', referencedColumnName: 'id')]
-    private PriceList $priceList;
-
-    #[ORM\Column(type: 'decimal', scale: 2, precision: 14)]
     private string $price;
+
+    private Product $product;
+    private PriceList $priceList;
 
     public function getId(): int
     {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping 
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping 
+                        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+
+    <entity name="Tenant\Entity\SaleOrder" table="sale_order" repository-class="Tenant\Repository\SaleOrderRepository">
+
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="status" type="string" length="10" default="OPEN"/>
+        <field name="date" type="datetime" default="CURRENT_TIMESTAMP"/>
+
+        <many-to-one field="user" target-entity="Tenant\Entity\User" inversed-by="saleOrders"/>
+        <many-to-one field="client" target-entity="Tenant\Entity\Client" inversed-by="saleOrders"/>
+        <many-to-one field="priceList" target-entity="Tenant\Entity\PriceList" inversed-by="saleOrders">
+            <join-column name="price_list_id" referenced-column-name="id" />
+        </many-to-one>
+        <many-to-one field="payment" target-entity="Tenant\Entity\Payment" nullable="true" inversed-by="saleOrders"/>
+        <one-to-many field="saleOrderLines" target-entity="Tenant\Entity\SaleOrderLine" mapped-by="saleOrder" fetch="EXTRA_LAZY"/>
+
+    </entity>
+
+</doctrine-mapping>

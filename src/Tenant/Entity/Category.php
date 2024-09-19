@@ -6,26 +6,14 @@ namespace Tenant\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Tenant\Repository\CategoryRepository;
 
-#[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ORM\Table(name: 'category')]
 class Category
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 100)]
     private string $name;
-
-    #[ORM\Column(name: 'is_enable')]
     private bool $isEnable = true;
 
     /** @var Collection<int, Product> */
-    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
     private Collection $products;
 
     public function __construct()

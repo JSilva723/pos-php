@@ -38,6 +38,7 @@ class ProductCreateType extends StyledType
                     new NotBlank(),
                     new Length(['max' => 100]),
                 ],
+                'mapped' => false,
             ])
             ->add('sku', TextType::class, [
                 'row_attr' => ['class' => 'w-full'],
@@ -91,6 +92,7 @@ class ProductCreateType extends StyledType
                 'class' => PriceList::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Select a price list',
+                'mapped' => false,
             ]);
     }
 

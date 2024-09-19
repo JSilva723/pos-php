@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping 
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping 
+                        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+
+    <entity name="Tenant\Entity\PriceList" table="price_list" repository-class="Tenant\Repository\PriceListRepository">
+
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="name" type="string" length="100"/>
+        <field name="isEnable" type="boolean" columns="is_enable" default="true"/>
+
+        <one-to-many field="productPriceLists" target-entity="Tenant\Entity\ProductPriceList" mapped-by="priceList" fetch="EXTRA_LAZY"/>
+        <one-to-many field="saleOrders" target-entity="Tenant\Entity\SaleOrder" mapped-by="priceList" fetch="EXTRA_LAZY"/>
+    
+    </entity>
+
+</doctrine-mapping>

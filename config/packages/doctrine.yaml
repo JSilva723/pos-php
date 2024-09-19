@@ -15,7 +15,8 @@ doctrine:
                 mappings:
                     Tenant:
                         is_bundle: false
-                        dir: '%kernel.project_dir%/src/Tenant/Entity'
+                        type: xml
+                        dir: '%kernel.project_dir%/config/mapping/tenant'
                         prefix: 'Tenant\Entity'
                         alias: Tenant
             landlord:

@@ -4,31 +4,14 @@ declare(strict_types=1);
 
 namespace Tenant\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Tenant\Repository\SaleOrderLineRepository;
-
-#[ORM\Entity(repositoryClass: SaleOrderLineRepository::class)]
-#[ORM\Table(name: 'sale_order_line')]
 class SaleOrderLine
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
     private int $id;
-
-    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'saleOrderLines')]
-    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id')]
-    private Product $product;
-
-    #[ORM\ManyToOne(targetEntity: SaleOrder::class, inversedBy: 'saleOrderLines')]
-    #[ORM\JoinColumn(name: 'sale_order_id', referencedColumnName: 'id')]
-    private SaleOrder $saleOrder;
-
-    #[ORM\Column]
-    private int $quantity;
-
-    #[ORM\Column(type: 'decimal', scale: 2, precision: 14)]
+    private float $quantity;
     private string $price;
+
+    private Product $product;
+    private SaleOrder $saleOrder;
 
     public function getId(): int
     {
@@ -59,12 +42,12 @@ class SaleOrderLine
         return $this;
     }
 
-    public function getQuantity(): int
+    public function getQuantity(): float
     {
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity): static
+    public function setQuantity(float $quantity): static
     {
         $this->quantity = $quantity;
 

@@ -6,56 +6,25 @@ namespace Tenant\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Tenant\Repository\ProductRepository;
 
-#[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[ORM\Table(name: 'product')]
 class Product
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 100)]
     private string $name;
-
-    #[ORM\Column(length: 100, nullable: true)]
     private string $brand;
-
-    #[ORM\Column(name: 'is_enable')]
-    private bool $isEnable = true;
-
-    #[ORM\Column(length: 100, unique: true, nullable: true)]
-    private ?string $sku = null;
-
-    #[ORM\Column(name: 'stock_quantity')]
     private int $stockQuantity;
-
-    #[ORM\Column(name: 'stock_min')]
     private int $stockMin;
-
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
-    private Category $category;
-
-    #[ORM\Column(type: 'text', nullable: true)]
+    private bool $isEnable = true;
+    private ?string $sku = null;
     private ?string $img = null;
-
-    #[ORM\Column(name: 'mime_type', nullable: true)]
     private ?string $mimeType = null;
 
+    private Category $category;
+
     /** @var Collection<int, ProductPriceList> */
-    #[ORM\OneToMany(targetEntity: ProductPriceList::class, mappedBy: 'product')]
     private Collection $productPriceLists;
-
     /** @var Collection<int, SaleOrderLine> */
-    #[ORM\OneToMany(targetEntity: SaleOrderLine::class, mappedBy: 'product')]
     private Collection $saleOrderLines;
-
-    private string $price;
-
-    private PriceList $priceList;
 
     public function __construct()
     {
@@ -192,29 +161,5 @@ class Product
     public function getOrderLines(): Collection
     {
         return $this->saleOrderLines;
-    }
-
-    public function getPrice(): string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(string $price): static
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    public function getPriceList(): PriceList
-    {
-        return $this->priceList;
-    }
-
-    public function setPriceList(PriceList $priceList): static
-    {
-        $this->priceList = $priceList;
-
-        return $this;
     }
 }

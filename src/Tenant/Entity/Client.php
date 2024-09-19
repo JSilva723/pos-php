@@ -6,26 +6,14 @@ namespace Tenant\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Tenant\Repository\ClientRepository;
 
-#[ORM\Entity(repositoryClass: ClientRepository::class)]
-#[ORM\Table(name: 'client')]
 class Client
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 100)]
     private string $name;
-
-    #[ORM\Column(name: 'is_enable')]
     private bool $isEnable = true;
 
     /** @var Collection<int, SaleOrder> */
-    #[ORM\OneToMany(targetEntity: SaleOrder::class, mappedBy: 'client')]
     private Collection $saleOrders;
 
     public function __construct()

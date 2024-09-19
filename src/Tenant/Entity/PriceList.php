@@ -6,30 +6,16 @@ namespace Tenant\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use Tenant\Repository\PriceListRepository;
 
-#[ORM\Entity(repositoryClass: PriceListRepository::class)]
-#[ORM\Table(name: 'price_list')]
 class PriceList
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 100)]
     private string $name;
-
-    #[ORM\Column(name: 'is_enable')]
     private bool $isEnable = true;
 
     /** @var Collection<int, ProductPriceList> */
-    #[ORM\OneToMany(targetEntity: ProductPriceList::class, mappedBy: 'priceList')]
     private Collection $productPriceLists;
-
     /** @var Collection<int, SaleOrder> */
-    #[ORM\OneToMany(targetEntity: SaleOrder::class, mappedBy: 'priceList')]
     private Collection $saleOrders;
 
     public function __construct()
